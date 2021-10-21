@@ -12,10 +12,11 @@ use IEEE.std_logic_1164.all;
 
 entity decoder is
 
-	   port(i_ALUop  	: in std_logic_vector(4 downto 0);
-		o_ALUctrl0 	: out std_logic;
-	     	o_ALUctrl1	: out std_logic;
-	     	o_ALUctrl2	: out std_logic;
+	   port(i_ALUop  		: in std_logic_vector(4 downto 0);
+		o_ALUShiftDir 		: out std_logic;
+	     	o_ALUShirtArithmetic	: out std_logic;
+	     	o_ALUAddSub		: out std_logic;
+		o_ALUMuxCtrl		: out std_logic_vector(3 downto 0);
 		);
 
 end decoder;
@@ -25,8 +26,20 @@ architecture data of decoder is
 begin
 
 with i_ALUop select
-	o_ALUctrl0 <="00000000000000000000000000000001" when "00000";
-	o_ALUctrl1 <="00000000000000000000000000000001" when "00000";
-	o_ALUctrl2 <="00000000000000000000000000000001" when "00000";
+	o_ALUAddSub <=
+		"1" when "0000",
+		"0" when others;
+
+with i_ALUop select
+	o_ALUShiftDir <=
+		"1" when "0111",
+		"0" when others;
+
+with i_ALUop select
+	o_ALUShiftArithmetic <=
+		"1" when "0111",
+		"0" when others;
+
+
 
 end data;
