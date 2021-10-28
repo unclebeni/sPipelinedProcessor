@@ -90,7 +90,29 @@ o_branch <=
 
 with i_opCode select --need to complete this
 o_ALUop <=
-	"0000" when "000000",
+	"0000" when "000000", --Add functions 0-3
+	"0000" when "000001",
+	"0000" when "000010",
+	"0000" when "000011",
+	"0010" when "000100", --AND fucntions are 4 &5 
+	"0010" when "000101", 
+	"0000" when "000111", --7 & 8 are Add
+	"0000" when "001000",
+	"0101" when "001001", --9 is NOR
+	"0100" when "001010", --10&11 are XOR
+	"0100" when "001011",
+	"0011" when "001100", --12*13 are OR
+	"0011" when "001101", 
+	"0110" when "001110", --14 & 15 are slt
+	"0110" when "001111", 
+	"0111" when "010000", --16 is shift left
+	"1000" when "010001", --17 is shift right logical
+	"1001" when "010010", --18 is shift right arithmetic
+	"0000" when "010011", --19 is Add
+	"0001" when "010100", --20-23 are Sub
+	"0001" when "010101", 
+	"0001" when "010110", 
+	"0001" when "010111",
 	"XXXX" when others;
 
 with i_opCode select
