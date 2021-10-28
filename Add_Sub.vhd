@@ -1,5 +1,5 @@
 ------------------------------------------------
---DESCRIPTION: This file contains an implementation of an 
+--DESCRIPTION: This file contains an implementation of an
 --N-bit add/sub machine
 --
 --09/09/21
@@ -20,7 +20,7 @@ end Add_Sub;
 architecture struct of Add_Sub is
 
 component mux2t1_N is
-  generic(N : integer := 32); 
+  generic(N : integer := 32);
   port(i_S          : in std_logic;
        i_D0         : in std_logic_vector(N-1 downto 0);
        i_D1         : in std_logic_vector(N-1 downto 0);
@@ -45,14 +45,14 @@ end component;
 
 signal invertedB : std_logic_vector(N-1 downto 0); --not sure what to make the size be, not sure if i need this
 signal selectedB : std_logic_vector(N-1 downto 0);
-signal carryIn : std_logic_vector(N-1 downto 0); 
+signal carryIn : std_logic_vector(N-1 downto 0);
 signal carryOut : std_logic_vector(N-1 downto 0);
 
 begin
 
 	carryIn(0) <= nAdd_Sub;
 --invert the second input first
-invert: onescompliment_N 
+invert: onescompliment_N
 	port map (
 		i_A	=> iB,
 		o_F	=> invertedB);--NEED a signal here--
@@ -66,7 +66,7 @@ selectOp: mux2t1_N
 		 o_O	=> selectedB); --need another signal here
 
 --add the first input and selected input. Carry in is the nAdd_Sub value
-add: fullAdderN 
+add: fullAdderN
 	port map(iA	=> iA,
 		 iB	=> selectedB,--the selected iB value (negative or positive
 		 iC	=> carryIn,

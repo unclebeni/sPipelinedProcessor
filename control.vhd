@@ -11,16 +11,16 @@ use IEEE.std_logic_1164.all;
 entity decoder is
 
 	   port(i_opCode  	: in std_logic_vector(5 downto 0);
-		o_RegDest 	: out std_logic; -- '1' when using R format instruction
-	     	o_ALUSrc	: out std_logic; -- '1' for immediate value operations
+			o_RegDest 	: out std_logic; -- '1' when using R format instruction
+	    	o_ALUSrc	: out std_logic; -- '1' for immediate value operations
 	     	o_MemtoReg	: out std_logic; -- '1' for load word
-		o_RegWrite	: out std_logic; -- '1' for storing to register
-		o_MemRead	: out std_logic; -- '1' for reading memory
-		o_MemWrite	: out std_logic; -- '1' for store word in memory
-		o_branch	: out std_logic; -- '1' for branch and jump operations
-		o_WriteRa	: out std_logic; -- '1' when using jal
-		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
-	     	o_ALUop	: out std_logic_vector(3 downto 0)); -- ALU op code 
+			o_RegWrite	: out std_logic; -- '1' for storing to register
+			o_MemRead	: out std_logic; -- '1' for reading memory
+			o_MemWrite	: out std_logic; -- '1' for store word in memory
+			o_branch	: out std_logic; -- '1' for branch and jump operations
+			o_WriteRa	: out std_logic; -- '1' when using jal
+			o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
+	     	o_ALUop	: out std_logic_vector(3 downto 0)); -- ALU op code
 
 end decoder;
 
@@ -34,13 +34,13 @@ o_RegDest <="1" when "000000", --add
 	    "1" when "001000", --nor
 	    "1" when "001001", --xor
 	    "1" when "001011", --or
-	    "1" when "001101", --set on less than  
+	    "1" when "001101", --set on less than
 	    "1" when "001111", --shift left logical
 	    "1" when "010000", --shift right logical
 	    "1" when "010001", --shift right arithmetic
 	    "1" when "010011", --subtract
 	    "0" when "010101", --beq
-	    "0" when "010110", --bne     
+	    "0" when "010110", --bne
 	    "0" when others;
 
 with i_opCode select

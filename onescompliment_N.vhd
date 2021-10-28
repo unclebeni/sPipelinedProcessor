@@ -17,7 +17,7 @@ end onescompliment_N;
 
 architecture struct of onescompliment_N is
 
-	component invg is 
+	component invg is
 		port(i_A	: in std_logic;
 		     o_F	: out std_logic);
 end component;
@@ -33,4 +33,3 @@ Nbit_onescompliment: for i in 0 to N-1 generate
 end generate Nbit_onescompliment;
 
 end struct;
-	

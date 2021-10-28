@@ -16,10 +16,10 @@ entity andg32 is
 
 end andg32;
 
-architecture struct of andg32 is 
+architecture struct of andg32 is
 
-	component andg2 is 
-	
+	component andg2 is
+
 	port(i_A	: in std_logic,
 	     i_B	: in std_logic,
 	     o_F	: out std_logic);
