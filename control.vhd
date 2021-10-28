@@ -111,8 +111,8 @@ o_ALUop <=
 	"0000" when "010010", -- sw		- add
 	"0001" when "010011", -- sub	- sub
 	"0001" when "010100", -- subu	- sub
-	"0001" when "010101", -- beq	- sub
-	"0001" when "010110", -- bne	- sub
+	"1010" when "010101", -- beq	- beq
+	"1011" when "010110", -- bne	- bne
 	"XXXX" when others;
 
 with i_opCode select
