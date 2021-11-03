@@ -7,14 +7,14 @@
 
 -- Adder.vhd
 -------------------------------------------------------------------------
--- DESCRIPTION: This file contains an implementation of a behavioral 
--- adder operating on integer inputs. 
+-- DESCRIPTION: This file contains an implementation of a behavioral
+-- adder operating on integer inputs.
 --
 --
 -- NOTES: Integer data type is not typically useful when doing hardware
 -- design. We use it here for simplicity, but in future labs it will be
 -- important to switch to std_logic_vector types and associated math
--- libraries (e.g. signed, unsigned). 
+-- libraries (e.g. signed, unsigned).
 
 
 -- 8/19/09 by JAZ::Design created.
@@ -41,5 +41,5 @@ begin
 	   oC <= iA + iB;
     end if;
   end process;
-  
+
 end behavior;

@@ -7,13 +7,13 @@
 
 -- andg2.vhd
 -------------------------------------------------------------------------
--- DESCRIPTION: This file contains an implementation of a 2-input AND 
+-- DESCRIPTION: This file contains an implementation of a 2-input AND
 -- gate.
 --
 --
 -- NOTES:
 -- 8/19/16 by JAZ::Design created.
--- 1/16/19 by H3::Changed name to avoid name conflict with Quartus 
+-- 1/16/19 by H3::Changed name to avoid name conflict with Quartus
 --         primitives.
 -------------------------------------------------------------------------
 
@@ -32,5 +32,5 @@ architecture dataflow of andg2 is
 begin
 
   o_F <= i_A and i_B;
-  
+
 end dataflow;

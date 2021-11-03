@@ -1,5 +1,5 @@
 ------------------------------------------------
---DESCRIPTION: This file contains an implementation of an 
+--DESCRIPTION: This file contains an implementation of an
 --N-bit ripple-carry full adder using structural vhdl.
 --
 --09/09/21
@@ -14,13 +14,13 @@ entity fullAdderN is
 	port(	iA	: in std_logic_vector(N-1 downto 0);
 		iB	: in std_logic_vector(N-1 downto 0);
 		iC	: in std_logic_vector(N-1 downto 0);   --Needs to be a vector, will normally be initialized to zero but bit 0 will be useful for two's compliment subraction
-		oC	: out std_logic_vector(N-1 downto 0); 
+		oC	: out std_logic_vector(N-1 downto 0);
 		oS	: out std_logic_vector(N-1 downto 0));
 end fullAdderN;
 
 architecture struct of fullAdderN is
 
-	component fullAdder is 
+	component fullAdder is
 		port(iA               : in std_logic;
        		iB               : in std_logic;
       		iC		: in std_logic;
@@ -37,7 +37,7 @@ loop1 : for i in 0 to 0 generate
 	iA	=>	iA(i),
 	iB	=>	iB(i),
 	iC	=>	iC(i),
-	oS	=>	oS(i),	
+	oS	=>	oS(i),
 	oC	=>	oC(i));
 end generate loop1;
 

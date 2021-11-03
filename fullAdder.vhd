@@ -7,7 +7,7 @@
 
 -- fullAdder.vhd
 -------------------------------------------------------------------------
--- DESCRIPTION: This file contains an implementation of a structural adder 
+-- DESCRIPTION: This file contains an implementation of a structural adder
 -------------------------------------------------------------------------
 
 library IEEE;
@@ -25,7 +25,7 @@ end fullAdder;
 
 architecture behavior of fullAdder is
 
-component andg2 is 
+component andg2 is
 
  	port(i_A          : in std_logic;
        		i_B          : in std_logic;
@@ -51,9 +51,9 @@ end component;
 
 signal s_1, s_2, s_3 : std_logic;
 
-begin  
+begin
 
-g1xor2 : xorg2 
+g1xor2 : xorg2
 port MAP(i_A	=> iA,
 	 i_B	=> iB,
 	 o_F	=> s_1);
