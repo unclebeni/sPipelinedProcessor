@@ -8,7 +8,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity decoder is
+entity control is
 
 	port(i_opCode  	: in std_logic_vector(5 downto 0);
 		o_RegDest 	: out std_logic; -- '1' when using R format instruction
@@ -22,7 +22,7 @@ entity decoder is
 		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
 		o_ALUop	: out std_logic_vector(3 downto 0)); -- ALU op code
 
-end decoder;
+end control;
 
 architecture data of decoder is
 
