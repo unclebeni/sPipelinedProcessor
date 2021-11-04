@@ -51,19 +51,6 @@ architecture structural of SingleCycleProcessor is
   -- Required overflow signal -- for overflow exception detection
   signal s_Ovfl         : std_logic;  -- TODO: this signal indicates an overflow exception would have been initiated
 
-  signal s_032  : std_logic_vector(31 downto 0);
-  signal s_31 : std_logic_vector(4 downto 0);
-
-  signal s_RegDst, s_WriteRa, s_RegWrite, s_Jump, s_Branch, s_MemToReg, s_MemWrite, s_ALUSrc, s_ALUOp, s_Sign/Zero  : std_logic;
-
-  signal s_RegDstMUX, s_WriteRaRegMUX, s_WriteRaDataMUX : std_logic_vector(31 downto 0);
-
-  signal s_instr25t21, s_instr20t16, s_instr15t11  : std_logic_vector(4 downto 0);
-  signal s_instr31t26, s_instr5t0 : std_logic_vector(5 downto 0);
-  signal s_instr15t0  : std_logic_vector(15 downto 0);
-
-  signal s_DataMemOut, s_PCp8 ; std_logic_vector(31 downto 0);
-
   component mem is
     generic(ADDR_WIDTH : integer;
             DATA_WIDTH : integer);
@@ -80,7 +67,15 @@ architecture structural of SingleCycleProcessor is
   end component;
 
   component ALU is
-
+    port(
+      i_Adata		: in std_logic_vector(32-1 downto 0);
+      i_Bdata		: in std_logic_vector(32-1 downto 0);
+      i_ALUShiftDir	: in std_logic;
+      i_ALuShiftArithmetic	: in std_logic;
+      i_ALUAddSub		: in std_logic;
+      i_ALUMuxCtrl	: in std_logic_vector(3-1 downto 0);
+      i_areEqual		: in std_logic;
+      o_result	: out std_logic_vector(32-1 downto 0));
   end component;
 
   component ALUControl is
@@ -124,79 +119,73 @@ architecture structural of SingleCycleProcessor is
         i_ALUResult	: in std_logic);
   end component;
 
-  architecture structural of SingleCycleProcessor is
+  signal s_032  : std_logic_vector(31 downto 0);
+  signal s_31 : std_logic_vector(4 downto 0);
 
-    s_032 <= x"00000000";
-    s_31 <= "11111";
+  --Control Signals
+  signal s_RegDst, s_WriteRa, s_RegWrite, s_Jump, s_Branch, s_MemToReg, s_MemWrite, s_ALUSrc, s_ALUOp, s_SignZero  : std_logic;
 
-    IMEM: mem port map(clk => iCLK, addr => s_NextInstAddr, data => s_032, we => '0', q => s_Inst);
+  --MUX output
+  signal s_WriteRaDataMUX, s_DMEMMUXOut : std_logic_vector(31 downto 0);
+  signal s_RegDstMUX, s_WriteRaRegMUX : std_logic_vector(4 downto 0);
+
+  --Module output
+  signal s_RegFileRD1, s_RegFileRD2, s_ALUOut, s_ImmExtended, s_DataMemOut, s_PCp8, s_PC : std_logic_vector(31 downto 0);
+  signal s_ALUSecondOut : std_logic;
+
+  --ALU control signals
+  signal s_ALUShiftArithmetic, s_ALUShiftDir, s_ALUAddSub, s_areEqual : std_logic;
+  signal s_ALUMuxCtrl : std_logic_vector(2 downto 0);
+
+  --Instruction segments
+  signal s_instr25t21, s_instr20t16, s_instr15t11  : std_logic_vector(4 downto 0);
+  signal s_instr31t26, s_instr5t0 : std_logic_vector(5 downto 0);
+  signal s_instr15t0  : std_logic_vector(15 downto 0);
+
+begin
+
+  s_032 <= x"00000000";
+  s_31 <= "11111";
+  s_PC <= iInstAddr;
+
+  IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32); port map(clk => iCLK, addr => s_NextInstAddr, data => s_032, we => '0', q => s_Inst);
     
-    s_instr31t26(5) <= s_Inst(31);
-    s_instr31t26(4) <= s_Inst(30);
-    s_instr31t26(3) <= s_Inst(29);
-    s_instr31t26(2) <= s_Inst(28);
-    s_instr31t26(1) <= s_Inst(27);
-    s_instr31t26(0) <= s_Inst(26);
+  s_instr31t26(5 downto 0) <= s_Inst(31 downto 26);
 
-    s_instr5t0(5) <= s_Inst(5);
-    s_instr5t0(4) <= s_Inst(4);
-    s_instr5t0(3) <= s_Inst(3);
-    s_instr5t0(2) <= s_Inst(2);
-    s_instr5t0(1) <= s_Inst(1);
-    s_instr5t0(0) <= s_Inst(0);
+  s_instr31t26(5 downto 0) <= s_Inst(5 downto 0);
 
-    s_instr25t21(4) <= s_Inst(25);
-    s_instr25t21(3) <= s_Inst(24);
-    s_instr25t21(2) <= s_Inst(23);
-    s_instr25t21(1) <= s_Inst(22));
-    s_instr25t21(0) <= s_Inst(21);
+  s_instr31t26(4 downto 0) <= s_Inst(25 downto 21);
 
-    s_instr20t16(4) <= s_Inst(20);
-    s_instr20t16(3) <= s_Inst(19);
-    s_instr20t16(2) <= s_Inst(18);
-    s_instr20t16(1) <= s_Inst(17);
-    s_instr20t16(0) <= s_Inst(16);
+  s_instr31t26(4 downto 0) <= s_Inst(20 downto 16);
 
-    s_instr15t11(4) <= s_Inst(15);
-    s_instr15t11(3) <= s_Inst(14);
-    s_instr15t11(2) <= s_Inst(13);
-    s_instr15t11(1) <= s_Inst(12);
-    s_instr15t11(0) <= s_Inst(11);
+  s_instr31t26(4 downto 0) <= s_Inst(15 downto 11);
 
-    s_instr15t0(15) <= s_Inst(15);
-    s_instr15t0(14) <= s_Inst(14);
-    s_instr15t0(13) <= s_Inst(13);
-    s_instr15t0(12) <= s_Inst(12);
-    s_instr15t0(11) <= s_Inst(11);
-    s_instr15t0(10) <= s_Inst(10);
-    s_instr15t0(9) <= s_Inst(9);
-    s_instr15t0(8) <= s_Inst(8);
-    s_instr15t0(7) <= s_Inst(7);
-    s_instr15t0(6) <= s_Inst(6);
-    s_instr15t0(5) <= s_Inst(5);
-    s_instr15t0(4) <= s_Inst(4);
-    s_instr15t0(3) <= s_Inst(3);
-    s_instr15t0(2) <= s_Inst(2);
-    s_instr15t0(1) <= s_Inst(1);
-    s_instr15t0(0) <= s_Inst(0);
+  s_instr31t26(15 downto 0) <= s_Inst(15 downto 0);
 
-    --TODO
-    CONTROLUNIT: control port map();
+  --TODO
+  --CONTROLUNIT: control port map();
 
-    REGDSTMUX: Mux2t1_N generic map(N => 5); port map(i_S => s_RegDst, i_D0 => s_instr20t16, i_D1 => s_instr15t11, o_O => s_RegDstMUX);
+  REGDSTMUX: Mux2t1_N generic map(N => 5); port map(i_S => s_RegDst, i_D0 => s_instr20t16, i_D1 => s_instr15t11, o_O => s_RegDstMUX);
 
-    WRITERAREGMUX: Mux2t1_N generic map(N => 5); port map(i_S => s_WriteRa, i_D0 => s_RegDstMUX, i_D1 => s_31, o_O => s_WriteRaRegMUX);
+  WRITERAREGMUX: Mux2t1_N generic map(N => 5); port map(i_S => s_WriteRa, i_D0 => s_RegDstMUX, i_D1 => s_31, o_O => s_WriteRaRegMUX);
 
-    WRITERADATAMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_WriteRa, i_D0 => s_DataMemOut, i_D1 => s_PCp8, o_O => s_WriteRaDataMUX);
+  WRITERADATAMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_WriteRa, i_D0 => s_DMEMMUXOut, i_D1 => s_PCp8, o_O => s_WriteRaDataMUX);
 
-    REGFILE: MIPSRegFile port map(i_WE => s_RegWrite, i_CLK => iCLK, i_WS => s_WriteRaRegMUX, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => sWriteRaDataMUX);
+  REGFILE: MIPSRegFile port map(i_WE => s_RegWrite, i_CLK => iCLK, i_WS => s_WriteRaRegMUX, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => sWriteRaDataMUX, o_R1F => s_RegFileRD1, o_R2F => s_RegFileRD2);
 
+  IMMEXTEND: Extend16t32 port map(i_D => s_instr15t0, i_SignZero => s_signZero, o_D => s_ImmExtended);
     
+  ALUSRCMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_WriteRa, i_D0 => s_RegFileRD2, i_D1 => s_ImmExtended, o_O => s_ALUSRCMux);
 
-    FETCHLOGIC: MipsFetch port map(i_PC => )
-  
-  begin
+  --TODO
+  --MIPSALUCNTRL: ALUControl port map();
 
+  MIPSALU: ALU port map(i_Adata => s_RegFileRD1, i_Bdata => s_ALUSRCMux, i_ALUShiftDir => s_ALUShiftDir, i_ALUShiftArithmetic => s_ALUShiftArithmetic, i_ALUAddSub => s_ALUAddSub, i_ALUMuxCtrl => s_ALUMuxCtrl, i_areEqual => s_areEqual, o_result => s_ALUOut);
+
+  FETCHLOGIC: MipsFetch port map(i_PC => s_PC, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_ALUResult => s_ALUSecondOut);
     
+  DATAMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32); port map(clk => iCLK, addr => s_ALUOut, data => s_RegFileRD2, we => s_MemWrite, q => s_DataMemOut);
+
+  DMEMTREGMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_WriteRa, i_D0 => s_DataMemOut, i_D1 => s_PCp8, o_O => s_DMEMMUXOut);
 
   end structural;
