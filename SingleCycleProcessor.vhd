@@ -7,7 +7,7 @@
 
 -- MIPSFetch.vhd
 -------------------------------------------------------------------------
--- DESCRIPTION: This file contains an implementation of the fetch logic of a MIPS processor.
+-- DESCRIPTION: This file contains an implementation of a MIPS processor.
 --
 -- NOTES:
 -- 11/4/21 by Sid::Created
