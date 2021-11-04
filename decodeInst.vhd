@@ -43,7 +43,6 @@ begin
 	"XXXXXXXXXXXXXXXX" when others;
     
 	o_RS	<=	i_toDecode(25 downto 21);
-    
-	
+
 
 end behavior;

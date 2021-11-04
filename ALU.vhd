@@ -16,9 +16,9 @@ port(
 	i_ALuShiftArithmetic	: in std_logic;
 	i_ALUAddSub		: in std_logic;
 	i_ALUMuxCtrl	: in std_logic_vector(3-1 downto 0);
-	i_areEqual		: in std_logic;
+	o_equal			: out std_logic;
 	o_result	: out std_logic_vector(32-1 downto 0));
-end ALU;  --Should be good here
+end ALU;  
 
 architecture struct of ALU is
 
@@ -72,13 +72,13 @@ signal s_andOUT : std_logic_vector(32-1 downto 0);
 signal s_orOUT	:	std_logic_vector(32-1 downto 0);
 signal s_xorOUT	:	std_logic_vector(32-1 downto 0);
 signal s_shifterOUT	:	std_logic_vector(32-1 downto 0);
-signal s_equal		:	std_logic_vector(32-1 downto 0);
-signal s_NOTequal	:	std_logic_vector(32-1 downto 0);
+signal s_equal		:	std_logic_vector(32-1 downto 0) := x"00000000";
+signal s_equal_one_bit	: std_logic;
+signal s_NOTequal	:	std_logic_vector(32-1 downto 0)	:= x"00000000";
 signal s_invOR		:	std_logic_vector(32-1 downto 0);
 
 begin
-
---map ports
+	signal s_equal_one_bit	: std_logic;
 
 full32adder : Add_Sub port map(
 	iA	=>	i_Adata,
@@ -106,6 +106,8 @@ full32xorg	:	xorg32	port map(
 
 --TODO: CREATE AND IMPLEMENT THE SHIFTER AND SLT FUNCTION
 
+
+
 ------Decide output depending on the ALU op code
 
 mux 	: FourToOneMux     port map(
@@ -118,7 +120,7 @@ mux 	: FourToOneMux     port map(
 	i_D6	  :	  =>	s_shifterOUT, 
 	i_D7	  :	  =>	s_equal, 
 	i_D8	  :	  =>	s_NOTequal,
-	o_output  :	   =>);
+	o_output  :	  =>	o_result);
 
 
 end struct;
