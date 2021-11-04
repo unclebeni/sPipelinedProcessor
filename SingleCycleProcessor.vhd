@@ -63,7 +63,18 @@ architecture structural of SingleCycleProcessor is
   end component;
   
   component control is
-
+    port(i_opCode  	: in std_logic_vector(5 downto 0);
+	  i_functCode : in std_logic_vector(5 downto 0);
+		o_RegDest 	: out std_logic; -- '1' when using R format instruction
+		o_ALUSrc	: out std_logic; -- '1' for immediate value operations
+		o_MemtoReg	: out std_logic; -- '1' for load word
+		o_RegWrite	: out std_logic; -- '1' for storing to register
+		o_MemRead	: out std_logic; -- '1' for reading memory
+		o_MemWrite	: out std_logic; -- '1' for store word in memory
+		o_branch	: out std_logic; -- '1' for branch and jump operations
+		o_WriteRa	: out std_logic; -- '1' when using jal
+		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
+		o_ALUop	: out std_logic_vector(3 downto 0)); -- ALU op code
   end component;
 
   component ALU is
@@ -79,7 +90,12 @@ architecture structural of SingleCycleProcessor is
   end component;
 
   component ALUControl is
-
+    port(i_ALUop  				: in std_logic_vector(4 downto 0);
+         o_ALUShiftDir 			: out std_logic;
+         o_ALUShiftArithmetic	: out std_logic;
+         o_ALUAddSub				: out std_logic;
+         o_ALUMuxCtrl			: out std_logic_vector(2 downto 0);
+         o_BranchOp				: out std_logic);
   end component;
 
   component MIPSRegFile is
@@ -123,7 +139,12 @@ architecture structural of SingleCycleProcessor is
   signal s_31 : std_logic_vector(4 downto 0);
 
   --Control Signals
-  signal s_RegDst, s_WriteRa, s_RegWrite, s_Jump, s_Branch, s_MemToReg, s_MemWrite, s_ALUSrc, s_ALUOp, s_SignZero  : std_logic;
+  signal s_RegDst, s_WriteRa, s_RegWrite, s_Jump, s_Branch, s_MemToReg, s_MemWrite, s_ALUSrc, s_SignZero, s_MemRead  : std_logic;
+  signal s_ALUOp  : std_logic_vector(4 downto 0);
+
+  --ALUControl Signals
+  signal s_ALUShiftDir, s_ALUShiftArithmetic, s_ALUAddSub, s_BranchOp : std_logic;
+  signal s_ALUMuxCtrl : std_logic_vector(2 downto 0);
 
   --MUX output
   signal s_WriteRaDataMUX, s_DMEMMUXOut : std_logic_vector(31 downto 0);
@@ -132,10 +153,6 @@ architecture structural of SingleCycleProcessor is
   --Module output
   signal s_RegFileRD1, s_RegFileRD2, s_ALUOut, s_ImmExtended, s_DataMemOut, s_PCp8, s_PC : std_logic_vector(31 downto 0);
   signal s_ALUSecondOut : std_logic;
-
-  --ALU control signals
-  signal s_ALUShiftArithmetic, s_ALUShiftDir, s_ALUAddSub, s_areEqual : std_logic;
-  signal s_ALUMuxCtrl : std_logic_vector(2 downto 0);
 
   --Instruction segments
   signal s_instr25t21, s_instr20t16, s_instr15t11  : std_logic_vector(4 downto 0);
@@ -148,44 +165,60 @@ begin
   s_31 <= "11111";
   s_PC <= iInstAddr;
 
+  --Instruction memory
   IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32); port map(clk => iCLK, addr => s_NextInstAddr, data => s_032, we => '0', q => s_Inst);
     
+  --Defining instruction segments
   s_instr31t26(5 downto 0) <= s_Inst(31 downto 26);
 
-  s_instr31t26(5 downto 0) <= s_Inst(5 downto 0);
+  s_instr5t0(5 downto 0) <= s_Inst(5 downto 0);
 
-  s_instr31t26(4 downto 0) <= s_Inst(25 downto 21);
+  s_instr25t21(4 downto 0) <= s_Inst(25 downto 21);
 
-  s_instr31t26(4 downto 0) <= s_Inst(20 downto 16);
+  s_instr20t16(4 downto 0) <= s_Inst(20 downto 16);
 
-  s_instr31t26(4 downto 0) <= s_Inst(15 downto 11);
+  s_instr15t11(4 downto 0) <= s_Inst(15 downto 11);
 
-  s_instr31t26(15 downto 0) <= s_Inst(15 downto 0);
+  s_instr15t0(15 downto 0) <= s_Inst(15 downto 0);
 
-  --TODO
-  --CONTROLUNIT: control port map();
+  --Control Unit
+  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWrite, o_MemRead => s_MemRead, o_MemWrite => s_MemWrite, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_ALUop => s_ALUOp);
 
+  --Register Destination Mux
   REGDSTMUX: Mux2t1_N generic map(N => 5); port map(i_S => s_RegDst, i_D0 => s_instr20t16, i_D1 => s_instr15t11, o_O => s_RegDstMUX);
 
+  --Write Ra Register Mux
   WRITERAREGMUX: Mux2t1_N generic map(N => 5); port map(i_S => s_WriteRa, i_D0 => s_RegDstMUX, i_D1 => s_31, o_O => s_WriteRaRegMUX);
 
+  --Write Ra Data Mux
   WRITERADATAMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_WriteRa, i_D0 => s_DMEMMUXOut, i_D1 => s_PCp8, o_O => s_WriteRaDataMUX);
 
+  --Register File
   REGFILE: MIPSRegFile port map(i_WE => s_RegWrite, i_CLK => iCLK, i_WS => s_WriteRaRegMUX, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => sWriteRaDataMUX, o_R1F => s_RegFileRD1, o_R2F => s_RegFileRD2);
 
+  --Immediate sign extension
   IMMEXTEND: Extend16t32 port map(i_D => s_instr15t0, i_SignZero => s_signZero, o_D => s_ImmExtended);
     
-  ALUSRCMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_WriteRa, i_D0 => s_RegFileRD2, i_D1 => s_ImmExtended, o_O => s_ALUSRCMux);
+  --ALU Source Mux
+  ALUSRCMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_ALUSrc, i_D0 => s_RegFileRD2, i_D1 => s_ImmExtended, o_O => s_ALUSRCMux);
 
-  --TODO
-  --MIPSALUCNTRL: ALUControl port map();
+  --ALU Control
+  MIPSALUCNTRL: ALUControl port map(i_ALUop => s_ALUOp, o_ALUShiftDir => s_ALUShiftDir, o_ALUShiftArithmetic => s_ALUShiftArithmetic, o_ALUAddSub => s_ALUAddSub, o_ALUMuxCtrl => s_ALUMuxCtrl, o_BranchOp => s_BranchOp);
 
+  --ALU
+                                                                                                                                                                                                                --TODO VVV        VVV
   MIPSALU: ALU port map(i_Adata => s_RegFileRD1, i_Bdata => s_ALUSRCMux, i_ALUShiftDir => s_ALUShiftDir, i_ALUShiftArithmetic => s_ALUShiftArithmetic, i_ALUAddSub => s_ALUAddSub, i_ALUMuxCtrl => s_ALUMuxCtrl, i_areEqual => s_areEqual, o_result => s_ALUOut);
 
+  --Assign ouput of Processor for synthesis
+  oALUOut <= s_ALUOut;
+
+  --Fetch Logic module
   FETCHLOGIC: MipsFetch port map(i_PC => s_PC, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_ALUResult => s_ALUSecondOut);
     
+  --Data memory
   DATAMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32); port map(clk => iCLK, addr => s_ALUOut, data => s_RegFileRD2, we => s_MemWrite, q => s_DataMemOut);
 
+  --Mem to Reg Mux
   DMEMTREGMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_WriteRa, i_D0 => s_DataMemOut, i_D1 => s_PCp8, o_O => s_DMEMMUXOut);
 
   end structural;
