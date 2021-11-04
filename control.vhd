@@ -39,7 +39,6 @@ o_RegDest<=	"1"
 				(i_opCode = "000000" && i_functCode = "101010") else -- slt
 				(i_opCode = "000000" && i_functCode = "000000") else -- sll
 				(i_opCode = "000000" && i_functCode = "000010") else -- srl
-				(i_opCode = "000000" && i_functCode = "000010") else -- srl
 				(i_opCode = "000000" && i_functCode = "000011") else -- sra
 				(i_opCode = "000000" && i_functCode = "100010") else -- sub
 				(i_opCode = "000000" && i_functCode = "100011") else -- subu
@@ -71,64 +70,55 @@ o_RegWrite<="0"
 				(i_opCode = "011111") else --repl.qb
 			"1";
 
-with i_opCode select
-o_MemRead <=
-	"1" when "000111", --lw
-	"0" when others;
+o_MemRead <="1"
+				(i_opCode = "100011") else -- lw
+			"0";
 
-with i_opCode select
-o_MemWrite <=
-	"1" when "010010", --sw
-	"0" when others;
+o_MemWrite<="1"
+				(i_opCode = "101011") else -- sw
+			"0";
 
-with i_opCode select
-o_branch <=
-	"1" when "010101", --beq
-	"1" when "010110", --bne
-	"0" when others;
+o_branch<= 	"1"
+				(i_opCode = "000100") else -- beq
+				(i_opCode = "000101") else -- bne
+			"0";
 
-with i_opCode select --need to complete this
 o_ALUop <=
-	"0000" when ("000000" i_opCode , -- add	- add
-	"0000" when "001000", -- addi	- add
-	"0000" when "001001", -- addiu	- add
-	"0000" when "000000", -- addu	- add
-	"0010" when "000000", -- AND	- AND
-	"0010" when "001100", -- ANDi	- AND
-	"0000" when "001111", -- lui	- add
-	"0000" when "100011", -- lw		- add
-	"0101" when "000000", -- NOR	- NOR
-	"0100" when "000000", -- XOR	- XOR
-	"0100" when "001110", -- XORI	- XOR
-	"0011" when "000000", -- OR		- OR
-	"0011" when "001101", -- ORI	- OR
-	"0110" when "000000", -- slt	- slt
-	"0110" when "001010", -- slti	- slt
-	"0111" when "000000", -- sll	- sl
-	"1000" when "000000", -- srl	- sr
-	"1001" when "000000", -- sra	- sr + a
-	"0000" when "101011", -- sw		- add
-	"0001" when "000000", -- sub	- sub
-	"0001" when "000000", -- subu	- sub
-	"1010" when "000100", -- beq	- beq
-	"1011" when "000101", -- bne	- bne
+	"0000" when (i_opCode == "000000" && i_functCode == "100000") else 	-- add 		- add
+	"0000" when (i_opCode == "001000") else 							-- addi		- add
+	"0000" when (i_opCode == "001001") else 							-- addiu	- add
+	"0000" when (i_opCode == "000000" && i_functCode == "100001") else 	-- addu		- add
+	"0010" when (i_opCode == "000000" && i_functCode == "100100") else 	-- AND		- AND
+	"0010" when (i_opCode == "001100") else  							-- ANDi		- AND
+	"0000" when (i_opCode == "001111") else 							-- lui		- add
+	"0000" when (i_opCode == "100011") else 							-- lw		- add
+	"0101" when (i_opCode == "000000" && i_functCode == "100111") else 	-- NOR		- NOR
+	"0100" when (i_opCode == "000000" && i_functCode == "100110") else 	-- XOR		- XOR
+	"0100" when (i_opCode == "001110") else 							-- XORI		- XOR
+	"0011" when (i_opCode == "000000" && i_functCode == "100101") else 	-- OR		- OR
+	"0011" when (i_opCode == "001101") else 							-- ORI		- OR
+	"0110" when (i_opCode == "000000" && i_functCode == "101010") else 	-- slt		- slt
+	"0110" when (i_opCode == "001010") else 							-- slti		- slt
+	"0111" when (i_opCode = "000000" && i_functCode = "000000") else	-- sll		- sl
+	"1000" when (i_opCode = "000000" && i_functCode = "000010") else 	-- srl		- sr
+	"1001" when (i_opCode = "000000" && i_functCode = "000011") else 	-- sra		- sr + a
+	"0000" when (i_opCode = "101011") else 								-- sw		- add
+	"0001" when (i_opCode = "000000" && i_functCode = "100010") else 	-- sub		- sub
+	"0001" when (i_opCode = "000000" && i_functCode = "100011") else 	-- subu		- sub
+	"1010" when (i_opCode = "000100") else 								-- beq	- beq
+	"1011" when (i_opCode = "000101") else 								-- bne	- bne
 	"XXXX" when others;
 
-when i_opCode "000000"
-
-with i_opCode select
-o_WriteRa <=
-	"1" when "011000", --jal
-	"0" when others;
-
-with i_opCode select
-o_signed <=
-	"0" when "000010", --addiu
-	"0" when "000011", --addu
-	"0" when "000111", --lw
-	"0" when "000110", --lui
-	"0" when "010010", --sw
-	"1" when others;
+o_WriteRa<=	"1"
+		 		(i_opCode = "000011") else -- jal
+			"0";
 
 
+o_signed<=	"0"
+				(i_opCode == "001001") else -- addiu
+				(i_opCode == "000000" && i_functCode == "100001") else -- addu
+				(i_opCode == "100011") else --lw
+				(i_opCode == "001111") else --lui
+				(i_opCode = "101011") else --sw
+			"1";
 end data;
