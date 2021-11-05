@@ -21,7 +21,8 @@ entity operationDecode is
 		o_branch	: out std_logic; -- '1' for branch and jump operations
 		o_WriteRa	: out std_logic; -- '1' when using jal
 		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
-		o_ALUop	: out std_logic_vector(3 downto 0)); -- ALU op code
+		o_bneOp		: out std_logic; -- '1' when bne operation
+		o_ALUop		: out std_logic_vector(3 downto 0)); -- ALU op code
 
 end operationDecode;
 
@@ -121,4 +122,9 @@ o_signed<=	"0"
 				(i_opCode == "001111") else --lui
 				(i_opCode = "101011") else --sw
 			"1";
+
+o_bneOp<=	"1"
+				(i_opCode = "000101") else -- bne
+			"0";
+
 end data;
