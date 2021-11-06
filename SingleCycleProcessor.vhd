@@ -93,7 +93,7 @@ port(
   end component;
 
   component ALUControl is
-    port(i_ALUop  				: in std_logic_vector(4 downto 0);
+    port(i_ALUop  				: in std_logic_vector(3 downto 0);
          o_ALUShiftDir 			: out std_logic;
          o_ALUShiftArithmetic	: out std_logic;
          o_ALUAddSub				: out std_logic;
@@ -143,15 +143,15 @@ port(
   signal s_31 : std_logic_vector(4 downto 0);
 
   --Control Signals
-  signal s_RegDst, s_WriteRa, s_RegWrite, s_Jump, s_Branch, s_MemToReg, s_MemWrite, s_ALUSrc, s_SignZero, s_bneOp s_MemRead  : std_logic;
-  signal s_ALUOp  : std_logic_vector(4 downto 0);
+  signal s_RegDst, s_WriteRa, s_RegWrite, s_Jump, s_Branch, s_MemToReg, s_MemWrite, s_ALUSrc, s_SignZero, s_bneOp, s_MemRead  : std_logic;
+  signal s_ALUOp  : std_logic_vector(3 downto 0);
 
   --ALUControl Signals
   signal s_ALUShiftDir, s_ALUShiftArithmetic, s_ALUAddSub, s_BranchOp : std_logic;
   signal s_ALUMuxCtrl : std_logic_vector(2 downto 0);
 
   --MUX output
-  signal s_WriteRaDataMUX, s_DMEMMUXOut : std_logic_vector(31 downto 0);
+  signal s_WriteRaDataMUX, s_DMEMMUXOut, s_ALUSRCMux : std_logic_vector(31 downto 0);
   signal s_RegDstMUX, s_WriteRaRegMUX : std_logic_vector(4 downto 0);
 
   --Module output
@@ -162,6 +162,7 @@ port(
   signal s_instr25t21, s_instr20t16, s_instr15t11, s_instr10t6  : std_logic_vector(4 downto 0);
   signal s_instr31t26, s_instr5t0 : std_logic_vector(5 downto 0);
   signal s_instr15t0  : std_logic_vector(15 downto 0);
+  signal s_instr25t0  : std_logic_vector(25 downto 0);
 
 begin
 
@@ -170,7 +171,7 @@ begin
   s_PC <= iInstAddr;
 
   --Instruction memory
-  IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32); port map(clk => iCLK, addr => s_NextInstAddr, data => s_032, we => '0', q => s_Inst);
+  IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_NextInstAddr, data => s_032, we => '0', q => s_Inst);
     
   --Defining instruction segments
   s_instr31t26(5 downto 0) <= s_Inst(31 downto 26);
@@ -187,43 +188,45 @@ begin
 
   s_instr10t6(4 downto 0) <= s_Inst(10 downto 6);
 
+  s_instr25t0(25 downto 0) <= s_Inst(25 downto 0);
+
   --Control Unit
   CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWrite, o_MemRead => s_MemRead, o_MemWrite => s_MemWrite, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_ALUop => s_ALUOp);
 
   --Register Destination Mux
-  REGDSTMUX: Mux2t1_N generic map(N => 5); port map(i_S => s_RegDst, i_D0 => s_instr20t16, i_D1 => s_instr15t11, o_O => s_RegDstMUX);
+  REGDSTMUX: Mux2t1_N generic map(N => 5) port map(i_S => s_RegDst, i_D0 => s_instr20t16, i_D1 => s_instr15t11, o_O => s_RegDstMUX);
 
   --Write Ra Register Mux
-  WRITERAREGMUX: Mux2t1_N generic map(N => 5); port map(i_S => s_WriteRa, i_D0 => s_RegDstMUX, i_D1 => s_31, o_O => s_WriteRaRegMUX);
+  WRITERAREGMUX: Mux2t1_N generic map(N => 5) port map(i_S => s_WriteRa, i_D0 => s_RegDstMUX, i_D1 => s_31, o_O => s_WriteRaRegMUX);
 
   --Write Ra Data Mux
-  WRITERADATAMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_WriteRa, i_D0 => s_DMEMMUXOut, i_D1 => s_PCp8, o_O => s_WriteRaDataMUX);
+  WRITERADATAMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_WriteRa, i_D0 => s_DMEMMUXOut, i_D1 => s_PCp8, o_O => s_WriteRaDataMUX);
 
   --Register File
-  REGFILE: MIPSRegFile port map(i_WE => s_RegWrite, i_CLK => iCLK, i_WS => s_WriteRaRegMUX, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => sWriteRaDataMUX, o_R1F => s_RegFileRD1, o_R2F => s_RegFileRD2);
+  REGFILE: MIPSRegFile port map(i_WE => s_RegWrite, i_CLK => iCLK, i_WS => s_WriteRaRegMUX, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => s_WriteRaDataMUX, o_R1F => s_RegFileRD1, o_R2F => s_RegFileRD2);
 
   --Immediate sign extension
   IMMEXTEND: Extend16t32 port map(i_D => s_instr15t0, i_SignZero => s_signZero, o_D => s_ImmExtended);
     
   --ALU Source Mux
-  ALUSRCMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_ALUSrc, i_D0 => s_RegFileRD2, i_D1 => s_ImmExtended, o_O => s_ALUSRCMux);
+  ALUSRCMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_ALUSrc, i_D0 => s_RegFileRD2, i_D1 => s_ImmExtended, o_O => s_ALUSRCMux);
 
   --ALU Control
   MIPSALUCNTRL: ALUControl port map(i_ALUop => s_ALUOp, o_ALUShiftDir => s_ALUShiftDir, o_ALUShiftArithmetic => s_ALUShiftArithmetic, o_ALUAddSub => s_ALUAddSub, o_ALUMuxCtrl => s_ALUMuxCtrl, o_BranchOp => s_BranchOp);
 
   --ALU
-  MIPSALU: ALU port map(i_Adata => s_RegFileRD1, i_Bdata => s_ALUSRCMux, ALUShiftDir => s_ALUShiftDir, i_ALUShiftArithmetic => s_ALUShiftArithmetic, i_ALUAddSub => s_ALUAddSub, i_ALUMuxCtrl => s_ALUMuxCtrl, i_shamt => s_instr10t6, o_equal => s_ALUSecondOut, o_overflow => s_overflow, o_result => s_ALUOut);
+  MIPSALU: ALU port map(i_Adata => s_RegFileRD1, i_Bdata => s_ALUSRCMux, i_ALUShiftDir => s_ALUShiftDir, i_ALUShiftArithmetic => s_ALUShiftArithmetic, i_ALUAddSub => s_ALUAddSub, i_ALUMuxCtrl => s_ALUMuxCtrl, i_shamt => s_instr10t6, o_equal => s_ALUSecondOut, o_overflow => s_overflow, o_result => s_ALUOut);
 
   --Assign ouput of Processor for synthesis
   oALUOut <= s_ALUOut;
 
   --Fetch Logic module
-  FETCHLOGIC: MipsFetch port map(i_PC => s_PC, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_ALUSecondOut);
+  FETCHLOGIC: MipsFetch port map(i_PC => s_PC, i_Instr25t0 => s_instr25t0, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_ALUSecondOut);
     
   --Data memory
-  DATAMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32); port map(clk => iCLK, addr => s_ALUOut, data => s_RegFileRD2, we => s_MemWrite, q => s_DataMemOut);
+  DATAMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_ALUOut, data => s_RegFileRD2, we => s_MemWrite, q => s_DataMemOut);
 
   --Mem to Reg Mux
-  DMEMTREGMUX: Mux2t1_N generic map(N => 32); port map(i_S => s_WriteRa, i_D0 => s_DataMemOut, i_D1 => s_PCp8, o_O => s_DMEMMUXOut);
+  DMEMTREGMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_WriteRa, i_D0 => s_DataMemOut, i_D1 => s_PCp8, o_O => s_DMEMMUXOut);
 
   end structural;
