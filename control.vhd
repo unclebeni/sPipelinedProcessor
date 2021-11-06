@@ -106,8 +106,7 @@ o_ALUop <=
 	"0000" when (i_opCode = "101011") else 								-- sw		- add
 	"0001" when (i_opCode = "000000" && i_functCode = "100010") else 	-- sub		- sub
 	"0001" when (i_opCode = "000000" && i_functCode = "100011") else 	-- subu		- sub
-	"1010" when (i_opCode = "000100") else 								-- beq	- beq
-	"1011" when (i_opCode = "000101") else 								-- bne	- bne
+	"1010" when (i_opCode = "011111") else					-- repl.qb
 	"XXXX" when others;
 
 o_WriteRa<=	"1"

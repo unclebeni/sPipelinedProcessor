@@ -17,7 +17,6 @@ entity ALUControl is
 			o_ALUShiftArithmetic	: out std_logic;
 			o_ALUAddSub				: out std_logic;
 			o_ALUMuxCtrl			: out std_logic_vector(2 downto 0);
-			o_BranchOp				: out std_logic;
 		);
 
 end ALUControl;
@@ -65,11 +64,12 @@ with i_ALUop select
 		-- Shifter
 		"101" when "0111", -- Shift Left
 		"101" when "1000", -- Shift Right
-		"101" when "1001"; -- Shift Right Arithmetic
+		"101" when "1001", -- Shift Right Arithmetic
 
-		-- Branch Ops
-		"110" when "1010" -- Branch Equal
-		"111" when "1011" -- Branch Not Equal
+		-- Set Less Than
+		"110" when "0110",
 
+		-- repl.qb
+		"111" when "1010";
 
 end data;

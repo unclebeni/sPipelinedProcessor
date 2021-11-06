@@ -173,7 +173,7 @@ mux 	: MuxForALU     port map(
 	i_D5      	  =>    s_xorOUT, 
 	i_D6	  	  =>	s_shifterOUT, 
 	i_D7	  	  =>	s_slt, 
-	i_D8	  	  =>	s_rplQB,
+	i_D8	  	  =>	s_replQB,
 	o_output  	  =>	o_result);
 
 
