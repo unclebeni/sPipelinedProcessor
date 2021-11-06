@@ -12,7 +12,7 @@ use IEEE.std_logic_1164.all;
 
 entity ALUControl is
 
-	   port(i_ALUop  				: in std_logic_vector(4 downto 0);
+	   port(i_ALUop  				: in std_logic_vector(3 downto 0);
 			o_ALUShiftDir 			: out std_logic;
 			o_ALUShiftArithmetic	: out std_logic;
 			o_ALUAddSub				: out std_logic;
