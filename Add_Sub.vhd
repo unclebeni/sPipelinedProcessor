@@ -15,6 +15,7 @@ entity Add_Sub is
 		iB	: in std_logic_vector(N-1 downto 0);
 		nAdd_Sub	: in std_logic;
 		o_overflow	: out std_logic;
+		o_carryout	: out std_logic;
 		oSum	: out std_logic_vector(N-1 downto 0));
 end Add_Sub;
 
@@ -41,8 +42,15 @@ component fullAdderN is
 		iB	: in std_logic_vector(N-1 downto 0);
 		iC	: in std_logic_vector(N-1 downto 0);
 		oC	: out std_logic_vector(N-1 downto 0);
-		overflow :	out std_logic;
 		oS	: out std_logic_vector(N-1 downto 0));
+end component;
+
+component overflowDetection is
+port(
+	i_Asign		: in std_logic;
+	i_Bsign		: in std_logic;
+	i_resultSign	: in std_logic;
+	o_overflow	: out std_logic);
 end component;
 
 signal invertedB : std_logic_vector(N-1 downto 0); --not sure what to make the size be, not sure if i need this
@@ -73,7 +81,16 @@ add: fullAdderN
 		 iB	=> selectedB,--the selected iB value (negative or positive
 		 iC	=> carryIn,
 		 oC	=> carryOut,
-		 overflow	=> o_overflow,
 		 oS	=> oSum);
+
+overflow : overflowDetection
+port map(
+	i_Asign		=> iA(31),
+	i_Bsign		=> selectedB(31),
+	i_resultSign	=> oSum(31),
+	o_overflow	=> o_overflow);
+
+o_carryout <= carryOut(31);
+
 
 end struct;

@@ -17,7 +17,9 @@ port(
 	i_ALUAddSub		: in std_logic;
 	i_ALUMuxCtrl	: in std_logic_vector(3-1 downto 0);
 	i_shamt		:	in std_logic_vector(5-1 downto 0);
+	i_signed	:	in std_logic;
 	o_equal			: out std_logic;
+	o_carryout	:	out std_logic;
 	o_overflow	:	out std_logic;
 	o_result	: out std_logic_vector(32-1 downto 0));
 end ALU;  
@@ -31,6 +33,7 @@ component Add_Sub is
 		iB	: in std_logic_vector(N-1 downto 0);
 		nAdd_Sub	: in std_logic;
 		o_overflow	: out std_logic;
+		o_carryout	: out std_logic;
 		oSum	: out std_logic_vector(N-1 downto 0));
 end component;
 
@@ -49,6 +52,14 @@ component org32 is
 	 o_result : out  std_logic_vector(32-1 downto 0));
 
 end component;
+
+component andg2 is
+	port( i_A	: in std_logic;
+	 	i_B	: in std_logic;
+		o_F	: out std_logic);
+end component;
+
+
 
 component xorg32 is
 
@@ -91,7 +102,6 @@ port(
 end component;  
 
 
-
 --define signals
 
 signal s_adderOUT : std_logic_vector(32-1 downto 0);
@@ -104,7 +114,7 @@ signal s_slt		:	std_logic_vector(32-1 downto 0);
 signal s_invOR		:	std_logic_vector(32-1 downto 0);
 signal s_rplQB		:	std_logic_vector(32-1 downto 0);
 signal s_equal_one_bit	:	std_logic;
-
+signal s_overflow	:	std_logic;
 
 begin
 	
@@ -112,7 +122,8 @@ full32adder : Add_Sub port map(
 	iA	=>	i_Adata,
 	iB	=>	i_Bdata,
 	nAdd_Sub	=>	i_ALUAddSub,
-	o_overflow	=>	o_overflow,
+	o_overflow	=>	s_overflow,
+	o_carryout	=>	o_carryout,	
 	oSum	=>	s_adderOUT);
 
 full32andg	:	andg32 port map(
@@ -160,6 +171,15 @@ s_rplQB(7 downto 0) 	<=	i_Adata(7 downto 0);
 s_rplQB(15 downto 8) 	<=	i_Adata(7 downto 0);
 s_rplQB(23 downto 16) 	<=	i_Adata(7 downto 0);
 s_rplQB(31 downto 24) 	<=	i_Adata(7 downto 0);
+
+--overflow logic
+
+overflow : andg2
+	 port map(
+	i_A          => s_overflow,
+        i_B          => i_signed,
+        o_F          => o_overflow);
+
 
 
 ------Decide output depending on the ALU op code
