@@ -20,7 +20,7 @@ entity FullAdderSid is
 	     o_C	: out std_logic);
 end FullAdderSid;
 
-architecture structural of FullAdder is
+architecture structural of FullAdderSid is
 
 component invg is
 	port(i_A	: in std_logic;
