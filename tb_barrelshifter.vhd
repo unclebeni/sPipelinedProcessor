@@ -19,11 +19,11 @@ constant cCLK_PER  : time := gCLK_HPER * 2;
 
 -- We will be instantiating our design under test (DUT), so we need to specify its
 -- component interface.
-component barrel_shifter is
+component barrelshifter is
 	port(i_in	: in std_logic_vector(31 downto 0);
 	     i_n	: in std_logic_vector(4 downto 0);
 	     i_arithmetic	: in std_logic;
-	     i_ctrl	: in std_logic;
+	     i_dir	: in std_logic;
 	     o_out	: out std_logic_vector(31 downto 0));
 end component;
 -- Create signals for all of the inputs and outputs of the file that you are testing
@@ -34,7 +34,7 @@ signal s_in : std_logic_vector(32-1 downto 0) := (others => '0');
 signal s_out  : std_logic_vector(32-1 downto 0) := (others => '0');
 signal s_n	:	std_logic_vector(4 downto 0)  := (others => '0');
 signal s_arithmetic : std_logic := '0';
-signal s_ctrl	:	std_logic := '0';
+signal s_dir	:	std_logic := '0';
 
 begin
 
@@ -42,13 +42,13 @@ begin
   -- input or output. Note that DUT0 is just the name of the instance that can be seen 
   -- during simulation. What follows DUT0 is the entity name that will be used to find
   -- the appropriate library component during simulation loading. --
-  DUT0: barrel_shifter
+  DUT0: barrelshifter
   port map(
 		i_in => s_in,
 		i_n  => s_n,
 		i_arithmetic => s_arithmetic,
-		i_ctrl   => s_ctrl,
-	  o_out =>  s_out);
+		i_dir   => s_dir,
+	  	o_out =>  s_out);
 
             
   -- This process sets the clock value (low for gCLK_HPER, then high
@@ -66,10 +66,51 @@ begin
   P_TB: process
   begin
 
+-- shift x"0000FFFF" right? by 16 bits
     s_in <=  x"0000FFFF";
     s_n  <=  "10000";
     s_arithmetic	<= '0';
-    s_ctrl <= '0';
+    s_dir <= '0';
+    
+    wait for cCLK_PER;
+
+-- shift x"0000FFFF" left? by 16 bits
+    s_in <=  x"0000FFFF";
+    s_n  <=  "10000";
+    s_arithmetic	<= '0';
+    s_dir <= '1';
+    
+    wait for cCLK_PER;
+ 
+-- shift right logical 16 bits
+    s_in <=  x"FFFF0000";
+    s_n  <=  "10000";
+    s_arithmetic	<= '0';
+    s_dir <= '0';
+    
+    wait for cCLK_PER;
+
+-- shfit left 16 bits
+    s_in <=  x"FFFF0000";
+    s_n  <=  "10000";
+    s_arithmetic	<= '0';
+    s_dir <= '1';
+    
+    wait for cCLK_PER;
+
+-- shift right arithmetic 16 bits
+    s_in <=  x"FFFF0000";
+    s_n  <=  "10000";
+    s_arithmetic	<= '1';
+    s_dir <= '0';
+
+    wait for cCLK_PER;
+
+-- shfit left 16 bits
+    s_in <=  x"FFFF0000";
+    s_n  <=  "10000";
+    s_arithmetic	<= '1';
+    s_dir <= '1';
     
     wait for cCLK_PER;
 

@@ -14,6 +14,7 @@ entity fullAdderN is
 	port(	iA	: in std_logic_vector(N-1 downto 0);
 		iB	: in std_logic_vector(N-1 downto 0);
 		iC	: in std_logic_vector(N-1 downto 0);   --Needs to be a vector, will normally be initialized to zero but bit 0 will be useful for two's compliment subraction
+		overflow :	out std_logic;
 		oC	: out std_logic_vector(N-1 downto 0);
 		oS	: out std_logic_vector(N-1 downto 0));
 end fullAdderN;
@@ -27,6 +28,16 @@ architecture struct of fullAdderN is
       		oS		: out std_logic;
        		oC               : out std_logic);
 	end component;
+	
+	
+	component xorg2 is
+
+  		port(i_A          : in std_logic;
+		i_B          : in std_logic;
+       		o_F          : out std_logic);
+
+	end component xorg2;
+
 
 begin
 
@@ -49,5 +60,15 @@ loop2 : for i in 1 to N-1 generate
 	oS	=>	oS(i),
 	oC	=>	oC(i));
 end generate loop2;
+
+g_oveflow	:	xorg2
+
+	port map(
+		i_A	=>	oC(32-1),
+		i_B	=>	oC(32-2),
+		o_F	=>	overflow		
+
+	);
+
 
 end struct;

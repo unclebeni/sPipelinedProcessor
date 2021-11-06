@@ -10,9 +10,9 @@ use IEEE.std_logic_1164.all;
 
 entity org32 is
 
-	   port(i_dataA	: in: std_logic_vector(32-1 downto 0);
-		i_dataB	: in: std_logic_vector(32-1 downto 0);
-		o_result : in : std_logic_vector(32-1 downto 0);
+	   port(i_dataA	: in std_logic_vector(32-1 downto 0);
+		i_dataB	: in std_logic_vector(32-1 downto 0);
+		o_result : out std_logic_vector(32-1 downto 0));
 
 end org32;
 
@@ -27,11 +27,11 @@ end component;
 
 begin
 
-32bitOrg: for i in 0 to 32-1 generate
+ fullOrg : for i in 0 to 32-1 generate
 	org: org2 port map(
 	i_A	=> i_dataA(i),
 	i_B	=> i_dataB(i),
 	o_F	=> o_result(i));
-end generate 32bitOrg;
+end generate fullOrg;
 
 end struct;

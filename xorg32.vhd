@@ -10,28 +10,28 @@ use IEEE.std_logic_1164.all;
 
 entity xorg32 is
 
-	   port(i_dataA	: in: std_logic_vector(32-1 downto 0);
-		i_dataB	: in: std_logic_vector(32-1 downto 0);
-		o_result : in : std_logic_vector(32-1 downto 0);
+	   port(i_dataA	: in std_logic_vector(32-1 downto 0);
+		i_dataB	: in std_logic_vector(32-1 downto 0);
+		o_result : out std_logic_vector(32-1 downto 0));
 
 end xorg32;
 
 architecture struct of xorg32 is
 
 	component xorg2 is
-	port(i_A	=> i_dataA(i),
-	     i_B	=> i_dataB(i),
-	     o_F	=> o_result(i));
+	port(i_A	: in std_logic;
+	     i_B	: in std_logic;
+	     o_F	: out std_logic);
 
-	end component
+	end component;
 
 begin
 
-32bitXOR: for i in 0 to 32-1 generate
+fullXor : for i in 0 to 32-1 generate
 	xorg: xorg2 port map(
 	i_A	=> i_dataA(i),
 	i_B	=> i_dataB(i),
 	o_F	=> o_result(i));
-end generate 32bitXOR;
+end generate fullXor;
 
 end struct;

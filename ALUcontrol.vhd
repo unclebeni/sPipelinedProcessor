@@ -10,7 +10,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity decoder is
+entity ALUControl is
 
 	   port(i_ALUop  				: in std_logic_vector(4 downto 0);
 			o_ALUShiftDir 			: out std_logic;
@@ -20,7 +20,7 @@ entity decoder is
 			o_BranchOp				: out std_logic;
 		);
 
-end decoder;
+end ALUControl;
 
 architecture data of decoder is
 
@@ -28,8 +28,8 @@ begin
 
 with i_ALUop select
 	o_ALUAddSub <=
-		"1" when "0000", -- Add
-		"0" when "0001", -- Sub
+		"0" when "0000", -- Add
+		"1" when "0001", -- Sub
 		"X" when others;
 
 with i_ALUop select

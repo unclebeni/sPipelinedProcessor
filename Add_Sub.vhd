@@ -14,6 +14,7 @@ entity Add_Sub is
 	port(	iA	: in std_logic_vector(N-1 downto 0);
 		iB	: in std_logic_vector(N-1 downto 0);
 		nAdd_Sub	: in std_logic;
+		o_overflow	: out std_logic;
 		oSum	: out std_logic_vector(N-1 downto 0));
 end Add_Sub;
 
@@ -40,6 +41,7 @@ component fullAdderN is
 		iB	: in std_logic_vector(N-1 downto 0);
 		iC	: in std_logic_vector(N-1 downto 0);
 		oC	: out std_logic_vector(N-1 downto 0);
+		overflow :	out std_logic;
 		oS	: out std_logic_vector(N-1 downto 0));
 end component;
 
@@ -71,6 +73,7 @@ add: fullAdderN
 		 iB	=> selectedB,--the selected iB value (negative or positive
 		 iC	=> carryIn,
 		 oC	=> carryOut,
+		 overflow	=> o_overflow,
 		 oS	=> oSum);
 
 end struct;
