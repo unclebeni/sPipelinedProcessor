@@ -17,7 +17,7 @@ entity ALUControl is
 			o_ALUShiftArithmetic	: out std_logic;
 			o_ALUAddSub				: out std_logic;
 			o_ALUMuxCtrl			: out std_logic_vector(2 downto 0);
-			o_signed 			: out std_logic
+			o_signed 			: out std_logic;
 		);
 
 end ALUControl;
