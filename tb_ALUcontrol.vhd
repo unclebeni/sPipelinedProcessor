@@ -24,27 +24,27 @@ port(i_ALUop			: in std_logic_vector(3 downto 0);
 	o_ALUShiftArithmetic    : out std_logic;
         o_ALUAddSub		: out std_logic;
         o_ALUMuxCtrl		: out std_logic_vector(2 downto 0);
-	o_unsigned		: out std_logic);
+	o_signed		: out std_logic);
 end component; 
 --signals
 
 signal s_CLK			: std_logic := '0';
 signal s_ALUop			: std_logic_vector(3 downto 0) := (others => '0');	
 signal s_ALUShiftDir		: std_logic := '0';
-signal s_ALUSHiftArithmetic	: std_logic := '0';
+signal s_ALUShiftArithmetic	: std_logic := '0';
 signal s_ALUAddSub		: std_logic := '0';
 signal s_ALUMuxCtrl		: std_logic_vector(2 downto 0) := (others => '0');
-signal s_unsigned		: std_logic := '0';
+signal s_signed		: std_logic := '0';
 
 begin
 
-DUT0: ALU port map(
-	i_ALUop			=> s_ALUop
+DUT0: ALUcontrol port map(
+	i_ALUop			=> s_ALUop,
 	o_ALUShiftDir		=> s_ALUShiftDir,
 	o_ALUShiftArithmetic	=> s_ALUShiftArithmetic,
 	o_ALUAddSub		=> s_ALUAddSub,
 	o_ALUMuxCtrl		=> s_ALUMuxCtrl,
-	o_unsinged		=> s_unsigned);
+	o_signed		=> s_signed);
 	
  P_CLK: process
   begin
@@ -58,57 +58,44 @@ DUT0: ALU port map(
   P_TB: process
   begin
 
-s_ALUop	<= "0000"; -- add
+	s_ALUop	<= "0000"; -- add
+	wait for cCLK_PER;
 
-wait for cCLK_PER;
+	s_ALUop	<= "0001"; -- sub
+	wait for cCLK_PER;
 
-s_ALUop	<= "0001"; -- sub
+	s_ALUop <= "0010"; -- AND
+	wait for cCLK_PER;
 
-wait for cCLK_PER;
+	s_ALUop <= "0011"; -- OR
+	wait for cCLK_PER;
 
-s_ALUop <= "0010"; -- AND
+	s_ALUop <= "0100"; -- XOR
+	wait for cCLK_PER;
 
-wait for cCLK_PER;
+	s_ALUop <= "0101"; -- NOR
+	wait for cCLK_PER;
 
-s_ALUop <= "0011"; -- OR
+	s_ALUop <= "0110"; -- slt
+	wait for cCLK_PER;
 
-wait for cCLK_PER;
+	s_ALUop <= "0111"; -- shiftLeft
+	wait for cCLK_PER;
 
-s_ALUop <= "0100"; -- XOR
+	s_ALUop <= "1000"; -- shiftRight
+	wait for cCLK_PER;
 
-wait for cCLK_PER;
+	s_ALUop <= "1001"; -- ShiftRightA
+	wait for cCLK_PER;
 
-s_ALUop <= "0101"; -- NOR
+	s_ALUop <= "1010"; -- repl.qb
+	wait for cCLK_PER;
 
-wait for cCLK_PER;
+	s_ALUop <= "1011"; -- addu
+	wait for cCLK_PER;
 
-s_ALUop <= "0110"; -- slt
-
-wait for cCLK_PER;
-
-s_ALUop <= "0111"; -- shiftLeft
-
-wait for cCLK_PER;
-
-s_ALUop <= "1000"; -- shiftRight
-
-wait for cCLK_PER;
-
-s_ALUop <= "1001"; -- ShiftRightA
-
-wait for cCLK_PER;
-
-s_ALUop <= "1010"; -- repl.qb
-
-wait for cCLK_PER;
-
-s_ALUop <= "1011"; -- addu
-
-wait for cCLK_PER;
-
-s_ALUop <= "1100"; -- subu
-
-wait for cCLK_PER;
+	s_ALUop <= "1100"; -- subu
+	wait for cCLK_PER;
 
 	wait;
 	end process;
