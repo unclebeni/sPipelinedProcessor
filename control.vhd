@@ -87,8 +87,8 @@ o_branch<= 	"1"
 o_ALUop <=
 	"0000" when (i_opCode == "000000" && i_functCode == "100000") else 	-- add 		- add
 	"0000" when (i_opCode == "001000") else 							-- addi		- add
-	"0000" when (i_opCode == "001001") else 							-- addiu	- add
-	"0000" when (i_opCode == "000000" && i_functCode == "100001") else 	-- addu		- add
+	"1011" when (i_opCode == "001001") else 							-- addiu	- add
+	"1011" when (i_opCode == "000000" && i_functCode == "100001") else 	-- addu		- add
 	"0010" when (i_opCode == "000000" && i_functCode == "100100") else 	-- AND		- AND
 	"0010" when (i_opCode == "001100") else  							-- ANDi		- AND
 	"0000" when (i_opCode == "001111") else 							-- lui		- add
@@ -105,7 +105,7 @@ o_ALUop <=
 	"1001" when (i_opCode = "000000" && i_functCode = "000011") else 	-- sra		- sr + a
 	"0000" when (i_opCode = "101011") else 								-- sw		- add
 	"0001" when (i_opCode = "000000" && i_functCode = "100010") else 	-- sub		- sub
-	"0001" when (i_opCode = "000000" && i_functCode = "100011") else 	-- subu		- sub
+	"1100" when (i_opCode = "000000" && i_functCode = "100011") else 	-- subu		- sub
 	"1010" when (i_opCode = "011111") else					-- repl.qb
 	"XXXX" when others;
 

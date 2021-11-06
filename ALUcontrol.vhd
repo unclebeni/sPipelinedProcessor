@@ -17,6 +17,7 @@ entity ALUControl is
 			o_ALUShiftArithmetic	: out std_logic;
 			o_ALUAddSub				: out std_logic;
 			o_ALUMuxCtrl			: out std_logic_vector(2 downto 0);
+			o_unsigned 			: out std logic;
 		);
 
 end ALUControl;
@@ -47,7 +48,9 @@ with i_ALUop select
 	o_ALUMuxCtrl <=
 		-- Adder/Subtractor
 		"000" when "0000", -- Add
+		"000" when "1011", -- Add U
 		"000" when "0001", -- Sub
+		"000" when "1100", -- Sub U
 
 		-- AND
 		"001" when "0010",
@@ -71,5 +74,11 @@ with i_ALUop select
 
 		-- repl.qb
 		"111" when "1010";
+
+with i_ALUop select
+	o_unsigned <=
+		"1" when "1011", -- Add U
+		"1" when "1100", -- Sub U
+		"0" when others;
 
 end data;
