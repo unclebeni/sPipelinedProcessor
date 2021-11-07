@@ -74,6 +74,7 @@ architecture structural of SingleCycleProcessor is
 		o_WriteRa	: out std_logic; -- '1' when using jal
 		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
 		o_bneop		: out std_logic; -- '1' when bne operation
+		o_halt		: out std_logic; --'1'
 		o_ALUop	: out std_logic_vector(3 downto 0)); -- ALU op code
   end component;
 
@@ -197,7 +198,7 @@ begin
   s_instr25t0(25 downto 0) <= s_Inst(25 downto 0);
 
   --Control Unit
-  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWr, o_MemRead => s_MemRead, o_MemWrite => s_DMemWr, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_ALUop => s_ALUOp);
+  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWr, o_MemRead => s_MemRead, o_MemWrite => s_DMemWr, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_halt => s_Halt o_ALUop => s_ALUOp);
 
   --Register Destination Mux
   REGDSTMUX: Mux2t1_N generic map(N => 5) port map(i_S => s_RegDst, i_D0 => s_instr20t16, i_D1 => s_instr15t11, o_O => s_RegDstMUX);
