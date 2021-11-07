@@ -19,7 +19,7 @@ use IEEE.std_logic_1164.all;
 entity MIPSFetch is
 	port(i_PC	: in std_logic_vector(31 downto 0);
 	     i_PCRST	: in std_logic;
-	     i_Instr25t0	: in std_logic_vector(25 downto 0);
+	     i_Instr	: in std_logic_vector(31 downto 0);
 	     i_ExtendedImm	: in std_logic_vector(31 downto 0);
 	     o_PC		: out std_logic_vector(31 downto 0);
 	     o_PCp8		: out std_logic_vector(31 downto 0);
@@ -98,25 +98,27 @@ begin
 
 	NHALT: invg port map(i_A => HALT, o_F => NOTHALT);
 
-	instrData(31 downto 26) <= "000000";
-	instrData(25 downto 0) <= i_Instr25t0(25 downto 0);
+	instrData(31 downto 0) <= i_Instr;
 
 	immData(31 downto 0) <= i_ExtendedImm(31 downto 0);
 
-	InstrShift2 : Shifter2 port map(i_D => instrData, o_D => instrShift);
+	--InstrShift2 : Shifter2 port map(i_D => instrData, o_D => instrShift);
+
 	ImmShift2 : Shifter2 port map(i_D => immData, o_D => immShift);
 
 	PCPLUS4	: RippleCarryAdder port map(i_A => PCin, i_B => four, i_C => zero, o_S => PCp4, o_C => PCp4C);
-	PCPLUS8	: RippleCarryAdder port map(i_A => i_PC, i_B => eight, i_C => zero, o_S => o_PCp8, o_C => PCp8C);
+	--PCPLUS8	: RippleCarryAdder port map(i_A => i_PC, i_B => eight, i_C => zero, o_S => o_PCp8, o_C => PCp8C);
+	o_PCp8 <= PCp4;
 
-	JUMPADDER : RippleCarryAdder port map(i_A => instrShift, i_B => PCp4, i_C => zero, o_S => jumpAddress, o_C => JAddressC);
+	--JUMPADDER : RippleCarryAdder port map(i_A => instrData, i_B => PCp4, i_C => zero, o_S => jumpAddress, o_C => JAddressC);
 	BRANCHADDER : RippleCarryAdder port map(i_A => PCp4, i_B => immShift, i_C => zero, o_S => BranchAddress, o_C => BranchC);
 	
 	BRANCHXOR : xorg2 port map(i_A => i_ALUResult, i_B => i_BranchNotEqual, o_F => Bxor);
 	BRANCHAND : andg2 port map(i_A => i_Branch, i_B => Bxor, o_F => BAnd);
 
 	BRANCHMULTI : mux2t1_N port map(i_S => BAnd, i_D0 => PCp4, i_D1 => BranchAddress, o_O => BranchMux);
-	JUMPMULTI : mux2t1_N port map(i_S => i_Jump, i_D0 => BranchMux, i_D1 => jumpAddress, o_O => PCnext);
+	--JUMPMULTI : mux2t1_N port map(i_S => i_Jump, i_D0 => BranchMux, i_D1 => jumpAddress, o_O => PCnext);
+	JUMPMULTI : mux2t1_N port map(i_S => i_Jump, i_D0 => BranchMux, i_D1 => instrData, o_O => PCnext);
 
 	PCREG : PC port map(i_CLK => clock, i_RST => i_PCRST, i_WE => NOTHALT, i_D => PCnext, o_R => currentPC);
 

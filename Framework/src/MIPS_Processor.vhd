@@ -68,6 +68,7 @@ architecture structural of MIPS_processor is
 		o_bneop		: out std_logic; -- '1' when bne operation
 		o_halt		: out std_logic; --'1'
 		o_luiOp		: out std_logic;
+    o_jrOp		: out std_logic;
 		o_ALUop	: out std_logic_vector(3 downto 0)); -- ALU op code
   end component;
 
@@ -125,7 +126,7 @@ port(
   component MIPSFetch is
     port(i_PC	: in std_logic_vector(31 downto 0);
 	 i_PCRST	: std_logic;
-         i_Instr25t0	: in std_logic_vector(25 downto 0);
+         i_Instr	: in std_logic_vector(31 downto 0);
          i_ExtendedImm	: in std_logic_vector(31 downto 0);
          o_PC		: out std_logic_vector(31 downto 0);
          o_PCp8		: out std_logic_vector(31 downto 0);
@@ -149,7 +150,7 @@ port(
   signal s_31 : std_logic_vector(4 downto 0);
 
   --Control Signals
-  signal s_RegDst, s_WriteRa, s_RegWrite, s_Jump, s_Branch, s_MemToReg, s_MemWrite, s_ALUSrc, s_SignZero, s_bneOp, s_MemRead, s_luiOp  : std_logic;
+  signal s_RegDst, s_WriteRa, s_RegWrite, s_Jump, s_Branch, s_MemToReg, s_MemWrite, s_ALUSrc, s_SignZero, s_bneOp, s_MemRead, s_luiOp, s_jrOp  : std_logic;
   signal s_ALUOp  : std_logic_vector(3 downto 0);
 
   --ALUControl Signals
@@ -159,6 +160,7 @@ port(
   --MUX output
   signal s_WriteRaDataMUX, s_DMEMMUXOut, s_ALUSRCMux, s_luiMux : std_logic_vector(31 downto 0);
   signal s_RegDstMUX, s_WriteRaRegMUX : std_logic_vector(4 downto 0);
+  signal s_jumpAddrMux  : std_logic_vector(31 downto 0);
 
   --Module output
   signal s_RegFileRD1, s_RegFileRD2, s_ALUOut, s_ImmExtended, s_PCp8, s_PC, s_luiShifted : std_logic_vector(31 downto 0);
@@ -172,12 +174,13 @@ port(
 
   signal s_Reset	: std_logic;
   signal s_NextInstAddrShift, s_DMemAddrShift	: std_logic_vector(9 downto 0);
+  signal s_RegFileRD125t0 : std_logic_vector(25 downto 0);
+  signal s_instr25t0shift : std_logic_vector(31 downto 0);
 
 begin
 
   s_032 <= x"00000000";
   s_31 <= "11111";
-  --s_PC <= iInstAddr;
   s_Reset <= iRST;
 
   with iInstLd select
@@ -185,7 +188,7 @@ begin
       iInstAddr when others;
 
   --Instruction memory
-  IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_NextInstAddrShift, data => iInstExt, we => iInstLd, q => s_Inst);
+  IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_IMemAddr(11 downto 2), data => iInstExt, we => iInstLd, q => s_Inst);
     
   --Defining instruction segments
   s_instr31t26(5 downto 0) <= s_Inst(31 downto 26);
@@ -205,7 +208,7 @@ begin
   s_instr25t0(25 downto 0) <= s_Inst(25 downto 0);
 
   --Control Unit
-  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWr, o_MemRead => s_MemRead, o_MemWrite => s_DMemWr, o_jump => s_jump, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_halt => s_Halt, o_luiOp => s_luiOP, o_ALUop => s_ALUOp);
+  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWr, o_MemRead => s_MemRead, o_MemWrite => s_DMemWr, o_jump => s_jump, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_halt => s_Halt, o_luiOp => s_luiOP, o_jrOp => s_jrOp, o_ALUop => s_ALUOp);
 
   --Register Destination Mux
   REGDSTMUX: Mux2t1_N generic map(N => 5) port map(i_S => s_RegDst, i_D0 => s_instr20t16, i_D1 => s_instr15t11, o_O => s_RegDstMUX);
@@ -235,28 +238,28 @@ begin
 
   --Lui Shifter
   LUISHIFT: luiShifter port map(i_data => s_instr15t0, o_out => s_luiShifted);
+
+  s_instr25t0shift(31 downto 28) <= "0000";
+  s_instr25t0shift(27 downto 2) <= s_instr25t0(25 downto 0);
+  s_instr25t0shift(1 downto 0) <= "00";
+
+  JUMPADDRMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_jrOp, i_D0 => s_instr25t0shift, i_D1 => s_RegFileRD1, o_O => s_jumpAddrMux);
 	
   --Assign ouput of Processor for synthesis
   oALUOut <= s_ALUOut;
 
   --Fetch Logic module
-  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_PCRST => s_Reset, i_Instr25t0 => s_instr25t0, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_ALUSecondOut);
-    
-  s_NextInstAddrShift(9 downto 0) <= s_NextInstAddr(11 downto 2);
+  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_PCRST => s_Reset, i_Instr => s_jumpAddrMux, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_ALUSecondOut);
   
   s_DMemAddr <= s_ALUOut;
 
-  s_DmemAddrShift(9 downto 0) <= s_ALUOut(11 downto 2);
-
   --Data memory
-  DMem: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_DMemAddrShift, data => s_DMemData, we => s_DMemWr, q => s_DMemOut);
+  DMem: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_DMemAddr(11 downto 2), data => s_DMemData, we => s_DMemWr, q => s_DMemOut);
 
   --Mem to Reg Mux
   DMEMTREGMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_MemToReg, i_D0 => s_ALUOut, i_D1 => s_DMemOut, o_O => s_DMEMMUXOut);
 
   --Lui mux
   LUIMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_luiOp, i_D0 => s_DMEMMUXOut, i_D1 => s_luiShifted, o_O => s_luiMux);
-
-  s_RegWrData <= s_luiMux;
 
   end structural;

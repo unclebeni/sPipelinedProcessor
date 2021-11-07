@@ -1,0 +1,145 @@
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 20.1.1 Build 720 11/11/2020 SJ Standard Edition
+    Info: Copyright (C) 2020  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and any partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details, at
+    Info: https://fpgasoftware.intel.com/eula.
+    Info: Processing started: Sun Nov  7 17:18:17 2021
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off toolflow -c toolflow
+Info (125068): Revision "toolflow" was previously opened in Quartus II software version 18.0.0 Standard Edition. Created Quartus Prime Default Settings File /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/internal/QuartusWork/toolflow_assignment_defaults.qdf, which contains the default assignment setting information from Quartus II software version 18.0.0 Standard Edition.
+Info (125069): Default assignment values were changed in the current version of the Quartus Prime software -- changes to default assignments values are contained in file /usr/local/quartus/20.1/quartus/linux64/assignment_defaults.qdf
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/ALU.vhd
+    Info (12022): Found design unit 1: ALU-struct File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/ALU.vhd Line: 27
+    Info (12023): Found entity 1: ALU File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/ALU.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/ALUcontrol.vhd
+    Info (12022): Found design unit 1: ALUcontrol-data File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/ALUcontrol.vhd Line: 25
+    Info (12023): Found entity 1: ALUControl File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/ALUcontrol.vhd Line: 13
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Add_Sub.vhd
+    Info (12022): Found design unit 1: Add_Sub-struct File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Add_Sub.vhd Line: 22
+    Info (12023): Found entity 1: Add_Sub File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Add_Sub.vhd Line: 12
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Adder.vhd
+    Info (12022): Found design unit 1: Adder-behavior File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Adder.vhd Line: 35
+    Info (12023): Found entity 1: Adder File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Adder.vhd Line: 26
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Decoder.vhd
+    Info (12022): Found design unit 1: Decoder-dataflow File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Decoder.vhd Line: 25
+    Info (12023): Found entity 1: Decoder File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Decoder.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Extend16t32.vhd
+    Info (12022): Found design unit 1: Extend16t32-behavioral File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Extend16t32.vhd Line: 22
+    Info (12023): Found entity 1: Extend16t32 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Extend16t32.vhd Line: 16
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/FullAdderSid.vhd
+    Info (12022): Found design unit 1: FullAdderSid-structural File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/FullAdderSid.vhd Line: 23
+    Info (12023): Found entity 1: FullAdderSid File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/FullAdderSid.vhd Line: 15
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPSFetch.vhd
+    Info (12022): Found design unit 1: MIPSFetch-structural File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPSFetch.vhd Line: 34
+    Info (12023): Found entity 1: MIPSFetch File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPSFetch.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPSRegFile.vhd
+    Info (12022): Found design unit 1: MIPSRegFile-structural File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPSRegFile.vhd Line: 31
+    Info (12023): Found entity 1: MIPSRegFile File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPSRegFile.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPS_Processor.vhd
+    Info (12022): Found design unit 1: MIPS_processor-structural File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPS_Processor.vhd Line: 20
+    Info (12023): Found entity 1: MIPS_processor File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPS_Processor.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Multi32t1.vhd
+    Info (12022): Found design unit 1: Multi32t1-dataflow File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Multi32t1.vhd Line: 25
+    Info (12023): Found entity 1: Multi32t1 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Multi32t1.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Mux2t1.vhd
+    Info (12022): Found design unit 1: Mux2t1-structure File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Mux2t1.vhd Line: 22
+    Info (12023): Found entity 1: Mux2t1 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Mux2t1.vhd Line: 15
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MuxForALU.vhd
+    Info (12022): Found design unit 1: MuxForALU-multiplex File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MuxForALU.vhd Line: 28
+    Info (12023): Found entity 1: MuxForALU File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MuxForALU.vhd Line: 12
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PC.vhd
+    Info (12022): Found design unit 1: PC-structural File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PC.vhd Line: 28
+    Info (12023): Found entity 1: PC File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PC.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PCff.vhd
+    Info (12022): Found design unit 1: PCff-mixed File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PCff.vhd Line: 33
+    Info (12023): Found entity 1: PCff File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PCff.vhd Line: 23
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PCffz.vhd
+    Info (12022): Found design unit 1: PCffz-mixed File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PCffz.vhd Line: 33
+    Info (12023): Found entity 1: PCffz File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PCffz.vhd Line: 23
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Reg.vhd
+    Info (12022): Found design unit 1: Reg-structural File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Reg.vhd Line: 28
+    Info (12023): Found entity 1: Reg File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Reg.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/RippleCarryAdder.vhd
+    Info (12022): Found design unit 1: RippleCarryAdder-structural File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/RippleCarryAdder.vhd Line: 24
+    Info (12023): Found entity 1: RippleCarryAdder File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/RippleCarryAdder.vhd Line: 15
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Shifter2.vhd
+    Info (12022): Found design unit 1: Shifter2-dataflow File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Shifter2.vhd Line: 24
+    Info (12023): Found entity 1: Shifter2 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Shifter2.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/andg2.vhd
+    Info (12022): Found design unit 1: andg2-dataflow File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/andg2.vhd Line: 31
+    Info (12023): Found entity 1: andg2 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/andg2.vhd Line: 23
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/andg32.vhd
+    Info (12022): Found design unit 1: andg32-struct File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/andg32.vhd Line: 19
+    Info (12023): Found entity 1: andg32 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/andg32.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/barrelshifter.vhd
+    Info (12022): Found design unit 1: barrelshifter-structure File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/barrelshifter.vhd Line: 18
+    Info (12023): Found entity 1: barrelshifter File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/barrelshifter.vhd Line: 8
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/control.vhd
+    Info (12022): Found design unit 1: control-data File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/control.vhd Line: 33
+    Info (12023): Found entity 1: control File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/control.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/dffg.vhd
+    Info (12022): Found design unit 1: dffg-mixed File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/dffg.vhd Line: 33
+    Info (12023): Found entity 1: dffg File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/dffg.vhd Line: 23
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/fullAdder.vhd
+    Info (12022): Found design unit 1: fullAdder-behavior File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/fullAdder.vhd Line: 26
+    Info (12023): Found entity 1: fullAdder File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/fullAdder.vhd Line: 16
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/fullAdderN.vhd
+    Info (12022): Found design unit 1: fullAdderN-struct File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/fullAdderN.vhd Line: 21
+    Info (12023): Found entity 1: fullAdderN File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/fullAdderN.vhd Line: 12
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/invg.vhd
+    Info (12022): Found design unit 1: invg-dataflow File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/invg.vhd Line: 30
+    Info (12023): Found entity 1: invg File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/invg.vhd Line: 23
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/luiShifter.vhd
+    Info (12022): Found design unit 1: luiShifter-struct File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/luiShifter.vhd Line: 21
+    Info (12023): Found entity 1: luiShifter File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/luiShifter.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mem.vhd
+    Info (12022): Found design unit 1: mem-rtl File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mem.vhd Line: 27
+    Info (12023): Found entity 1: mem File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mem.vhd Line: 8
+Error (10430): VHDL Primary Unit Declaration error at mux2t1.vhd(21): primary unit "mux2t1" already exists in library "work". Compile the two primary units into different libraries or assign them unique names. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mux2t1.vhd Line: 21
+Error (10784): HDL error at Mux2t1.vhd(15): see declaration for object "Mux2t1" File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Mux2t1.vhd Line: 15
+Info (12021): Found 0 design units, including 0 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mux2t1.vhd
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mux2t1_5.vhd
+    Info (12022): Found design unit 1: mux2t1_5-structural File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mux2t1_5.vhd Line: 30
+    Info (12023): Found entity 1: mux2t1_5 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mux2t1_5.vhd Line: 21
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mux2t1_N.vhd
+    Info (12022): Found design unit 1: mux2t1_N-structural File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mux2t1_N.vhd Line: 30
+    Info (12023): Found entity 1: mux2t1_N File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/mux2t1_N.vhd Line: 21
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/norg32t1.vhd
+    Info (12022): Found design unit 1: norg32t1-data File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/norg32t1.vhd Line: 16
+    Info (12023): Found entity 1: norg32t1 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/norg32t1.vhd Line: 10
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/onescompliment_N.vhd
+    Info (12022): Found design unit 1: onescompliment_N-struct File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/onescompliment_N.vhd Line: 18
+    Info (12023): Found entity 1: onescompliment_N File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/onescompliment_N.vhd Line: 12
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/org2.vhd
+    Info (12022): Found design unit 1: org2-dataflow File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/org2.vhd Line: 31
+    Info (12023): Found entity 1: org2 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/org2.vhd Line: 23
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/org32.vhd
+    Info (12022): Found design unit 1: org32-struct File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/org32.vhd Line: 19
+    Info (12023): Found entity 1: org32 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/org32.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/overflowDetection.vhd
+    Info (12022): Found design unit 1: overflowDetection-behavior File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/overflowDetection.vhd Line: 19
+    Info (12023): Found entity 1: overflowDetection File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/overflowDetection.vhd Line: 11
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/xorg2.vhd
+    Info (12022): Found design unit 1: xorg2-dataflow File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/xorg2.vhd Line: 31
+    Info (12023): Found entity 1: xorg2 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/xorg2.vhd Line: 23
+Info (12021): Found 2 design units, including 1 entities, in source file /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/xorg32.vhd
+    Info (12022): Found design unit 1: xorg32-struct File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/xorg32.vhd Line: 19
+    Info (12023): Found entity 1: xorg32 File: /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/xorg32.vhd Line: 11
+Error: Quartus Prime Analysis & Synthesis was unsuccessful. 2 errors, 1 warning
+    Error: Peak virtual memory: 553 megabytes
+    Error: Processing ended: Sun Nov  7 17:18:23 2021
+    Error: Elapsed time: 00:00:06
+    Error: Total CPU time (on all processors): 00:00:15
