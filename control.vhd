@@ -22,6 +22,7 @@ entity control is
 		o_WriteRa	: out std_logic; -- '1' when using jal
 		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
 		o_bneOp		: out std_logic; -- '1' when bne operation
+		o_halt		: out std_logic; -- '1'
 		o_ALUop		: out std_logic_vector(3 downto 0)); -- ALU op code
 
 end control;
@@ -121,6 +122,10 @@ o_signed<=
 		'0' when	(i_opCode = "001111") else --lui
 		'0' when	(i_opCode = "101011") else --sw
 		'1';
+
+o_halt<=
+		'1' when 	(i_opCode = "010100") else -- halt
+		'0';
 
 o_bneOp<=
 		'1' when	(i_opCode = "000101") else -- bne
