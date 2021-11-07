@@ -19,6 +19,7 @@ use IEEE.std_logic_1164.all;
 entity MIPSRegFile is
 	port(i_WE	: in std_logic;
 	     i_CLK	: in std_logic;
+	     i_RST	: in std_logic;
 	     i_WS	: in std_logic_vector(4 downto 0);
 	     i_RS	: in std_logic_vector(4 downto 0);
 	     i_R2S	: in std_logic_vector(4 downto 0);
@@ -73,7 +74,7 @@ s_r2M12, s_r2M13, s_r2M14, s_r2M15, s_r2M16, s_r2M17, s_r2M18, s_r2M19, s_r2M20,
 
 begin
 	s_CLK <= i_CLK;
-	s_RST <= '0';
+	s_RST <= i_RST;
 	s_zeroRST <= '1';
 	s_WE <= i_WE;
 	DEC0: Decoder

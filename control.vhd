@@ -22,6 +22,8 @@ entity control is
 		o_WriteRa	: out std_logic; -- '1' when using jal
 		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
 		o_bneOp		: out std_logic; -- '1' when bne operation
+		o_halt		: out std_logic;
+		o_lui		: out std_logic;
 		o_ALUop		: out std_logic_vector(3 downto 0)); -- ALU op code
 
 end control;
@@ -91,7 +93,6 @@ o_ALUop <=
 	"1011" when (i_opCode = "000000" AND i_functCode = "100001") else 	-- addu		- add
 	"0010" when (i_opCode = "000000" AND i_functCode = "100100") else 	-- AND		- AND
 	"0010" when (i_opCode = "001100") else  							-- ANDi		- AND
-	"0000" when (i_opCode = "001111") else 							-- lui		- add
 	"0000" when (i_opCode = "100011") else 							-- lw		- add
 	"0101" when (i_opCode = "000000" AND i_functCode = "100111") else 	-- NOR		- NOR
 	"0100" when (i_opCode = "000000" AND i_functCode = "100110") else 	-- XOR		- XOR
@@ -121,6 +122,14 @@ o_signed<=
 		'0' when	(i_opCode = "001111") else --lui
 		'0' when	(i_opCode = "101011") else --sw
 		'1';
+
+o_halt<=
+		'1' when 	(i_opCode = "010100") else -- halt
+		'0';
+
+o_luiOp<=
+		'1' when (i_opCode = "001111") else -- lui
+		'0';
 
 o_bneOp<=
 		'1' when	(i_opCode = "000101") else -- bne
