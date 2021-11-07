@@ -21,6 +21,7 @@ component MIPSFetch is
 	     i_ExtendedImm	: in std_logic_vector(31 downto 0);
 	     o_PC		: out std_logic_vector(31 downto 0);
 	     o_PCp8		: out std_logic_vector(31 downto 0);
+	     i_HALT	: in std_logic;
 	     i_CLK	: in std_logic;
 	     i_Jump	: in std_logic;
 	     i_Branch	: in std_logic;
@@ -30,11 +31,11 @@ end component;
 
 signal PC, imm, oPC, oPCp8	: std_logic_vector(31 downto 0);
 signal instr25t0	: std_logic_vector(25 downto 0);
-signal clk, jump, branch, bne, aluresult	: std_logic;
+signal clk, jump, branch, bne, aluresult, halt	: std_logic;
 
 begin
 
-FETCHLOGIC: MIPSFetch port map(i_PC => PC, i_Instr25t0 => instr25t0, i_ExtendedImm => imm, o_PC => oPC, o_PCp8 => oPCp8, i_CLK => clk, i_Jump => jump, i_Branch => branch, i_BranchNotEqual => bne, i_ALUResult => aluresult);
+FETCHLOGIC: MIPSFetch port map(i_PC => PC, i_Instr25t0 => instr25t0, i_ExtendedImm => imm, o_PC => oPC, o_PCp8 => oPCp8, i_HALT => halt, i_CLK => clk, i_Jump => jump, i_Branch => branch, i_BranchNotEqual => bne, i_ALUResult => aluresult);
 
 	P_CLK: process
 	begin
@@ -49,6 +50,7 @@ FETCHLOGIC: MIPSFetch port map(i_PC => PC, i_Instr25t0 => instr25t0, i_ExtendedI
 		wait for gCLK_HPER;
 		PC <= x"00000000";
 		imm <= x"00000000";
+		halt <= '0';
 		instr25t0 <= "00000000000000000000000000";
 		jump <= '0';
 		branch <= '0';
@@ -58,6 +60,8 @@ FETCHLOGIC: MIPSFetch port map(i_PC => PC, i_Instr25t0 => instr25t0, i_ExtendedI
 		PC <= x"00000004";
 		wait for cCLK_PER;
 		PC <= x"00000008";
+		wait for cCLK_PER;
+		halt <= '1';
 		wait for cCLK_PER;
 		PC <= x"0000000C";
 		wait for cCLK_PER;
