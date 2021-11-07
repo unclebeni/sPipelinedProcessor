@@ -18,6 +18,7 @@ use IEEE.std_logic_1164.all;
 
 entity MIPSFetch is
 	port(i_PC	: in std_logic_vector(31 downto 0);
+	     i_PCRST	: in std_logic;
 	     i_Instr25t0	: in std_logic_vector(25 downto 0);
 	     i_ExtendedImm	: in std_logic_vector(31 downto 0);
 	     o_PC		: out std_logic_vector(31 downto 0);
@@ -117,7 +118,7 @@ begin
 	BRANCHMULTI : mux2t1_N port map(i_S => BAnd, i_D0 => PCp4, i_D1 => BranchAddress, o_O => BranchMux);
 	JUMPMULTI : mux2t1_N port map(i_S => i_Jump, i_D0 => BranchMux, i_D1 => jumpAddress, o_O => PCnext);
 
-	PCREG : PC port map(i_CLK => clock, i_RST => zero, i_WE => NOTHALT, i_D => PCnext, o_R => currentPC);
+	PCREG : PC port map(i_CLK => clock, i_RST => i_PCRST, i_WE => NOTHALT, i_D => PCnext, o_R => currentPC);
 
 	o_PC <= currentPC;
 

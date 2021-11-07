@@ -75,6 +75,7 @@ architecture structural of SingleCycleProcessor is
 		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
 		o_bneop		: out std_logic; -- '1' when bne operation
 		o_halt		: out std_logic; --'1'
+		o_luiOp		: out std_logic;
 		o_ALUop	: out std_logic_vector(3 downto 0)); -- ALU op code
   end component;
 
@@ -131,6 +132,7 @@ port(
 
   component MIPSFetch is
     port(i_PC	: in std_logic_vector(31 downto 0);
+	 i_PCRST	: std_logic;
          i_Instr25t0	: in std_logic_vector(25 downto 0);
          i_ExtendedImm	: in std_logic_vector(31 downto 0);
          o_PC		: out std_logic_vector(31 downto 0);
@@ -147,7 +149,7 @@ port(
   signal s_31 : std_logic_vector(4 downto 0);
 
   --Control Signals
-  signal s_RegDst, s_WriteRa, s_RegWrite, s_Jump, s_Branch, s_MemToReg, s_MemWrite, s_ALUSrc, s_SignZero, s_bneOp, s_MemRead  : std_logic;
+  signal s_RegDst, s_WriteRa, s_RegWrite, s_Jump, s_Branch, s_MemToReg, s_MemWrite, s_ALUSrc, s_SignZero, s_bneOp, s_MemRead, s_luiOp  : std_logic;
   signal s_ALUOp  : std_logic_vector(3 downto 0);
 
   --ALUControl Signals
@@ -175,10 +177,10 @@ begin
   s_032 <= x"00000000";
   s_31 <= "11111";
   s_PC <= iInstAddr;
-  s_RegFileReset <= iRST;
+  s_Reset <= iRST;
 
   --Instruction memory
-  IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_NextInstAddr, data => s_032, we => iInstLd, q => s_Inst);
+  IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_NextInstAddr, data => iInstExt, we => iInstLd, q => s_Inst);
     
   --Defining instruction segments
   s_instr31t26(5 downto 0) <= s_Inst(31 downto 26);
@@ -198,7 +200,7 @@ begin
   s_instr25t0(25 downto 0) <= s_Inst(25 downto 0);
 
   --Control Unit
-  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWr, o_MemRead => s_MemRead, o_MemWrite => s_DMemWr, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_halt => s_Halt, o_ALUop => s_ALUOp);
+  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWr, o_MemRead => s_MemRead, o_MemWrite => s_DMemWr, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_halt => s_Halt, o_luiOp => s_luiOP, o_ALUop => s_ALUOp);
 
   --Register Destination Mux
   REGDSTMUX: Mux2t1_N generic map(N => 5) port map(i_S => s_RegDst, i_D0 => s_instr20t16, i_D1 => s_instr15t11, o_O => s_RegDstMUX);
@@ -210,7 +212,7 @@ begin
   WRITERADATAMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_WriteRa, i_D0 => s_DMEMMUXOut, i_D1 => s_PCp8, o_O => s_RegWrData);
 
   --Register File
-  REGFILE: MIPSRegFile port map(i_WE => s_RegWr, i_CLK => iCLK, i_RST => s_RegFileReset, i_WS => s_RegWrAddr, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => s_RegWrData, o_R1F => s_RegFileRD1, o_R2F => s_RegFileRD2);
+  REGFILE: MIPSRegFile port map(i_WE => s_RegWr, i_CLK => iCLK, i_RST => s_Reset, i_WS => s_RegWrAddr, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => s_RegWrData, o_R1F => s_RegFileRD1, o_R2F => s_RegFileRD2);
 
   s_DMemData <= s_RegFileRD2;
 
@@ -230,7 +232,7 @@ begin
   oALUOut <= s_ALUOut;
 
   --Fetch Logic module
-  FETCHLOGIC: MipsFetch port map(i_PC => s_PC, i_Instr25t0 => s_instr25t0, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_ALUSecondOut);
+  FETCHLOGIC: MipsFetch port map(i_PC => s_PC, i_PCRST => s_Reset, i_Instr25t0 => s_instr25t0, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_ALUSecondOut);
     
   s_DMemAddr <= s_ALUOut;
 
