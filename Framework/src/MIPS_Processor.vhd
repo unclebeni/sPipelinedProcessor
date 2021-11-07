@@ -61,7 +61,8 @@ architecture structural of MIPS_processor is
 		o_RegWrite	: out std_logic; -- '1' for storing to register
 		o_MemRead	: out std_logic; -- '1' for reading memory
 		o_MemWrite	: out std_logic; -- '1' for store word in memory
-		o_branch	: out std_logic; -- '1' for branch and jump operations
+		o_branch	: out std_logic; -- '1' for branch operations
+		o_jump		: out std_logic;
 		o_WriteRa	: out std_logic; -- '1' when using jal
 		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
 		o_bneop		: out std_logic; -- '1' when bne operation
@@ -176,8 +177,12 @@ begin
 
   s_032 <= x"00000000";
   s_31 <= "11111";
-  s_PC <= iInstAddr;
+  --s_PC <= iInstAddr;
   s_Reset <= iRST;
+
+  with iInstLd select
+    s_IMemAddr <= s_NextInstAddr when '0',
+      iInstAddr when others;
 
   --Instruction memory
   IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_NextInstAddrShift, data => iInstExt, we => iInstLd, q => s_Inst);
@@ -200,7 +205,7 @@ begin
   s_instr25t0(25 downto 0) <= s_Inst(25 downto 0);
 
   --Control Unit
-  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWr, o_MemRead => s_MemRead, o_MemWrite => s_DMemWr, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_halt => s_Halt, o_luiOp => s_luiOP, o_ALUop => s_ALUOp);
+  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWr, o_MemRead => s_MemRead, o_MemWrite => s_DMemWr, o_jump => s_jump, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_halt => s_Halt, o_luiOp => s_luiOP, o_ALUop => s_ALUOp);
 
   --Register Destination Mux
   REGDSTMUX: Mux2t1_N generic map(N => 5) port map(i_S => s_RegDst, i_D0 => s_instr20t16, i_D1 => s_instr15t11, o_O => s_RegDstMUX);
@@ -209,7 +214,7 @@ begin
   WRITERAREGMUX: Mux2t1_N generic map(N => 5) port map(i_S => s_WriteRa, i_D0 => s_RegDstMUX, i_D1 => s_31, o_O => s_RegWrAddr);
 
   --Write Ra Data Mux
-  WRITERADATAMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_WriteRa, i_D0 => s_DMEMMUXOut, i_D1 => s_PCp8, o_O => s_RegWrData);
+  WRITERADATAMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_WriteRa, i_D0 => s_luiMux, i_D1 => s_PCp8, o_O => s_RegWrData);
 
   --Register File
   REGFILE: MIPSRegFile port map(i_WE => s_RegWr, i_CLK => iCLK, i_RST => s_Reset, i_WS => s_RegWrAddr, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => s_RegWrData, o_R1F => s_RegFileRD1, o_R2F => s_RegFileRD2);
@@ -235,7 +240,7 @@ begin
   oALUOut <= s_ALUOut;
 
   --Fetch Logic module
-  FETCHLOGIC: MipsFetch port map(i_PC => s_PC, i_PCRST => s_Reset, i_Instr25t0 => s_instr25t0, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_ALUSecondOut);
+  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_PCRST => s_Reset, i_Instr25t0 => s_instr25t0, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_ALUSecondOut);
     
   s_NextInstAddrShift(9 downto 0) <= s_NextInstAddr(11 downto 2);
   
@@ -247,7 +252,7 @@ begin
   DMem: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_DMemAddrShift, data => s_DMemData, we => s_DMemWr, q => s_DMemOut);
 
   --Mem to Reg Mux
-  DMEMTREGMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_WriteRa, i_D0 => s_DMemOut, i_D1 => s_ALUOut, o_O => s_DMEMMUXOut);
+  DMEMTREGMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_MemToReg, i_D0 => s_ALUOut, i_D1 => s_DMemOut, o_O => s_DMEMMUXOut);
 
   --Lui mux
   LUIMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_luiOp, i_D0 => s_DMEMMUXOut, i_D1 => s_luiShifted, o_O => s_luiMux);

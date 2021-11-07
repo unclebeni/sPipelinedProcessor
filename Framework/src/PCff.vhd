@@ -32,13 +32,13 @@ end PCff;
 
 architecture mixed of PCff is
   signal s_D    : std_logic;    -- Multiplexed input to the FF
-  signal s_Q    : std_logic;    -- Output of the FF
+  signal s_Q    : std_logic := '1';    -- Output of the FF
 
 begin
 
   -- The output of the FF is fixed to s_Q
   o_Q <= s_Q;
-  
+
   -- Create a multiplexed input to the FF based on i_WE
   with i_WE select
     s_D <= i_D when '1',

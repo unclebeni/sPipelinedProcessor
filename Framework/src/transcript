@@ -1,0 +1,149 @@
+# //  Questa Sim-64
+# //  Version 2021.2 linux_x86_64 Apr 14 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+project open /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/temp/whatever
+# Loading project whatever
+# Compile of Add_Sub.vhd failed with 1 errors.
+# Compile of Add_Sub.vhd failed with 1 errors.
+# Compile of Adder.vhd was successful.
+# Compile of ALU.vhd was successful.
+# Compile of ALUcontrol.vhd was successful.
+# Compile of andg2.vhd was successful.
+# Compile of andg32.vhd was successful.
+# Compile of barrelshifter.vhd was successful.
+# Compile of control.vhd was successful.
+# Compile of Decoder.vhd was successful.
+# Compile of dffg.vhd was successful.
+# Compile of Extend16t32.vhd was successful.
+# Compile of fullAdder.vhd was successful.
+# Compile of fullAdderN.vhd failed with 1 errors.
+# Compile of FullAdderSid.vhd was successful.
+# Compile of invg.vhd was successful.
+# Compile of luiShifter.vhd was successful.
+# Compile of mem.vhd was successful.
+# Compile of MIPS_Processor.vhd was successful.
+# Compile of MIPSFetch.vhd was successful.
+# Compile of MIPSRegFile.vhd was successful.
+# Compile of Multi32t1.vhd was successful.
+# Compile of Mux2t1.vhd was successful.
+# Compile of mux2t1.vhd was successful.
+# Compile of mux2t1_N.vhd was successful.
+# Compile of MuxForALU.vhd was successful.
+# Compile of norg32t1.vhd was successful.
+# Compile of onescompliment_N.vhd was successful.
+# Compile of org2.vhd was successful.
+# Compile of org32.vhd was successful.
+# Compile of overflowDetection.vhd was successful.
+# Compile of PC.vhd was successful.
+# Compile of PCff.vhd was successful.
+# Compile of Reg.vhd was successful.
+# Compile of RippleCarryAdder.vhd was successful.
+# Compile of Shifter2.vhd was successful.
+# Compile of tb.vhd failed with 18 errors.
+# Compile of xorg2.vhd was successful.
+# Compile of xorg32.vhd was successful.
+# 39 compiles, 4 failed with 21 errors.
+# Compile of Add_Sub.vhd failed with 1 errors.
+# Compile of Add_Sub.vhd failed with 1 errors.
+# Compile of Adder.vhd was successful.
+# Compile of ALU.vhd was successful.
+# Compile of ALUcontrol.vhd was successful.
+# Compile of andg2.vhd was successful.
+# Compile of andg32.vhd was successful.
+# Compile of barrelshifter.vhd was successful.
+# Compile of control.vhd was successful.
+# Compile of Decoder.vhd was successful.
+# Compile of dffg.vhd was successful.
+# Compile of Extend16t32.vhd was successful.
+# Compile of fullAdder.vhd was successful.
+# Compile of fullAdderN.vhd failed with 1 errors.
+# Compile of FullAdderSid.vhd was successful.
+# Compile of invg.vhd was successful.
+# Compile of luiShifter.vhd was successful.
+# Compile of mem.vhd was successful.
+# Compile of MIPS_Processor.vhd was successful.
+# Compile of MIPSFetch.vhd was successful.
+# Compile of MIPSRegFile.vhd was successful.
+# Compile of Multi32t1.vhd was successful.
+# Compile of Mux2t1.vhd was successful.
+# Compile of mux2t1.vhd was successful.
+# Compile of mux2t1_N.vhd was successful.
+# Compile of MuxForALU.vhd was successful.
+# Compile of norg32t1.vhd was successful.
+# Compile of onescompliment_N.vhd was successful.
+# Compile of org2.vhd was successful.
+# Compile of org32.vhd was successful.
+# Compile of overflowDetection.vhd was successful.
+# Compile of PC.vhd was successful.
+# Compile of PCff.vhd was successful.
+# Compile of Reg.vhd was successful.
+# Compile of RippleCarryAdder.vhd was successful.
+# Compile of Shifter2.vhd was successful.
+# Compile of tb.vhd failed with 18 errors.
+# Compile of xorg2.vhd was successful.
+# Compile of xorg32.vhd was successful.
+# 39 compiles, 4 failed with 21 errors.
+vsim work.mipsfetch
+# vsim work.mipsfetch 
+# Start time: 23:47:07 on Nov 06,2021
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.mipsfetch(structural)#1
+# Loading work.ripplecarryadder(structural)#1
+# Loading work.mux2t1_n(structural)#1
+add wave -position insertpoint  \
+sim:/mipsfetch/i_PC \
+sim:/mipsfetch/i_PCRST \
+sim:/mipsfetch/i_Instr25t0 \
+sim:/mipsfetch/i_ExtendedImm \
+sim:/mipsfetch/o_PC \
+sim:/mipsfetch/o_PCp8 \
+sim:/mipsfetch/i_HALT \
+sim:/mipsfetch/i_CLK \
+sim:/mipsfetch/i_Jump \
+sim:/mipsfetch/i_Branch \
+sim:/mipsfetch/i_BranchNotEqual \
+sim:/mipsfetch/i_ALUResult \
+sim:/mipsfetch/instrData \
+sim:/mipsfetch/immData \
+sim:/mipsfetch/instrShift \
+sim:/mipsfetch/immShift \
+sim:/mipsfetch/jumpAddress \
+sim:/mipsfetch/BranchAddress \
+sim:/mipsfetch/BranchMux \
+sim:/mipsfetch/PCp4 \
+sim:/mipsfetch/four \
+sim:/mipsfetch/eight \
+sim:/mipsfetch/PCnext \
+sim:/mipsfetch/currentPC \
+sim:/mipsfetch/PCin \
+sim:/mipsfetch/PCp4C \
+sim:/mipsfetch/PCp8C \
+sim:/mipsfetch/JAddressC \
+sim:/mipsfetch/BranchC \
+sim:/mipsfetch/BAnd \
+sim:/mipsfetch/Bxor \
+sim:/mipsfetch/clock \
+sim:/mipsfetch/HALT \
+sim:/mipsfetch/NOTHALT \
+sim:/mipsfetch/zero
+force -freeze sim:/mipsfetch/i_PC 32'h00400000 0
+force -freeze sim:/mipsfetch/i_PCRST 0 0
+force -freeze sim:/mipsfetch/i_Instr25t0 26'h0010001 0
+force -freeze sim:/mipsfetch/i_ExtendedImm 32'h00000001 0
+force -freeze sim:/mipsfetch/i_HALT 0 0
+force -freeze sim:/mipsfetch/i_CLK 0 0
+force -freeze sim:/mipsfetch/i_Jump 0 0

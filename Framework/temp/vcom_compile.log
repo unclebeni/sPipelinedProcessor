@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2021.2 Compiler 2021.04 Apr 14 2021
-Start time: 22:25:49 on Nov 06,2021
+Start time: 01:25:59 on Nov 07,2021
 vcom -2008 -work internal/ModelSimContainer/work src/*.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -61,6 +61,8 @@ vcom -2008 -work internal/ModelSimContainer/work src/*.vhd
 -- Compiling architecture struct of luiShifter
 -- Compiling entity PC
 -- Compiling architecture structural of PC
+-- Compiling entity PCffz
+-- Compiling architecture mixed of PCffz
 -- Compiling entity Extend16t32
 -- Compiling architecture behavioral of Extend16t32
 -- Compiling entity mux2t1_N
@@ -84,5 +86,5 @@ vcom -2008 -work internal/ModelSimContainer/work src/*.vhd
 -- Compiling architecture struct of mux2t1
 -- Compiling entity Decoder
 -- Compiling architecture dataflow of Decoder
-End time: 22:25:49 on Nov 06,2021, Elapsed time: 0:00:00
+End time: 01:25:59 on Nov 07,2021, Elapsed time: 0:00:00
 Errors: 0, Warnings: 1

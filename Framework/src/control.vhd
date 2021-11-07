@@ -19,6 +19,7 @@ entity control is
 		o_MemRead	: out std_logic; -- '1' for reading memory
 		o_MemWrite	: out std_logic; -- '1' for store word in memory
 		o_branch	: out std_logic; -- '1' for branch and jump operations
+		o_jump		: out std_logic;
 		o_WriteRa	: out std_logic; -- '1' when using jal
 		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
 		o_bneOp		: out std_logic; -- '1' when bne operation
@@ -133,6 +134,12 @@ o_luiOp<=
 
 o_bneOp<=
 		'1' when	(i_opCode = "000101") else -- bne
+		'0';
+
+o_jump<=
+		'1' when 	(i_opCode = "000010") else
+		'1' when	(i_opCode = "000011") else
+		'1' when	(i_opCode = "000000" AND i_functCode = "001000") else
 		'0';
 
 end data;
