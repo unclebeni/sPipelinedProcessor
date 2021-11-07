@@ -22,6 +22,7 @@ entity MIPSFetch is
 	     i_ExtendedImm	: in std_logic_vector(31 downto 0);
 	     o_PC		: out std_logic_vector(31 downto 0);
 	     o_PCp8		: out std_logic_vector(31 downto 0);
+	     i_HALT	: in std_logic;
 	     i_CLK	: in std_logic;
 	     i_Jump	: in std_logic;
 	     i_Branch	: in std_logic;
@@ -65,7 +66,7 @@ component xorg2 is
        o_F          : out std_logic);
 end component;
 
-component Reg is
+component PC is
 	generic(N : integer := 32);
 	port(i_CLK	: in std_logic;
 	     i_RST	: in std_logic;
@@ -74,10 +75,15 @@ component Reg is
 	     o_R	: out std_logic_vector(N-1 downto 0));
 end component;
 
+component invg is
+	port(i_A          : in std_logic;
+             o_F          : out std_logic);
+end component;
+
 signal instrData, immData, instrShift, immShift, jumpAddress, BranchAddress, BranchMux 	: std_logic_vector(31 downto 0);
 signal PCp4, four, eight, PCnext, currentPC, sdata, PCin	: std_logic_vector(31 downto 0);
 signal nextinstr	: std_logic_vector(9 downto 0);
-signal PCp4C, PCp8C, JAddressC, BranchC, BAnd, Bxor, clock	: std_logic;
+signal PCp4C, PCp8C, JAddressC, BranchC, BAnd, Bxor, clock, HALT, NOTHALT	: std_logic;
 signal zero	: std_logic;
 
 begin
@@ -87,6 +93,9 @@ begin
 	PCin <= i_PC;
 	clock <= i_CLK;
 	eight <= x"00000008";
+	HALT <= i_HALT;
+
+	NHALT: invg port map(i_A => HALT, o_F => NOTHALT);
 
 	instrData(31 downto 26) <= "000000";
 	instrData(25 downto 0) <= i_Instr25t0(25 downto 0);
@@ -108,7 +117,7 @@ begin
 	BRANCHMULTI : mux2t1_N port map(i_S => BAnd, i_D0 => PCp4, i_D1 => BranchAddress, o_O => BranchMux);
 	JUMPMULTI : mux2t1_N port map(i_S => i_Jump, i_D0 => BranchMux, i_D1 => jumpAddress, o_O => PCnext);
 
-	PC : Reg port map(i_CLK => clock, i_RST => zero, i_WE => '1', i_D => PCnext, o_R => currentPC);
+	PCREG : PC port map(i_CLK => clock, i_RST => zero, i_WE => NOTHALT, i_D => PCnext, o_R => currentPC);
 
 	o_PC <= currentPC;
 

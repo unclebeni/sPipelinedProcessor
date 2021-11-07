@@ -45,7 +45,7 @@ architecture structural of SingleCycleProcessor is
   signal s_Inst         : std_logic_vector(N-1 downto 0); -- use this signal as the instruction signal 
 
   -- Required halt signal -- for simulation
-  signal s_Halt         : std_logic;  -- TODO: this signal indicates to the simulation that intended program execution has completed. (Opcode: 01 0100)
+  signal s_Halt         : std_logic;  -- this signal indicates to the simulation that intended program execution has completed. (Opcode: 01 0100)
 
   -- Required overflow signal -- for overflow exception detection
   signal s_Ovfl         : std_logic;  -- this signal indicates an overflow exception would have been initiated
@@ -198,7 +198,7 @@ begin
   s_instr25t0(25 downto 0) <= s_Inst(25 downto 0);
 
   --Control Unit
-  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWr, o_MemRead => s_MemRead, o_MemWrite => s_DMemWr, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_halt => s_Halt o_ALUop => s_ALUOp);
+  CONTROLUNIT: control port map(i_opCode => s_instr31t26, i_functCode => s_instr5t0, o_RegDest => s_RegDst, o_ALUSrc => s_ALUSrc, o_MemtoReg => s_MemToReg, o_RegWrite => s_RegWr, o_MemRead => s_MemRead, o_MemWrite => s_DMemWr, o_branch => s_Branch, o_WriteRa => s_WriteRa, o_signed => s_SignZero, o_bneOp => s_bneOp, o_halt => s_Halt, o_ALUop => s_ALUOp);
 
   --Register Destination Mux
   REGDSTMUX: Mux2t1_N generic map(N => 5) port map(i_S => s_RegDst, i_D0 => s_instr20t16, i_D1 => s_instr15t11, o_O => s_RegDstMUX);
