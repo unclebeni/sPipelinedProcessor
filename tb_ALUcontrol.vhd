@@ -19,33 +19,33 @@ constant cCLK_PER  : time := gCLK_HPER * 2;
 
 
 component ALUcontrol is
-port(i_ALUop			: in std_logic_vector(3 downto 0);
-	o_ALUShiftDir		: out std_logic;
-	o_ALUShiftArithmetic    : out std_logic;
-        o_ALUAddSub		: out std_logic;
-        o_ALUMuxCtrl		: out std_logic_vector(2 downto 0);
-	o_signed		: out std_logic);
-end component; 
+port(i_ALUop					: in std_logic_vector(3 downto 0);
+		o_ALUShiftDir			: out std_logic;
+		o_ALUShiftArithmetic    : out std_logic;
+        o_ALUAddSub				: out std_logic;
+        o_ALUMuxCtrl			: out std_logic_vector(2 downto 0);
+		o_signed				: out std_logic);
+end component;
 --signals
 
-signal s_CLK			: std_logic := '0';
-signal s_ALUop			: std_logic_vector(3 downto 0) := (others => '0');	
+signal s_CLK				: std_logic := '0';
+signal s_ALUop				: std_logic_vector(3 downto 0) := (others => '0');
 signal s_ALUShiftDir		: std_logic := '0';
 signal s_ALUShiftArithmetic	: std_logic := '0';
-signal s_ALUAddSub		: std_logic := '0';
-signal s_ALUMuxCtrl		: std_logic_vector(2 downto 0) := (others => '0');
-signal s_signed		: std_logic := '0';
+signal s_ALUAddSub			: std_logic := '0';
+signal s_ALUMuxCtrl			: std_logic_vector(2 downto 0) := (others => '0');
+signal s_signed				: std_logic := '0';
 
 begin
 
 DUT0: ALUcontrol port map(
-	i_ALUop			=> s_ALUop,
+	i_ALUop				=> s_ALUop,
 	o_ALUShiftDir		=> s_ALUShiftDir,
-	o_ALUShiftArithmetic	=> s_ALUShiftArithmetic,
-	o_ALUAddSub		=> s_ALUAddSub,
+	o_ALUShiftArithmetic=> s_ALUShiftArithmetic,
+	o_ALUAddSub			=> s_ALUAddSub,
 	o_ALUMuxCtrl		=> s_ALUMuxCtrl,
-	o_signed		=> s_signed);
-	
+	o_signed			=> s_signed);
+
  P_CLK: process
   begin
     s_CLK <= '0';
@@ -53,8 +53,8 @@ DUT0: ALUcontrol port map(
     s_CLK <= '1';
     wait for gCLK_HPER;
   end process;
-  
-  -- Testbench process  
+
+  -- Testbench process
   P_TB: process
   begin
 
