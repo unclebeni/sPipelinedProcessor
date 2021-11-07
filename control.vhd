@@ -23,7 +23,7 @@ entity control is
 		o_signed	: out std_logic; -- '1' when adding or subtracting a signed number
 		o_bneOp		: out std_logic; -- '1' when bne operation
 		o_halt		: out std_logic;
-		o_lui		: out std_logic;
+		o_luiOp		: out std_logic;
 		o_ALUop		: out std_logic_vector(3 downto 0)); -- ALU op code
 
 end control;
