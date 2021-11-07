@@ -246,7 +246,7 @@ begin
   
   s_DMemAddr <= s_ALUOut;
 
-  s_DmemAddrShift(9 downto 0) <= s_ALUOut(9 downto 0);
+  s_DmemAddrShift(9 downto 0) <= s_ALUOut(11 downto 2);
 
   --Data memory
   DMem: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_DMemAddrShift, data => s_DMemData, we => s_DMemWr, q => s_DMemOut);

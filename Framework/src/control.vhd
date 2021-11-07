@@ -72,7 +72,28 @@ o_RegWrite<=
 		'0' when	(i_opCode = "000011") else -- jal
 		'0' when	(i_opCode = "000000" AND i_functCode = "001000") else -- jr
 		'0' when	(i_opCode = "011111") else --repl.qb
-		'1';
+		'1' when	(i_opCode = "000000" AND i_functCode = "100000") else -- add
+		'1' when	(i_opCode = "000000" AND i_functCode = "100001") else -- addu
+		'1' when	(i_opCode = "000000" AND i_functCode = "100100") else -- and
+		'1' when	(i_opCode = "000000" AND i_functCode = "100111") else -- nor
+		'1' when	(i_opCode = "000000" AND i_functCode = "100110") else -- xor
+		'1' when	(i_opCode = "000000" AND i_functCode = "100101") else -- or
+		'1' when	(i_opCode = "000000" AND i_functCode = "101010") else -- slt
+		'1' when	(i_opCode = "000000" AND i_functCode = "000000") else -- sll
+		'1' when	(i_opCode = "000000" AND i_functCode = "000010") else -- srl
+		'1' when	(i_opCode = "000000" AND i_functCode = "000011") else -- sra
+		'1' when	(i_opCode = "000000" AND i_functCode = "100010") else -- sub
+		'1' when	(i_opCode = "000000" AND i_functCode = "100011") else  -- subu
+		'1' when 	(i_opCode = "001000") else --addi
+		'1' when	(i_opCode = "001001") else -- addiu
+		'1' when	(i_opCode = "001100") else -- andi
+		'1' when	(i_opCode = "001111") else -- lui
+		'1' when	(i_opCode = "100011") else -- lw
+		'1' when	(i_opCode = "001110") else -- xori
+		'1' when	(i_opCode = "001101") else -- ori
+		'1' when	(i_opCode = "001010") else -- slti
+		'0';
+
 
 o_MemRead <=
 		'1' when	(i_opCode = "100011") else -- lw
