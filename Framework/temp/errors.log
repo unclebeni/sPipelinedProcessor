@@ -1,0 +1,32 @@
+
+Exception caught at 2021-11-06 21:33:54.032194:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 34, in main
+    input("Press Enter to Exit...")
+EOFError
+
+Exception caught at 2021-11-06 21:34:23.466588:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 34, in main
+    input("Press Enter to Exit...")
+EOFError
+
+Exception caught at 2021-11-06 22:04:45.153263:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 34, in main
+    input("Press Enter to Exit...")
+EOFError
+
+Exception caught at 2021-11-06 22:05:41.331525:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 34, in main
+    input("Press Enter to Exit...")
+EOFError
