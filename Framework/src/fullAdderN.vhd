@@ -37,6 +37,7 @@ architecture struct of fullAdderN is
 
 	end component xorg2;
 		
+signal carry	: std_logic_vector(N-1 downto 0);
 
 begin
 
@@ -48,17 +49,18 @@ loop1 : for i in 0 to 0 generate
 	iB	=>	iB(i),
 	iC	=>	iC(i),
 	oS	=>	oS(i),
-	oC	=>	oC(i));
+	oC	=>	carry(i));
 end generate loop1;
 
 loop2 : for i in 1 to N-1 generate
 	rippleAdder2 : fullAdder port map(
 	iA	=>	iA(i),
 	iB	=>	iB(i),
-	iC	=>	oC(i-1),
+	iC	=>	carry(i-1),
 	oS	=>	oS(i),
-	oC	=>	oC(i));
+	oC	=>	carry(i));
 end generate loop2;
 
+oC	<= carry;
 
 end struct;

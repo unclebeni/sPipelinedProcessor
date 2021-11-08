@@ -57,6 +57,8 @@ signal invertedB : std_logic_vector(N-1 downto 0); --not sure what to make the s
 signal selectedB : std_logic_vector(N-1 downto 0);
 signal carryIn : std_logic_vector(N-1 downto 0);
 signal carryOut : std_logic_vector(N-1 downto 0);
+signal outsign 	: std_logic;
+signal sum	: std_logic_vector(N-1 downto 0);
 
 begin
 
@@ -81,16 +83,20 @@ add: fullAdderN
 		 iB	=> selectedB,--the selected iB value (negative or positive
 		 iC	=> carryIn,
 		 oC	=> carryOut,
-		 oS	=> oSum);
+		 oS	=> sum);
+outsign	<= sum(31);
 
 overflow : overflowDetection
 port map(
 	i_Asign		=> iA(31),
 	i_Bsign		=> selectedB(31),
-	i_resultSign	=> oSum(31),
+	i_resultSign	=> outsign,
 	o_overflow	=> o_overflow);
 
+
+
 o_carryout <= carryOut(31);
+oSum	<= sum;
 
 
 end struct;
