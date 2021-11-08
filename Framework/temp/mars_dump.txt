@@ -1,16 +1,6 @@
-[inst #1] lui $1,410
-Register Write to Reg: 0x01 Val: 0x019A0000
-[inst #2] ori $1,$1,36218
-Register Write to Reg: 0x01 Val: 0x019A8D7A
-[inst #3] add $1,$0,$1
-Register Write to Reg: 0x01 Val: 0x019A8D7A
-[inst #4] lui $1,-411
-Register Write to Reg: 0x01 Val: 0xFE650000
-[inst #5] ori $1,$1,29317
-Register Write to Reg: 0x01 Val: 0xFE657285
-[inst #6] add $2,$0,$1
-Register Write to Reg: 0x02 Val: 0xFE657285
-[inst #7] add $3,$2,$1
-Register Write to Reg: 0x03 Val: 0xFCCAE50A
-[inst #8] halt 
+[inst #1] jal 4194308
+Register Write to Reg: 0x1F Val: 0x00400004
+[inst #2] addi $9,$0,25
+Register Write to Reg: 0x09 Val: 0x00000019
+[inst #3] halt 
 

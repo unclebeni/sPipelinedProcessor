@@ -3,8 +3,8 @@ Reading pref.tcl
 # 2021.2
 
 # vsim -c -voptargs="+acc" tb -do "../testpy/modelsim_framework.do" 
-# Start time: 17:29:32 on Nov 07,2021
-# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Start time: 20:11:30 on Nov 07,2021
+# ** Note: (vsim-3812) Design is being optimized...
 # //  Questa Sim-64
 # //  Version 2021.2 linux_x86_64 Apr 14 2021
 # //
@@ -72,16 +72,14 @@ Reading pref.tcl
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 0 ns  Iteration: 3  Instance: /tb/MyMips/DMem
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ns  Iteration: 13  Instance: /tb/MyMips/DMem
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ns  Iteration: 14  Instance: /tb/MyMips/DMem
+#    Time: 0 ns  Iteration: 15  Instance: /tb/MyMips/DMem
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 0 ns  Iteration: 16  Instance: /tb/MyMips/DMem
-# ** Note: Data structure takes 54828600 bytes of memory
+# ** Note: Data structure takes 54566448 bytes of memory
 #          Process time 0.12 seconds
 #          stop
-#    Time: 180 ns  Iteration: 1  Instance: /tb
+#    Time: 80 ns  Iteration: 1  Instance: /tb
 # Break in Process P_DUMP_STATE at /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/tb.vhd line 146
 # Stopped at /home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/tb.vhd line 146
-# End time: 17:29:33 on Nov 07,2021, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 7
+# End time: 20:11:32 on Nov 07,2021, Elapsed time: 0:00:02
+# Errors: 0, Warnings: 6

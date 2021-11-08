@@ -129,7 +129,7 @@ port(
          i_Instr	: in std_logic_vector(31 downto 0);
          i_ExtendedImm	: in std_logic_vector(31 downto 0);
          o_PC		: out std_logic_vector(31 downto 0);
-         o_PCp8		: out std_logic_vector(31 downto 0);
+         o_PCp4		: out std_logic_vector(31 downto 0);
 	 i_HALT	: in std_logic;
          i_CLK	: in std_logic;
          i_Jump	: in std_logic;
@@ -163,7 +163,7 @@ port(
   signal s_jumpAddrMux  : std_logic_vector(31 downto 0);
 
   --Module output
-  signal s_RegFileRD1, s_RegFileRD2, s_ALUOut, s_ImmExtended, s_PCp8, s_PC, s_luiShifted : std_logic_vector(31 downto 0);
+  signal s_RegFileRD1, s_RegFileRD2, s_ALUOut, s_ImmExtended, s_PCp4, s_PC, s_luiShifted : std_logic_vector(31 downto 0);
   signal s_ALUSecondOut, s_overflow, s_carryout : std_logic;
 
   --Instruction segments
@@ -217,7 +217,7 @@ begin
   WRITERAREGMUX: Mux2t1_N generic map(N => 5) port map(i_S => s_WriteRa, i_D0 => s_RegDstMUX, i_D1 => s_31, o_O => s_RegWrAddr);
 
   --Write Ra Data Mux
-  WRITERADATAMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_WriteRa, i_D0 => s_luiMux, i_D1 => s_PCp8, o_O => s_RegWrData);
+  WRITERADATAMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_WriteRa, i_D0 => s_luiMux, i_D1 => s_PCp4, o_O => s_RegWrData);
 
   --Register File
   REGFILE: MIPSRegFile port map(i_WE => s_RegWr, i_CLK => iCLK, i_RST => s_Reset, i_WS => s_RegWrAddr, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => s_RegWrData, o_R1F => s_RegFileRD1, o_R2F => s_RegFileRD2);
@@ -249,7 +249,7 @@ begin
   oALUOut <= s_ALUOut;
 
   --Fetch Logic module
-  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_PCRST => s_Reset, i_Instr => s_jumpAddrMux, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp8 => s_PCp8, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_ALUSecondOut);
+  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_PCRST => s_Reset, i_Instr => s_jumpAddrMux, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp4 => s_PCp4, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_ALUSecondOut);
   
   s_DMemAddr <= s_ALUOut;
 

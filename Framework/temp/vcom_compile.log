@@ -1,5 +1,5 @@
 QuestaSim-64 vcom 2021.2 Compiler 2021.04 Apr 14 2021
-Start time: 17:29:31 on Nov 07,2021
+Start time: 20:11:29 on Nov 07,2021
 vcom -2008 -work internal/ModelSimContainer/work src/*.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -24,8 +24,6 @@ vcom -2008 -work internal/ModelSimContainer/work src/*.vhd
 -- Compiling architecture data of ALUcontrol
 -- Compiling entity Shifter2
 -- Compiling architecture dataflow of Shifter2
--- Compiling entity Mux2t1
--- Compiling architecture structure of Mux2t1
 -- Compiling entity control
 -- Compiling architecture data of control
 -- Compiling entity org2
@@ -83,10 +81,9 @@ vcom -2008 -work internal/ModelSimContainer/work src/*.vhd
 -- Compiling architecture struct of ALU
 -- Compiling entity Multi32t1
 -- Compiling architecture dataflow of Multi32t1
-** Warning: src/mux2t1.vhd(21): (vcom-1615) Existing entity 'mux2t1' at src/Mux2t1.vhd(15) will be overwritten.
 -- Compiling entity mux2t1
 -- Compiling architecture struct of mux2t1
 -- Compiling entity Decoder
 -- Compiling architecture dataflow of Decoder
-End time: 17:29:31 on Nov 07,2021, Elapsed time: 0:00:00
-Errors: 0, Warnings: 1
+End time: 20:11:29 on Nov 07,2021, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

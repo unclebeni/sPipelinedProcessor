@@ -24,7 +24,6 @@ set_global_assignment -name VHDL_FILE "/home/sfstowe/sfstowe/cpre381/test/mipspr
 set_global_assignment -name VHDL_FILE "/home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPSRegFile.vhd"
 set_global_assignment -name VHDL_FILE "/home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MIPS_Processor.vhd"
 set_global_assignment -name VHDL_FILE "/home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Multi32t1.vhd"
-set_global_assignment -name VHDL_FILE "/home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/Mux2t1.vhd"
 set_global_assignment -name VHDL_FILE "/home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/MuxForALU.vhd"
 set_global_assignment -name VHDL_FILE "/home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PC.vhd"
 set_global_assignment -name VHDL_FILE "/home/sfstowe/sfstowe/cpre381/test/mipsprocessor/Framework/src/PCff.vhd"
