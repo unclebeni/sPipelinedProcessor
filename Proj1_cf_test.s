@@ -1,10 +1,19 @@
 #
-# int fact (int n){
-# if(n < 1) return (1);
-# else return (n + fact(n - 1));
+# for(int i = 5; i > 0; i--){
+#   int fact (int n){
+#   if(n < 1) return (1);
+#   else return (n + fact(n - 1));
+#   }
 # }
 #
+.data
+.text
+.globl main
 
+addi		$t2, $0, 5		    # $t2 = $0 + $5
+j fact:
+start:
+    addi    $t2, $t2, -1
 fact:
     addi	$sp, $sp, -8		# $sp = sp1 -8
     sw		$ra, 4($sp)
@@ -22,3 +31,4 @@ L1:
     addi	$sp, $sp, 8			# $sp = $t1 + 8
     add		$v0, $a0, $v0		# $v0 = $a0 + $v0
     jr		$ra					# jump to $ra
+    bne     $t2, $0, start
