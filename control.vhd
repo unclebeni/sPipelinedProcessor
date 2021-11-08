@@ -25,6 +25,7 @@ entity control is
 		o_bneOp		: out std_logic; -- '1' when bne operation
 		o_halt		: out std_logic;
 		o_luiOp		: out std_logic;
+		o_jrOp		: out std_logic;
 		o_ALUop		: out std_logic_vector(3 downto 0)); -- ALU op code
 
 end control;
@@ -134,6 +135,10 @@ o_luiOp<=
 
 o_bneOp<=
 		'1' when	(i_opCode = "000101") else -- bne
+		'0';
+
+o_jrOp <=
+		'1' when (i_opCode = "000000" AND i_functCode = "001000") else
 		'0';
 
 o_jump<=

@@ -32,14 +32,14 @@ with i_ALUop select
 		'0' when "1011", -- Add U
 		'1' when "0001", -- Sub
 		'1' when "1100", -- Sub U
-		'X' when others;
+		'0' when others;
 
 with i_ALUop select
 	o_ALUShiftDir <=
 		'1' when "0111", -- Shift Left
 		'0' when "1000", -- Shift Right
 		'0' when "1001", -- Shift Right Arithmetic
-		'X' when others;
+		'0' when others;
 
 with i_ALUop select
 	o_ALUShiftArithmetic <=
@@ -77,7 +77,7 @@ with i_ALUop select
 		-- repl.qb
 		"111" when "1010",
 
-		"XXX" when others;
+		"000" when others;
 
 with i_ALUop select
 	o_signed <=

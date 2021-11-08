@@ -25,6 +25,7 @@ entity control is
 		o_bneOp		: out std_logic; -- '1' when bne operation
 		o_halt		: out std_logic;
 		o_luiOp		: out std_logic;
+		o_jrOp		: out std_logic;
 		o_ALUop		: out std_logic_vector(3 downto 0)); -- ALU op code
 
 end control;
@@ -69,7 +70,7 @@ o_RegWrite<=
 		'0' when	(i_opCode = "000100") else -- beq
 		'0' when	(i_opCode = "000101") else -- bne
 		'0' when	(i_opCode = "000010") else -- j
-		'0' when	(i_opCode = "000011") else -- jal
+		'1' when	(i_opCode = "000011") else -- jal
 		'0' when	(i_opCode = "000000" AND i_functCode = "001000") else -- jr
 		'0' when	(i_opCode = "011111") else --repl.qb
 		'1' when	(i_opCode = "000000" AND i_functCode = "100000") else -- add
@@ -130,7 +131,9 @@ o_ALUop <=
 	"0001" when (i_opCode = "000000" AND i_functCode = "100010") else 	-- sub		- sub
 	"1100" when (i_opCode = "000000" AND i_functCode = "100011") else 	-- subu		- sub
 	"1010" when (i_opCode = "011111") else					-- repl.qb
-	"XXXX";
+	"0001" when (i_opCode = "000101") else					--bne		-sub
+	"0001" when (i_opCode = "000100") else					--beq		-sub
+	"0000";
 
 o_WriteRa<=
 		'1' when	(i_opCode = "000011") else -- jal
@@ -138,11 +141,15 @@ o_WriteRa<=
 
 
 o_signed<=
-		'0' when	(i_opCode = "001001") else -- addiu
+		'0' when	(i_opCode = "001001") else -- addiuvsim:/tb/MyMips/s_Inst
+
 		'0' when	(i_opCode = "000000" AND i_functCode = "100001") else -- addu
-		'0' when	(i_opCode = "100011") else --lw
+		'1' when	(i_opCode = "100011") else --lw
 		'0' when	(i_opCode = "001111") else --lui
-		'0' when	(i_opCode = "101011") else --sw
+		'1' when	(i_opCode = "101011") else --sw
+		'0' when	(i_opCode = "001100") else --andi
+		'0' when	(i_opCode = "001110") else --ori
+		'0' when	(i_opcode = "001101") else --xori
 		'1';
 
 o_halt<=
@@ -155,6 +162,11 @@ o_luiOp<=
 
 o_bneOp<=
 		'1' when	(i_opCode = "000101") else -- bne
+		'0';
+
+
+o_jrOp <=
+		'1' when (i_opCode = "000000" AND i_functCode = "001000") else
 		'0';
 
 o_jump<=

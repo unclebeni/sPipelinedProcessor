@@ -51,14 +51,20 @@ component Reg
 	     o_R	: out std_logic_vector(N-1 downto 0));
 end component;
 
+component andg2 is
+
+  port(i_A          : in std_logic;
+       i_B          : in std_logic;
+       o_F          : out std_logic);
+
+end component;
+
 signal s_CLK, s_WE, s_RST	: std_logic;
 signal s_iD, s_sR, s_rD, s_r2D	: std_logic_vector(31 downto 0);
 signal s_rS, s_wS	: std_logic_vector(4 downto 0);
 signal s_zeroRST	: std_logic;
 
-signal s_wR0, s_wR1, s_wR2, s_wR3, s_wR4, s_wR5, s_wR6, s_wR7, s_wR8, s_wR9, s_wR10, s_wR11, 
-s_wR12, s_wR13, s_wR14, s_wR15, s_wR16, s_wR17, s_wR18, s_wR19, s_wR20, s_wR21, s_wR22, s_wR23,
- s_wR24, s_wR25, s_wR26, s_wR27, s_wR28, s_wR29, s_wR30, s_wR31	: std_logic;
+signal s_wR	: std_logic_vector(31 downto 0);
 
 signal s_rR0, s_rR1, s_rR2, s_rR3, s_rR4, s_rR5, s_rR6, s_rR7, s_rR8, s_rR9, s_rR10, s_rR11, 
 s_rR12, s_rR13, s_rR14, s_rR15, s_rR16, s_rR17, s_rR18, s_rR19, s_rR20, s_rR21, s_rR22, s_rR23,
@@ -80,134 +86,108 @@ begin
 	DEC0: Decoder
 		port map(i_WE => s_WE, i_D => i_WS, o_D => s_sR);
 
-	s_wR0 <= s_sR(0);
-	s_wR1 <= s_sR(1);
-	s_wR2 <= s_sR(2);
-	s_wR3 <= s_sR(3);
-	s_wR4 <= s_sR(4);
-	s_wR5 <= s_sR(5);
-	s_wR6 <= s_sR(6);
-	s_wR7 <= s_sR(7);
-	s_wR8 <= s_sR(8);
-	s_wR9 <= s_sR(9);
-	s_wR10 <= s_sR(10);
-	s_wR11 <= s_sR(11);
-	s_wR12 <= s_sR(12);
-	s_wR13 <= s_sR(13);
-	s_wR14 <= s_sR(14);
-	s_wR15 <= s_sR(15);
-	s_wR16 <= s_sR(16);
-	s_wR17 <= s_sR(17);
-	s_wR18 <= s_sR(18);
-	s_wR19 <= s_sR(19);
-	s_wR20 <= s_sR(20);
-	s_wR21 <= s_sR(21);
-	s_wR22 <= s_sR(22);
-	s_wR23 <= s_sR(23);
-	s_wR24 <= s_sR(24);
-	s_wR25 <= s_sR(25);
-	s_wR26 <= s_sR(26);
-	s_wR27 <= s_sR(27);
-	s_wR28 <= s_sR(28);
-	s_wR29 <= s_sR(29);
-	s_wR30 <= s_sR(30);
-	s_wR31 <= s_sR(31);
+	G_32BITAND: for i in 0 to 31 generate
+		ANDI: andg2 port map(
+			i_A => i_WE,
+			i_B => s_sR(i),
+			o_F => s_wR(i));
+	end generate G_32BITAND;
 
 	REG0: Reg
-		port map(i_CLK => s_CLK, i_RST => s_zeroRST, i_WE => s_wR0, i_D => i_wD, o_R => s_rR0);
+		port map(i_CLK => s_CLK, i_RST => s_zeroRST, i_WE => s_wR(0), i_D => i_wD, o_R => s_rR0);
 
 	REG1: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR1, i_D => i_wD, o_R => s_rR1);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(1), i_D => i_wD, o_R => s_rR1);
 
 	REG2: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR2, i_D => i_wD, o_R => s_rR2);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(2), i_D => i_wD, o_R => s_rR2);
 
 	REG3: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR3, i_D => i_wD, o_R => s_rR3);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(3), i_D => i_wD, o_R => s_rR3);
 
 	REG4: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR4, i_D => i_wD, o_R => s_rR4);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(4), i_D => i_wD, o_R => s_rR4);
 
 	REG5: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR5, i_D => i_wD, o_R => s_rR5);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(5), i_D => i_wD, o_R => s_rR5);
 
 	REG6: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR6, i_D => i_wD, o_R => s_rR6);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(6), i_D => i_wD, o_R => s_rR6);
 
 	REG7: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR7, i_D => i_wD, o_R => s_rR7);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(7), i_D => i_wD, o_R => s_rR7);
 
 	REG8: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR8, i_D => i_wD, o_R => s_rR8);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(8), i_D => i_wD, o_R => s_rR8);
 
 	REG9: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR9, i_D => i_wD, o_R => s_rR9);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(9), i_D => i_wD, o_R => s_rR9);
 
 	REG10: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR10, i_D => i_wD, o_R => s_rR10);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(10), i_D => i_wD, o_R => s_rR10);
 
 	REG11: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR11, i_D => i_wD, o_R => s_rR11);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(11), i_D => i_wD, o_R => s_rR11);
 
 	REG12: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR12, i_D => i_wD, o_R => s_rR12);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(12), i_D => i_wD, o_R => s_rR12);
 
 	REG13: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR13, i_D => i_wD, o_R => s_rR13);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(13), i_D => i_wD, o_R => s_rR13);
 
 	REG14: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR14, i_D => i_wD, o_R => s_rR14);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(14), i_D => i_wD, o_R => s_rR14);
 
 	REG15: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR15, i_D => i_wD, o_R => s_rR15);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(15), i_D => i_wD, o_R => s_rR15);
 
 	REG16: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR16, i_D => i_wD, o_R => s_rR16);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(16), i_D => i_wD, o_R => s_rR16);
 
 	REG17: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR17, i_D => i_wD, o_R => s_rR17);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(17), i_D => i_wD, o_R => s_rR17);
 
 	REG18: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR18, i_D => i_wD, o_R => s_rR18);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(18), i_D => i_wD, o_R => s_rR18);
 
 	REG19: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR19, i_D => i_wD, o_R => s_rR19);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(19), i_D => i_wD, o_R => s_rR19);
 
 	REG20: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR20, i_D => i_wD, o_R => s_rR20);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(20), i_D => i_wD, o_R => s_rR20);
 
 	REG21: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR21, i_D => i_wD, o_R => s_rR21);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(21), i_D => i_wD, o_R => s_rR21);
 
 	REG22: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR22, i_D => i_wD, o_R => s_rR22);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(22), i_D => i_wD, o_R => s_rR22);
 
 	REG23: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR23, i_D => i_wD, o_R => s_rR23);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(23), i_D => i_wD, o_R => s_rR23);
 
 	REG24: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR24, i_D => i_wD, o_R => s_rR24);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(24), i_D => i_wD, o_R => s_rR24);
 
 	REG25: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR25, i_D => i_wD, o_R => s_rR25);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(25), i_D => i_wD, o_R => s_rR25);
 
 	REG26: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR26, i_D => i_wD, o_R => s_rR26);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(26), i_D => i_wD, o_R => s_rR26);
 
 	REG27: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR27, i_D => i_wD, o_R => s_rR27);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(27), i_D => i_wD, o_R => s_rR27);
 
 	REG28: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR28, i_D => i_wD, o_R => s_rR28);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(28), i_D => i_wD, o_R => s_rR28);
 
 	REG29: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR29, i_D => i_wD, o_R => s_rR29);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(29), i_D => i_wD, o_R => s_rR29);
 
 	REG30: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR30, i_D => i_wD, o_R => s_rR30);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(30), i_D => i_wD, o_R => s_rR30);
 
 	REG31: Reg
-		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR31, i_D => i_wD, o_R => s_rR31);
+		port map(i_CLK => s_CLK, i_RST => s_RST, i_WE => s_wR(31), i_D => i_wD, o_R => s_rR31);
 
 	s_rM0(0) <= s_rR0(0);
 	s_rM0(1) <= s_rR1(0);
@@ -482,7 +462,7 @@ begin
 	s_rM7(17) <= s_rR17(7);
 	s_rM7(18) <= s_rR18(7);
 	s_rM7(19) <= s_rR19(7);
-	s_rM7(20) <= s_rR21(7);
+	s_rM7(20) <= s_rR20(7);
 	s_rM7(21) <= s_rR21(7);
 	s_rM7(22) <= s_rR22(7);
 	s_rM7(23) <= s_rR23(7);
@@ -518,7 +498,7 @@ begin
 	s_rM8(17) <= s_rR17(8);
 	s_rM8(18) <= s_rR18(8);
 	s_rM8(19) <= s_rR19(8);
-	s_rM8(20) <= s_rR21(8);
+	s_rM8(20) <= s_rR20(8);
 	s_rM8(21) <= s_rR21(8);
 	s_rM8(22) <= s_rR22(8);
 	s_rM8(23) <= s_rR23(8);
@@ -554,7 +534,7 @@ begin
 	s_rM9(17) <= s_rR17(9);
 	s_rM9(18) <= s_rR18(9);
 	s_rM9(19) <= s_rR19(9);
-	s_rM9(20) <= s_rR21(9);
+	s_rM9(20) <= s_rR20(9);
 	s_rM9(21) <= s_rR21(9);
 	s_rM9(22) <= s_rR22(9);
 	s_rM9(23) <= s_rR23(9);
@@ -590,7 +570,7 @@ begin
 	s_rM10(17) <= s_rR17(10);
 	s_rM10(18) <= s_rR18(10);
 	s_rM10(19) <= s_rR19(10);
-	s_rM10(20) <= s_rR21(10);
+	s_rM10(20) <= s_rR20(10);
 	s_rM10(21) <= s_rR21(10);
 	s_rM10(22) <= s_rR22(10);
 	s_rM10(23) <= s_rR23(10);
@@ -626,7 +606,7 @@ begin
 	s_rM11(17) <= s_rR17(11);
 	s_rM11(18) <= s_rR18(11);
 	s_rM11(19) <= s_rR19(11);
-	s_rM11(20) <= s_rR21(11);
+	s_rM11(20) <= s_rR20(11);
 	s_rM11(21) <= s_rR21(11);
 	s_rM11(22) <= s_rR22(11);
 	s_rM11(23) <= s_rR23(11);
@@ -662,7 +642,7 @@ begin
 	s_rM12(17) <= s_rR17(12);
 	s_rM12(18) <= s_rR18(12);
 	s_rM12(19) <= s_rR19(12);
-	s_rM12(20) <= s_rR21(12);
+	s_rM12(20) <= s_rR20(12);
 	s_rM12(21) <= s_rR21(12);
 	s_rM12(22) <= s_rR22(12);
 	s_rM12(23) <= s_rR23(12);
@@ -950,7 +930,7 @@ begin
 	s_rM20(17) <= s_rR17(20);
 	s_rM20(18) <= s_rR18(20);
 	s_rM20(19) <= s_rR19(20);
-	s_rM20(20) <= s_rR21(20);
+	s_rM20(20) <= s_rR20(20);
 	s_rM20(21) <= s_rR21(20);
 	s_rM20(22) <= s_rR22(20);
 	s_rM20(23) <= s_rR23(20);
@@ -986,7 +966,7 @@ begin
 	s_rM21(17) <= s_rR17(21);
 	s_rM21(18) <= s_rR18(21);
 	s_rM21(19) <= s_rR19(21);
-	s_rM21(20) <= s_rR21(21);
+	s_rM21(20) <= s_rR20(21);
 	s_rM21(21) <= s_rR21(21);
 	s_rM21(22) <= s_rR22(21);
 	s_rM21(23) <= s_rR23(21);
@@ -1022,7 +1002,7 @@ begin
 	s_rM22(17) <= s_rR17(22);
 	s_rM22(18) <= s_rR18(22);
 	s_rM22(19) <= s_rR19(22);
-	s_rM22(20) <= s_rR21(22);
+	s_rM22(20) <= s_rR20(22);
 	s_rM22(21) <= s_rR21(22);
 	s_rM22(22) <= s_rR22(22);
 	s_rM22(23) <= s_rR23(22);
@@ -1058,7 +1038,7 @@ begin
 	s_rM23(17) <= s_rR17(23);
 	s_rM23(18) <= s_rR18(23);
 	s_rM23(19) <= s_rR19(23);
-	s_rM23(20) <= s_rR21(23);
+	s_rM23(20) <= s_rR20(23);
 	s_rM23(21) <= s_rR21(23);
 	s_rM23(22) <= s_rR22(23);
 	s_rM23(23) <= s_rR23(23);
@@ -1094,7 +1074,7 @@ begin
 	s_rM24(17) <= s_rR17(24);
 	s_rM24(18) <= s_rR18(24);
 	s_rM24(19) <= s_rR19(24);
-	s_rM24(20) <= s_rR21(24);
+	s_rM24(20) <= s_rR20(24);
 	s_rM24(21) <= s_rR21(24);
 	s_rM24(22) <= s_rR22(24);
 	s_rM24(23) <= s_rR23(24);
@@ -1130,7 +1110,7 @@ begin
 	s_rM25(17) <= s_rR17(25);
 	s_rM25(18) <= s_rR18(25);
 	s_rM25(19) <= s_rR19(25);
-	s_rM25(20) <= s_rR21(25);
+	s_rM25(20) <= s_rR20(25);
 	s_rM25(21) <= s_rR21(25);
 	s_rM25(22) <= s_rR22(25);
 	s_rM25(23) <= s_rR23(25);
@@ -1166,7 +1146,7 @@ begin
 	s_rM26(17) <= s_rR17(26);
 	s_rM26(18) <= s_rR18(26);
 	s_rM26(19) <= s_rR19(26);
-	s_rM26(20) <= s_rR21(26);
+	s_rM26(20) <= s_rR20(26);
 	s_rM26(21) <= s_rR21(26);
 	s_rM26(22) <= s_rR22(26);
 	s_rM26(23) <= s_rR23(26);
@@ -1202,7 +1182,7 @@ begin
 	s_rM27(17) <= s_rR17(27);
 	s_rM27(18) <= s_rR18(27);
 	s_rM27(19) <= s_rR19(27);
-	s_rM27(20) <= s_rR21(27);
+	s_rM27(20) <= s_rR20(27);
 	s_rM27(21) <= s_rR21(27);
 	s_rM27(22) <= s_rR22(27);
 	s_rM27(23) <= s_rR23(27);
@@ -1238,7 +1218,7 @@ begin
 	s_rM28(17) <= s_rR17(28);
 	s_rM28(18) <= s_rR18(28);
 	s_rM28(19) <= s_rR19(28);
-	s_rM28(20) <= s_rR21(28);
+	s_rM28(20) <= s_rR20(28);
 	s_rM28(21) <= s_rR21(28);
 	s_rM28(22) <= s_rR22(28);
 	s_rM28(23) <= s_rR23(28);
@@ -1274,7 +1254,7 @@ begin
 	s_rM29(17) <= s_rR17(29);
 	s_rM29(18) <= s_rR18(29);
 	s_rM29(19) <= s_rR19(29);
-	s_rM29(20) <= s_rR21(29);
+	s_rM29(20) <= s_rR20(29);
 	s_rM29(21) <= s_rR21(29);
 	s_rM29(22) <= s_rR22(29);
 	s_rM29(23) <= s_rR23(29);
@@ -1310,7 +1290,7 @@ begin
 	s_rM30(17) <= s_rR17(30);
 	s_rM30(18) <= s_rR18(30);
 	s_rM30(19) <= s_rR19(30);
-	s_rM30(20) <= s_rR21(30);
+	s_rM30(20) <= s_rR20(30);
 	s_rM30(21) <= s_rR21(30);
 	s_rM30(22) <= s_rR22(30);
 	s_rM30(23) <= s_rR23(30);
@@ -1346,7 +1326,7 @@ begin
 	s_rM31(17) <= s_rR17(31);
 	s_rM31(18) <= s_rR18(31);
 	s_rM31(19) <= s_rR19(31);
-	s_rM31(20) <= s_rR21(31);
+	s_rM31(20) <= s_rR20(31);
 	s_rM31(21) <= s_rR21(31);
 	s_rM31(22) <= s_rR22(31);
 	s_rM31(23) <= s_rR23(31);
@@ -1637,7 +1617,7 @@ begin
 	s_r2M7(17) <= s_rR17(7);
 	s_r2M7(18) <= s_rR18(7);
 	s_r2M7(19) <= s_rR19(7);
-	s_r2M7(20) <= s_rR21(7);
+	s_r2M7(20) <= s_rR20(7);
 	s_r2M7(21) <= s_rR21(7);
 	s_r2M7(22) <= s_rR22(7);
 	s_r2M7(23) <= s_rR23(7);
@@ -1673,7 +1653,7 @@ begin
 	s_r2M8(17) <= s_rR17(8);
 	s_r2M8(18) <= s_rR18(8);
 	s_r2M8(19) <= s_rR19(8);
-	s_r2M8(20) <= s_rR21(8);
+	s_r2M8(20) <= s_rR20(8);
 	s_r2M8(21) <= s_rR21(8);
 	s_r2M8(22) <= s_rR22(8);
 	s_r2M8(23) <= s_rR23(8);
@@ -1709,7 +1689,7 @@ begin
 	s_r2M9(17) <= s_rR17(9);
 	s_r2M9(18) <= s_rR18(9);
 	s_r2M9(19) <= s_rR19(9);
-	s_r2M9(20) <= s_rR21(9);
+	s_r2M9(20) <= s_rR20(9);
 	s_r2M9(21) <= s_rR21(9);
 	s_r2M9(22) <= s_rR22(9);
 	s_r2M9(23) <= s_rR23(9);
@@ -1745,7 +1725,7 @@ begin
 	s_r2M10(17) <= s_rR17(10);
 	s_r2M10(18) <= s_rR18(10);
 	s_r2M10(19) <= s_rR19(10);
-	s_r2M10(20) <= s_rR21(10);
+	s_r2M10(20) <= s_rR20(10);
 	s_r2M10(21) <= s_rR21(10);
 	s_r2M10(22) <= s_rR22(10);
 	s_r2M10(23) <= s_rR23(10);
@@ -1781,7 +1761,7 @@ begin
 	s_r2M11(17) <= s_rR17(11);
 	s_r2M11(18) <= s_rR18(11);
 	s_r2M11(19) <= s_rR19(11);
-	s_r2M11(20) <= s_rR21(11);
+	s_r2M11(20) <= s_rR20(11);
 	s_r2M11(21) <= s_rR21(11);
 	s_r2M11(22) <= s_rR22(11);
 	s_r2M11(23) <= s_rR23(11);
@@ -1817,7 +1797,7 @@ begin
 	s_r2M12(17) <= s_rR17(12);
 	s_r2M12(18) <= s_rR18(12);
 	s_r2M12(19) <= s_rR19(12);
-	s_r2M12(20) <= s_rR21(12);
+	s_r2M12(20) <= s_rR20(12);
 	s_r2M12(21) <= s_rR21(12);
 	s_r2M12(22) <= s_rR22(12);
 	s_r2M12(23) <= s_rR23(12);
@@ -2105,7 +2085,7 @@ begin
 	s_r2M20(17) <= s_rR17(20);
 	s_r2M20(18) <= s_rR18(20);
 	s_r2M20(19) <= s_rR19(20);
-	s_r2M20(20) <= s_rR21(20);
+	s_r2M20(20) <= s_rR20(20);
 	s_r2M20(21) <= s_rR21(20);
 	s_r2M20(22) <= s_rR22(20);
 	s_r2M20(23) <= s_rR23(20);
@@ -2141,7 +2121,7 @@ begin
 	s_r2M21(17) <= s_rR17(21);
 	s_r2M21(18) <= s_rR18(21);
 	s_r2M21(19) <= s_rR19(21);
-	s_r2M21(20) <= s_rR21(21);
+	s_r2M21(20) <= s_rR20(21);
 	s_r2M21(21) <= s_rR21(21);
 	s_r2M21(22) <= s_rR22(21);
 	s_r2M21(23) <= s_rR23(21);
@@ -2177,7 +2157,7 @@ begin
 	s_r2M22(17) <= s_rR17(22);
 	s_r2M22(18) <= s_rR18(22);
 	s_r2M22(19) <= s_rR19(22);
-	s_r2M22(20) <= s_rR21(22);
+	s_r2M22(20) <= s_rR20(22);
 	s_r2M22(21) <= s_rR21(22);
 	s_r2M22(22) <= s_rR22(22);
 	s_r2M22(23) <= s_rR23(22);
@@ -2213,7 +2193,7 @@ begin
 	s_r2M23(17) <= s_rR17(23);
 	s_r2M23(18) <= s_rR18(23);
 	s_r2M23(19) <= s_rR19(23);
-	s_r2M23(20) <= s_rR21(23);
+	s_r2M23(20) <= s_rR20(23);
 	s_r2M23(21) <= s_rR21(23);
 	s_r2M23(22) <= s_rR22(23);
 	s_r2M23(23) <= s_rR23(23);
@@ -2249,7 +2229,7 @@ begin
 	s_r2M24(17) <= s_rR17(24);
 	s_r2M24(18) <= s_rR18(24);
 	s_r2M24(19) <= s_rR19(24);
-	s_r2M24(20) <= s_rR21(24);
+	s_r2M24(20) <= s_rR20(24);
 	s_r2M24(21) <= s_rR21(24);
 	s_r2M24(22) <= s_rR22(24);
 	s_r2M24(23) <= s_rR23(24);
@@ -2285,7 +2265,7 @@ begin
 	s_r2M25(17) <= s_rR17(25);
 	s_r2M25(18) <= s_rR18(25);
 	s_r2M25(19) <= s_rR19(25);
-	s_r2M25(20) <= s_rR21(25);
+	s_r2M25(20) <= s_rR20(25);
 	s_r2M25(21) <= s_rR21(25);
 	s_r2M25(22) <= s_rR22(25);
 	s_r2M25(23) <= s_rR23(25);
@@ -2321,7 +2301,7 @@ begin
 	s_r2M26(17) <= s_rR17(26);
 	s_r2M26(18) <= s_rR18(26);
 	s_r2M26(19) <= s_rR19(26);
-	s_r2M26(20) <= s_rR21(26);
+	s_r2M26(20) <= s_rR20(26);
 	s_r2M26(21) <= s_rR21(26);
 	s_r2M26(22) <= s_rR22(26);
 	s_r2M26(23) <= s_rR23(26);
@@ -2357,7 +2337,7 @@ begin
 	s_r2M27(17) <= s_rR17(27);
 	s_r2M27(18) <= s_rR18(27);
 	s_r2M27(19) <= s_rR19(27);
-	s_r2M27(20) <= s_rR21(27);
+	s_r2M27(20) <= s_rR20(27);
 	s_r2M27(21) <= s_rR21(27);
 	s_r2M27(22) <= s_rR22(27);
 	s_r2M27(23) <= s_rR23(27);
@@ -2393,7 +2373,7 @@ begin
 	s_r2M28(17) <= s_rR17(28);
 	s_r2M28(18) <= s_rR18(28);
 	s_r2M28(19) <= s_rR19(28);
-	s_r2M28(20) <= s_rR21(28);
+	s_r2M28(20) <= s_rR20(28);
 	s_r2M28(21) <= s_rR21(28);
 	s_r2M28(22) <= s_rR22(28);
 	s_r2M28(23) <= s_rR23(28);
@@ -2429,7 +2409,7 @@ begin
 	s_r2M29(17) <= s_rR17(29);
 	s_r2M29(18) <= s_rR18(29);
 	s_r2M29(19) <= s_rR19(29);
-	s_r2M29(20) <= s_rR21(29);
+	s_r2M29(20) <= s_rR20(29);
 	s_r2M29(21) <= s_rR21(29);
 	s_r2M29(22) <= s_rR22(29);
 	s_r2M29(23) <= s_rR23(29);
@@ -2465,7 +2445,7 @@ begin
 	s_r2M30(17) <= s_rR17(30);
 	s_r2M30(18) <= s_rR18(30);
 	s_r2M30(19) <= s_rR19(30);
-	s_r2M30(20) <= s_rR21(30);
+	s_r2M30(20) <= s_rR20(30);
 	s_r2M30(21) <= s_rR21(30);
 	s_r2M30(22) <= s_rR22(30);
 	s_r2M30(23) <= s_rR23(30);
@@ -2501,7 +2481,7 @@ begin
 	s_r2M31(17) <= s_rR17(31);
 	s_r2M31(18) <= s_rR18(31);
 	s_r2M31(19) <= s_rR19(31);
-	s_r2M31(20) <= s_rR21(31);
+	s_r2M31(20) <= s_rR20(31);
 	s_r2M31(21) <= s_rR21(31);
 	s_r2M31(22) <= s_rR22(31);
 	s_r2M31(23) <= s_rR23(31);
