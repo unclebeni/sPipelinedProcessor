@@ -8,19 +8,20 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity tb_MIPSFetch is
-	generic(gCLK_HPER   : time := 10 ns); 
+	generic(gCLK_HPER   : time := 10 ns);
 end tb_MIPSFetch;
 
-architecture mixed of tb_MIPSFetch is
+architecture structural of tb_MIPSFetch is
 
 constant cCLK_PER	:  time := gCLK_HPER * 2;
 
 component MIPSFetch is
 	port(i_PC	: in std_logic_vector(31 downto 0);
-	     i_Instr25t0	: in std_logic_vector(25 downto 0);
+	     i_PCRST	: in std_logic;
+	     i_Instr	: in std_logic_vector(31 downto 0);
 	     i_ExtendedImm	: in std_logic_vector(31 downto 0);
 	     o_PC		: out std_logic_vector(31 downto 0);
-	     o_PCp8		: out std_logic_vector(31 downto 0);
+	     o_PCp4		: out std_logic_vector(31 downto 0);
 	     i_HALT	: in std_logic;
 	     i_CLK	: in std_logic;
 	     i_Jump	: in std_logic;
@@ -29,45 +30,61 @@ component MIPSFetch is
 	     i_ALUResult	: in std_logic);
 end component;
 
-signal PC, imm, oPC, oPCp8	: std_logic_vector(31 downto 0);
-signal instr25t0	: std_logic_vector(25 downto 0);
-signal clk, jump, branch, bne, aluresult, halt	: std_logic;
+signal iPC, Inst, ImmExt, oPC, oPCp4	: std_logic_vector(31 downto 0);
+signal HALT, PCRST, CLK, Jump, Branch, Bne, ALUResult	: std_logic;
 
 begin
 
-FETCHLOGIC: MIPSFetch port map(i_PC => PC, i_Instr25t0 => instr25t0, i_ExtendedImm => imm, o_PC => oPC, o_PCp8 => oPCp8, i_HALT => halt, i_CLK => clk, i_Jump => jump, i_Branch => branch, i_BranchNotEqual => bne, i_ALUResult => aluresult);
+FETCHLOGIC: MIPSFetch port map(i_PC => iPC, i_PCRST => PCRST, i_Instr => Inst, i_ExtendedImm => ImmExt, o_PC => oPC, o_PCp4 => oPcp4, i_HALT => HALT, i_CLK => CLK, i_Jump => Jump, i_Branch => Branch, i_BranchNotEqual => Bne, i_ALUResult => ALUResult);
 
 	P_CLK: process
 	begin
-		clk <= '1';
+		CLK <= '1';
 		wait for gCLK_HPER;
-		clk <= '0';
+		CLK <= '0';
 		wait for gCLK_HPER;
 	end process;
 
 	P_TEST_CASES: process
 	begin
-		wait for gCLK_HPER;
-		PC <= x"00000000";
-		imm <= x"00000000";
-		halt <= '0';
-		instr25t0 <= "00000000000000000000000000";
-		jump <= '0';
-		branch <= '0';
-		bne <= '0';
-		aluresult <= '0';
+		iPC <= x"00400058";
+		PCRST <= '0';
+		Inst <= x"00000000";
+		ImmExt <= x"00000000";
+		HALT <= '0';
+		Jump <= '0';
+		Branch <= '0';
+		Bne <= '0';
+		ALUResult <= '0';
 		wait for cCLK_PER;
-		PC <= x"00000004";
+		iPC <= x"0040005C";
+		Inst <= x"0840000C";
+		Jump <= '1';
 		wait for cCLK_PER;
-		PC <= x"00000008";
+		iPC <= x"0040000C";
+		Inst <= x"11100003";
+		ImmExt <= x"00000003";
+		Jump <= '0';
+		Branch <= '1';
+		Bne <= '0';
+		ALUResult <= '1';
 		wait for cCLK_PER;
-		halt <= '1';
+		iPC <= x"0040001C";
+		Inst <= x"11180001";
+		ImmExt <= x"00000001";
+		Branch <= '1';
+		Bne <= '1';
+		ALUResult <= '1';
 		wait for cCLK_PER;
-		PC <= x"0000000C";
+		Branch <= '0';
 		wait for cCLK_PER;
-		PC <= x"00000010";
+		iPC <= x"00400020";
+		Inst <= x"11180001";
+		ImmExt <= x"00000001";
+		Branch <= '1';
+		Bne <= '1';
+		ALUResult <= '0';
 		wait for cCLK_PER;
-		PC <= x"00000014";
 	end process;
 
-end mixed;
+end structural;
