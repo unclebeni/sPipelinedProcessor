@@ -26,7 +26,8 @@ entity control is
 		o_halt		: out std_logic;
 		o_luiOp		: out std_logic;
 		o_jrOp		: out std_logic;
-		o_ALUop		: out std_logic_vector(3 downto 0)); -- ALU op code
+		o_ALUop		: out std_logic_vector(3 downto 0) -- ALU op code
+		);
 
 end control;
 
