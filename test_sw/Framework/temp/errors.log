@@ -102,3 +102,19 @@ Traceback (most recent call last):
   File "internal/testpy/test_framework.py", line 57, in main
     input("Press Enter To Exit...")
 EOFError: EOF when reading a line
+
+Exception caught at 2021-12-03 17:22:19.529131:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 34, in main
+    input("Press Enter to Exit...")
+EOFError
+
+Exception caught at 2021-12-03 18:31:03.531877:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 57, in main
+    input("Press Enter To Exit...")
+EOFError

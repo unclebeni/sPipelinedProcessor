@@ -6,6 +6,9 @@ main:
 	addi $t0, $0, 4
 	lui $t1, 0x1001
 	#start test
+	nop
+	nop
+        #nop
 	sw $t0, 0x1e0($t1)
 	#end test
 	
