@@ -1,12 +1,24 @@
 Oh no...
 
-Cycle: 8
-Incorrect Write to Memory
-MARS instruction number: 5	Instruction: sw $8,480($9)
-MARS: Memory Write to Addr: 0x100101E0 Val: 0x00000004
-Student: Memory Write to Addr: 0x000001E0 Val: 0x00000004
+Cycle: 36
+Incorrect Write to Register File
+MARS instruction number: 32	Instruction: add $1,$0,$0
+MARS: Register Write to Reg: 0x01 Val: 0x00000000
+Student: Register Write to Reg: 0x02 Val: 0x00000000
 
-Almost! your processor completed the program with  1/3 allowed mismatches
+Cycle: 37
+Incorrect Write to Register File
+MARS instruction number: 33	Instruction: add $2,$0,$0
+MARS: Register Write to Reg: 0x02 Val: 0x00000000
+Student: Register Write to Reg: 0x03 Val: 0x00000000
+
+Cycle: 38
+Incorrect Write to Register File
+MARS instruction number: 34	Instruction: add $3,$0,$0
+MARS: Register Write to Reg: 0x03 Val: 0x00000000
+Student: Register Write to Reg: 0x04 Val: 0x00000000
+
+You have reached the maximum mismatches (3)
 
 Helpful resources for Debugging:
 temp/modelsim_dump.txt : output from the VHDL testbench during program execution on your processor

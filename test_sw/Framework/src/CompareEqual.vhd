@@ -31,7 +31,12 @@ port(
     o_result    :   out std_logic);
 end component;
 
-signal s_overflow, s_carryout, s_Eq	: std_logic;
+component invg is
+  port(i_A          : in std_logic;
+       o_F          : out std_logic);
+end component;
+
+signal s_overflow, s_carryout, s_Eq, s_nEq	: std_logic;
 signal s_AddOut	: std_logic_vector(31 downto 0);
 
 begin
@@ -40,6 +45,8 @@ ADDSUB: Add_Sub port map(iA => i_A, iB => i_B, nAdd_Sub => '1', o_overflow => s_
 
 EQUATOR: norg32t1 port map(i_data => s_AddOut, o_result => s_Eq);
 
-o_Eq <= s_Eq;
+INVERT: invg port map(i_A => s_Eq, o_F => s_nEq);
+
+o_Eq <= s_nEq;
 
 end structural;
