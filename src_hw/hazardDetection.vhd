@@ -27,11 +27,13 @@ entity hazardDetection is
 
     end hazardDetection;
 
-    architecture behavior of hazardDetection is 
+    architecture mixed of hazardDetection is 
 
     signal id_ex.rt, id_ex.rd, if_id.rt, if_id.rs, ex_mem.rs, ex_mem.rt    : std_logic_vector(5-1 downto 0 );
     signal id_ex.op, if_id.op, ex_mem.op   : std_logic_vector(6-1);
-
+    signal if_id.consumable : std_logic; -----This will be true when the if_id instruction is an operation that consumes a register value
+    signal if_id.rformat : std_logic; --This will be '1' when the if_id instruction is an r format instruction
+    signal if_id.immediate : std_logic; -- This will be true if the IF_ID instruction is an immediate instruction that consumes a value
 
     begin
 
@@ -47,15 +49,30 @@ entity hazardDetection is
         ex_mem.rt <= i_EX_MEM(20 downto 16);
         ex_mem.op <= i_EX_MEM(31 downto 26);
 
+
+
 --First we implement stalling
-        --lw case : The ID_EX instruction is a lw and ID/EX.Rt = IF/ID.Rs or ID/EX.Rt = IF/ID.Rt ... IF/ID is an instruction that consumes a value
+        --lw case : The ID_EX instruction is a lw and ID/EX.Rt = IF/ID.Rs or ID/EX.Rt = IF/ID.Rt ... when IF/ID is an instruction that consumes a value
         --branch case: when making a branch descision, we need to decide how to handle that....
                         --The hazard is when there is a branch instruction in the ex/mem register and we are taking the branch
-        o_Stall_IF_ID <= '1' when id_ex.op = "100011" and ((id_ex.rt = if_id.rs) or id_ex.rt = if_id.rt) else --This covers lw case
-                    '0'; --Base case, no stall.
-        i_Flush <= '1' when (ex_mem.op = "00100" or ex_mem.op = (00101)) and i_branchTaken = '1' else --When taking the branch, we should flush. 
 
-                        '0';
+-------This logic decides if the if_id operation is and r-format
+
+	if_id.rformat <= '1' when if_id.op = "000000" else '0';
+
+	if_id.immediate <= '1' when if_id.op = "001000" or if_id.op = "001001" or if_id.op = "001100" or if_id.op = "001111" or if_id.op = "100011" or if_id.op = "001110" or
+				if_id.op = "001101" or if_id.op = "001010" or if_id.op "101011" else '0';  ---This should cover all of the cases of immediate values that are NOT Branches
+
+
+
+        o_Stall_IF_ID <= '1' when id_ex.op = "100011" and if_id.rformat and ((id_ex.rt = if_id.rs) or id_ex.rt = if_id.rt) else --This covers lw case for r format if_id instructions
+			 '1' when id_ex.op = "100011" and if_id.immediate and (id_ex.rt = if_id.rs) else '1' when (if_id.op = "00100" or if_id.op = "00101" else '0'; --This should cover the lw case for immediate instructions
+
+	o_Stall_PC <= '1' when if_id.op = "00100" else '1' when if_id.op = "00101" else '0';
+						
+						
+        i_Flush <= '1' when (ex_mem.op = "00100" or ex_mem.op = (00101)) and i_branchTaken = '1' else --When taking the branch, we should flush. 
+                        '0'; --base case, no flush
                 
 
-    end behavior;
+    end mixed;
