@@ -313,7 +313,7 @@ begin
   IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_IMemAddr(11 downto 2), data => iInstExt, we => iInstLd, q => s_Inst);
     
   --IF/ID Register
-  IFIDREG: IfID port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => '1', i_PCp4 => s_PCp4, i_Inst => s_Inst, o_PCp4 => ps_PCp4, o_Inst => ps_Inst);
+  IFIDREG: IFID port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => '1', i_PCp4 => s_PCp4, i_Inst => s_Inst, o_PCp4 => ps_PCp4, o_Inst => ps_Inst);
 
   --Defining instruction segments
   s_instr31t26(5 downto 0) <= ps_Inst(31 downto 26);

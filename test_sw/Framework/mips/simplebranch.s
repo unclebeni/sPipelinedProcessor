@@ -4,6 +4,9 @@ main:
 	li $s0 0xffffffff
 skip:
 	ori $s1 $zero 0x1234
+	nop
+	nop
+	nop
 	beq $s0 $s1 skip2
 	li $s0 0xffffffff
 skip2:
