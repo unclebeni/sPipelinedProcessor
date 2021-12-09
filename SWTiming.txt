@@ -1,0 +1,103 @@
+
+#
+# CprE 381 toolflow Timing dump
+#
+
+FMax: 54.92mhz Clk Constraint: 20.00ns Slack: 1.79ns
+
+The path is given below
+
+ ===================================================================
+ From Node    : IDEX:IDEXREG|Reg:IFIDREG|dffg:\N_Bit_REG:123:DFFGI|s_Q
+ To Node      : EXMEM:EXMEMREG|Reg:IFIDREG|dffg:\N_Bit_REG:100:DFFGI|s_Q
+ Launch Clock : iCLK
+ Latch Clock  : iCLK
+ Data Arrival Path:
+ Total (ns)  Incr (ns)     Type  Element
+ ==========  ========= ==  ====  ===================================
+      0.000      0.000           launch edge time
+      3.057      3.057  R        clock network delay
+      3.289      0.232     uTco  IDEX:IDEXREG|Reg:IFIDREG|dffg:\N_Bit_REG:123:DFFGI|s_Q
+      3.289      0.000 FF  CELL  IDEXREG|IFIDREG|\N_Bit_REG:123:DFFGI|s_Q|q
+      3.740      0.451 FF    IC  MIPSALUCNTRL|Mux0~0|dataa
+      4.169      0.429 FR  CELL  MIPSALUCNTRL|Mux0~0|combout
+      5.271      1.102 RR    IC  MIPSALU|full32adder|add|\loop2:1:rippleAdder2|g5or2|o_F~0|datab
+      5.705      0.434 RF  CELL  MIPSALU|full32adder|add|\loop2:1:rippleAdder2|g5or2|o_F~0|combout
+      5.995      0.290 FF    IC  MIPSALU|full32adder|add|\loop2:2:rippleAdder2|g5or2|o_F~0|datab
+      6.420      0.425 FF  CELL  MIPSALU|full32adder|add|\loop2:2:rippleAdder2|g5or2|o_F~0|combout
+      6.669      0.249 FF    IC  MIPSALU|full32adder|add|\loop2:3:rippleAdder2|g5or2|o_F~0|datad
+      6.794      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:3:rippleAdder2|g5or2|o_F~0|combout
+      7.042      0.248 FF    IC  MIPSALU|full32adder|add|\loop2:4:rippleAdder2|g5or2|o_F~0|datad
+      7.167      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:4:rippleAdder2|g5or2|o_F~0|combout
+      7.416      0.249 FF    IC  MIPSALU|full32adder|add|\loop2:5:rippleAdder2|g5or2|o_F~0|datad
+      7.541      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:5:rippleAdder2|g5or2|o_F~0|combout
+      7.791      0.250 FF    IC  MIPSALU|full32adder|add|\loop2:6:rippleAdder2|g5or2|o_F~0|datad
+      7.916      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:6:rippleAdder2|g5or2|o_F~0|combout
+      8.207      0.291 FF    IC  MIPSALU|full32adder|add|\loop2:7:rippleAdder2|g5or2|o_F~0|datab
+      8.632      0.425 FF  CELL  MIPSALU|full32adder|add|\loop2:7:rippleAdder2|g5or2|o_F~0|combout
+      8.922      0.290 FF    IC  MIPSALU|full32adder|add|\loop2:8:rippleAdder2|g5or2|o_F~0|datab
+      9.347      0.425 FF  CELL  MIPSALU|full32adder|add|\loop2:8:rippleAdder2|g5or2|o_F~0|combout
+      9.598      0.251 FF    IC  MIPSALU|full32adder|add|\loop2:9:rippleAdder2|g5or2|o_F~0|datad
+      9.723      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:9:rippleAdder2|g5or2|o_F~0|combout
+      9.972      0.249 FF    IC  MIPSALU|full32adder|add|\loop2:10:rippleAdder2|g5or2|o_F~0|datad
+     10.097      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:10:rippleAdder2|g5or2|o_F~0|combout
+     10.396      0.299 FF    IC  MIPSALU|full32adder|add|\loop2:11:rippleAdder2|g5or2|o_F~0|dataa
+     10.820      0.424 FF  CELL  MIPSALU|full32adder|add|\loop2:11:rippleAdder2|g5or2|o_F~0|combout
+     11.070      0.250 FF    IC  MIPSALU|full32adder|add|\loop2:12:rippleAdder2|g5or2|o_F~0|datad
+     11.195      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:12:rippleAdder2|g5or2|o_F~0|combout
+     11.449      0.254 FF    IC  MIPSALU|full32adder|add|\loop2:13:rippleAdder2|g5or2|o_F~0|datac
+     11.730      0.281 FF  CELL  MIPSALU|full32adder|add|\loop2:13:rippleAdder2|g5or2|o_F~0|combout
+     11.979      0.249 FF    IC  MIPSALU|full32adder|add|\loop2:14:rippleAdder2|g5or2|o_F~0|datad
+     12.104      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:14:rippleAdder2|g5or2|o_F~0|combout
+     12.491      0.387 FF    IC  MIPSALU|full32adder|add|\loop2:15:rippleAdder2|g5or2|o_F~0|datad
+     12.616      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:15:rippleAdder2|g5or2|o_F~0|combout
+     12.866      0.250 FF    IC  MIPSALU|full32adder|add|\loop2:16:rippleAdder2|g5or2|o_F~0|datad
+     12.991      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:16:rippleAdder2|g5or2|o_F~0|combout
+     13.247      0.256 FF    IC  MIPSALU|full32adder|add|\loop2:17:rippleAdder2|g5or2|o_F~0|datac
+     13.528      0.281 FF  CELL  MIPSALU|full32adder|add|\loop2:17:rippleAdder2|g5or2|o_F~0|combout
+     13.780      0.252 FF    IC  MIPSALU|full32adder|add|\loop2:18:rippleAdder2|g5or2|o_F~0|datad
+     13.905      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:18:rippleAdder2|g5or2|o_F~0|combout
+     14.163      0.258 FF    IC  MIPSALU|full32adder|add|\loop2:19:rippleAdder2|g5or2|o_F~0|datac
+     14.444      0.281 FF  CELL  MIPSALU|full32adder|add|\loop2:19:rippleAdder2|g5or2|o_F~0|combout
+     14.699      0.255 FF    IC  MIPSALU|full32adder|add|\loop2:20:rippleAdder2|g5or2|o_F~0|datac
+     14.980      0.281 FF  CELL  MIPSALU|full32adder|add|\loop2:20:rippleAdder2|g5or2|o_F~0|combout
+     15.228      0.248 FF    IC  MIPSALU|full32adder|add|\loop2:21:rippleAdder2|g5or2|o_F~0|datad
+     15.353      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:21:rippleAdder2|g5or2|o_F~0|combout
+     15.608      0.255 FF    IC  MIPSALU|full32adder|add|\loop2:22:rippleAdder2|g5or2|o_F~0|datac
+     15.889      0.281 FF  CELL  MIPSALU|full32adder|add|\loop2:22:rippleAdder2|g5or2|o_F~0|combout
+     16.145      0.256 FF    IC  MIPSALU|full32adder|add|\loop2:23:rippleAdder2|g5or2|o_F~0|datac
+     16.426      0.281 FF  CELL  MIPSALU|full32adder|add|\loop2:23:rippleAdder2|g5or2|o_F~0|combout
+     16.677      0.251 FF    IC  MIPSALU|full32adder|add|\loop2:24:rippleAdder2|g5or2|o_F~0|datad
+     16.802      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:24:rippleAdder2|g5or2|o_F~0|combout
+     17.052      0.250 FF    IC  MIPSALU|full32adder|add|\loop2:25:rippleAdder2|g5or2|o_F~0|datad
+     17.177      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:25:rippleAdder2|g5or2|o_F~0|combout
+     17.429      0.252 FF    IC  MIPSALU|full32adder|add|\loop2:26:rippleAdder2|g5or2|o_F~0|datad
+     17.554      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:26:rippleAdder2|g5or2|o_F~0|combout
+     17.805      0.251 FF    IC  MIPSALU|full32adder|add|\loop2:27:rippleAdder2|g5or2|o_F~0|datad
+     17.930      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:27:rippleAdder2|g5or2|o_F~0|combout
+     18.181      0.251 FF    IC  MIPSALU|full32adder|add|\loop2:28:rippleAdder2|g5or2|o_F~0|datad
+     18.306      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:28:rippleAdder2|g5or2|o_F~0|combout
+     18.557      0.251 FF    IC  MIPSALU|full32adder|add|\loop2:29:rippleAdder2|g5or2|o_F~0|datad
+     18.682      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:29:rippleAdder2|g5or2|o_F~0|combout
+     18.932      0.250 FF    IC  MIPSALU|full32adder|add|\loop2:30:rippleAdder2|g5or2|o_F~0|datad
+     19.057      0.125 FF  CELL  MIPSALU|full32adder|add|\loop2:30:rippleAdder2|g5or2|o_F~0|combout
+     19.791      0.734 FF    IC  MIPSALU|mux|o_output[31]~202|datac
+     20.072      0.281 FF  CELL  MIPSALU|mux|o_output[31]~202|combout
+     20.305      0.233 FF    IC  MIPSALU|mux|o_output[31]~203|datac
+     20.586      0.281 FF  CELL  MIPSALU|mux|o_output[31]~203|combout
+     20.820      0.234 FF    IC  MIPSALU|mux|o_output[31]~206|datac
+     21.101      0.281 FF  CELL  MIPSALU|mux|o_output[31]~206|combout
+     21.101      0.000 FF    IC  EXMEMREG|IFIDREG|\N_Bit_REG:100:DFFGI|s_Q|d
+     21.205      0.104 FF  CELL  EXMEM:EXMEMREG|Reg:IFIDREG|dffg:\N_Bit_REG:100:DFFGI|s_Q
+ Data Required Path:
+ Total (ns)  Incr (ns)     Type  Element
+ ==========  ========= ==  ====  ===================================
+     20.000     20.000           latch edge time
+     22.967      2.967  R        clock network delay
+     22.999      0.032           clock pessimism removed
+     22.979     -0.020           clock uncertainty
+     22.997      0.018     uTsu  EXMEM:EXMEMREG|Reg:IFIDREG|dffg:\N_Bit_REG:100:DFFGI|s_Q
+ Data Arrival Time  :    21.205
+ Data Required Time :    22.997
+ Slack              :     1.792
+ ===================================================================
