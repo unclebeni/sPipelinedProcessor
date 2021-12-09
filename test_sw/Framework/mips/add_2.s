@@ -40,6 +40,8 @@ add $9, $9, $10		#store 39 in 9
 
 addi $1, $1, 2
 beq $1, $2, exit
+nop
+nop
 addi $10, $10, 24
 exit:
 

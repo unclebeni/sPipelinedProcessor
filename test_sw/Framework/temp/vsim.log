@@ -3,8 +3,8 @@ Reading pref.tcl
 # 2021.2
 
 # vsim -c -voptargs="+acc" tb -do "../testpy/modelsim_framework.do" 
-# Start time: 15:42:54 on Dec 08,2021
-# ** Note: (vsim-8009) Loading existing optimized design _opt2
+# Start time: 15:57:41 on Dec 08,2021
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
 # //  Questa Sim-64
 # //  Version 2021.2 linux_x86_64 Apr 14 2021
 # //
@@ -33,7 +33,7 @@ Reading pref.tcl
 # Loading work.dffg(mixed)#1
 # Loading work.control(data)#1
 # Loading work.mux2t1_n(structural)#1
-# Loading work.mux2t1(struct)#1
+# Loading work.mux2t1(structure)#1
 # Loading work.andg2(dataflow)#1
 # Loading work.invg(dataflow)#1
 # Loading work.org2(dataflow)#1
@@ -79,10 +79,10 @@ Reading pref.tcl
 # ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 #    Time: 0 ns  Iteration: 5  Instance: /tb/MyMips/DMem
 # ** Note: Data structure takes 59511328 bytes of memory
-#          Process time 0.15 seconds
+#          Process time 0.17 seconds
 #          stop
 #    Time: 1240 ns  Iteration: 1  Instance: /tb
-# Break in Process P_DUMP_STATE at /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_sw/Framework/src/tb.vhd line 146
-# Stopped at /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_sw/Framework/src/tb.vhd line 146
-# End time: 15:42:54 on Dec 08,2021, Elapsed time: 0:00:00
+# Break in Process P_DUMP_STATE at /home/bmoeckly/cpre381/project2/sPipelinedProcessor/test_sw/Framework/src/tb.vhd line 146
+# Stopped at /home/bmoeckly/cpre381/project2/sPipelinedProcessor/test_sw/Framework/src/tb.vhd line 146
+# End time: 15:57:42 on Dec 08,2021, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 3
