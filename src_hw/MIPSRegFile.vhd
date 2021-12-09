@@ -59,6 +59,11 @@ component andg2 is
 
 end component;
 
+component invg is
+  port(i_A          : in std_logic;
+       o_F          : out std_logic);
+end component;
+
 signal s_CLK, s_WE, s_RST	: std_logic;
 signal s_iD, s_sR, s_rD, s_r2D	: std_logic_vector(31 downto 0);
 signal s_rS, s_wS	: std_logic_vector(4 downto 0);
@@ -79,7 +84,7 @@ s_r2M12, s_r2M13, s_r2M14, s_r2M15, s_r2M16, s_r2M17, s_r2M18, s_r2M19, s_r2M20,
  s_r2M24, s_r2M25, s_r2M26, s_r2M27, s_r2M28, s_r2M29, s_r2M30, s_r2M31	: std_logic_vector(31 downto 0);
 
 begin
-	s_CLK <= i_CLK;
+	CLKINVERT: invg port map (i_A => i_CLK, o_F => s_CLK);
 	s_RST <= i_RST;
 	s_zeroRST <= '1';
 	s_WE <= i_WE;
