@@ -16,50 +16,58 @@ entity ForwardingUnit is
     i_IDEX_RT   : in std_logic_vector(4 downto 0);
 
     i_EXMEM_RD  : in std_logic_vector(4 downto 0);
-    i_EXMEM_RW  : in std_logic_vector(4 downto 0);
+    i_EXMEM_RW  : in std_logic;
 
     i_MEMWB_RD  : in std_logic_vector(4 downto 0);
-    i_MEMWB_RW  : in std_logic_vector(4 downto 0);
+    i_MEMWB_RW  : in std_logic;
 
-    o_ForwardA  : out std_logic_vector(1 downto 0) -- Output to Signal 3 to 1 MUX  (ID/EX - luiMUX Output - EX/MEM -> ALU A)
-                        -- 00 - ID/EX - Comes from RegFile
-                        -- 10 - EX/MEM - Forwarded from prior ALU result
-                        -- 01 - MEM/WB - Forwarded from memory or earlier ALU result
-    o_ForwardB  : out std_logic_vector(1 downto 0) -- Output to Signal 3 to 1 MUX  (ID/EX - luiMUX Output - EX/MEM -> Imm MUX for ALU)
-                        -- 00 - ID/EX - Comes from RegFile
-                        -- 10 - EX/MEM - Forwarded from prior ALU result
-                        -- 01 - MEM/WB - Forwarded from memory or earlier ALU result
+    o_ForwardA  : out std_logic_vector(1 downto 0); -- Output to Signal 3 to 1 MUX  (ID/EX - luiMUX Output - EX/MEM -> ALU A)
+                                                    -- 00 - ID/EX - Comes from RegFile
+                                                    -- 10 - EX/MEM - Forwarded from prior ALU result
+                                                    -- 01 - MEM/WB - Forwarded from memory or earlier ALU result
+
+    o_ForwardB  : out std_logic_vector(1 downto 0)  -- Output to Signal 3 to 1 MUX  (ID/EX - luiMUX Output - EX/MEM -> Imm MUX for ALU)
+                                                    -- 00 - ID/EX - Comes from RegFile
+                                                    -- 10 - EX/MEM - Forwarded from prior ALU result
+                                                    -- 01 - MEM/WB - Forwarded from memory or earlier ALU result
     );
 
 end ForwardingUnit;
 
-architecture behavioral of ForwardingUnit is
+architecture behavior of ForwardingUnit is
 
-    -- No Hazard
-        o_ForwardA = "00";
-        o_ForwardB = "00";
+    begin
 
-    -- EX Hazard
-        if (i_EXMEM_RW
-        and (i_EXMEM_RD != 0)
-        and (i_EXMEM_RD = i_IDEX_RS)) o_ForwardA = "10";
+        o_ForwardA <=
+                        -- EX Hazard
+                        "10" when (i_EXMEM_RW = '1'
+                        and (i_EXMEM_RD /= "00000")
+                        and (i_EXMEM_RD = i_IDEX_RS)) else
 
-        if (i_EXMEM_RW
-        and (i_EXMEM_RD != 0)
-        and (i_EXMEM_RD = i_IDEX_RT)) o_ForwardB = "10";
+                        --MEM Hazard
+                        "01" when (i_MEMWB_RW = '1'
+                        and (i_MEMWB_RD /= "00000")
+                        and not(i_EXMEM_RW = '1' and (i_EXMEM_RD /= "00000")
+                            and (i_EXMEM_RD /= i_IDEX_RS))
+                        and (i_MEMWB_RD = i_IDEX_RS)) else
 
-    -- MEM Hazard
-        if (i_MEMWB_RW
-        and (i_MEMWB_RD != 0)
-        and not(i_EXMEM_RW and (i_EXMEM_RD != 0)
-            and (i_EXMEM_RD != i_IDEX_RS))
-        and (i_MEMWB_RD = i_IDEX_RS)) o_ForwardA = "01";
+                        -- No Hazard
+                        "00";
 
-        if (i_MEMWB_RW
-        and (i_MEMWB_RD != 0)
-        and not(i_EXMEM_RW and (i_EXMEM_RD != 0)
-            and (i_EXMEM_RD != i_IDEX_RT))
-        and (i_MEMWB_RD = i_IDEX_RT)) o_ForwardB = "01";
+        o_ForwardB <=
+                        -- EX Hazard
+                        "10" when (i_EXMEM_RW = '1'
+                        and (i_EXMEM_RD /= "00000")
+                        and (i_EXMEM_RD = i_IDEX_RT)) else
 
+                        --MEM Hazard
+                        "01" when (i_MEMWB_RW = '1'
+                        and (i_MEMWB_RD /= "00000")
+                        and not(i_EXMEM_RW = '1' and (i_EXMEM_RD /= "00000")
+                            and (i_EXMEM_RD /= i_IDEX_RT))
+                        and (i_MEMWB_RD = i_IDEX_RT)) else
 
-end behavioral;
+                        -- No Hazard
+                        "00";
+
+end behavior;
