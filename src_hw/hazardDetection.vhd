@@ -22,7 +22,6 @@ entity hazardDetection is
 	i_IF_ID.Op	: in std_logic_vector(6-1 downto 0);
 	i_IF_ID.Rs	: in std_logic_vector(5-1 downto 0);
 	i_IF_ID.Rt	: in std_logic_vector(5-1 downto 0);
-	i_EX_MEM.MemWrite : in std_logic;
 	i_ID_EX.jump	: in std_logic;
 	i_branchTaken	: in std_logic;
 	o_flush		: out std_logic;
