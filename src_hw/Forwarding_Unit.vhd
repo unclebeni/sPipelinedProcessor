@@ -26,17 +26,20 @@ entity ForwardingUnit is
                                                     -- 10 - EX/MEM - Forwarded from prior ALU result
                                                     -- 01 - MEM/WB - Forwarded from memory or earlier ALU result
 
-    o_ForwardB  : out std_logic_vector(1 downto 0)  -- Output to Signal 3 to 1 MUX  (ID/EX - luiMUX Output - EX/MEM -> Imm MUX for ALU)
+    o_ForwardB  : out std_logic_vector(1 downto 0); -- Output to Signal 3 to 1 MUX  (ID/EX - luiMUX Output - EX/MEM -> Imm MUX for ALU)
                                                     -- 00 - ID/EX - Comes from RegFile
                                                     -- 10 - EX/MEM - Forwarded from prior ALU result
                                                     -- 01 - MEM/WB - Forwarded from memory or earlier ALU result
+
+    o_BranchForwardA : std_logic_vector(1 downto 0);
+
+    o_BranchForwardB : std_logic_vector(1 downto 0)
+
     );
 
 end ForwardingUnit;
 
 architecture behavior of ForwardingUnit is
-
-
 
     begin
 
@@ -72,4 +75,12 @@ architecture behavior of ForwardingUnit is
                         -- No Hazard
                         "00";
 
+        o_BranchForwardA <=
+
+                        "00";
+
+        o_BranchForwardB <=
+
+
+                        "00";
 end behavior;
