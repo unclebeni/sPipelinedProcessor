@@ -63,6 +63,12 @@ component andg2 is
              o_F          : out std_logic);
 end component;
 
+component org2 is
+	port(i_A          : in std_logic;
+             i_B          : in std_logic;
+             o_F          : out std_logic);
+end component;
+
 component xorg2 is
   port(i_A          : in std_logic;
        i_B          : in std_logic;
@@ -86,7 +92,7 @@ end component;
 signal instrData, immData, instrShift, immShift, jumpAddress, BranchAddress, BranchMux 	: std_logic_vector(31 downto 0);
 signal PCp4, four, PCnext, currentPC, sdata, PCin	: std_logic_vector(31 downto 0);
 signal nextinstr	: std_logic_vector(9 downto 0);
-signal PCp4C, JAddressC, BranchC, BAnd, Bxor, clock, HALT, NOTHALT, HSxor	: std_logic;
+signal PCp4C, JAddressC, BranchC, BAnd, Bxor, clock, HALT, NOTHALT, HSor	: std_logic;
 signal zero	: std_logic;
 
 begin
@@ -121,9 +127,10 @@ begin
 
 	JUMPMULTI : mux2t1_N port map(i_S => i_Jump, i_D0 => BranchMux, i_D1 => instrData, o_O => PCnext);
 
-	HALTSTALLXOR : xorg2 port map(i_A => NOTHALT, i_B =>  i_PCStall, o_F => HSxor);
+	--HALTSTALLXOR : xorg2 port map(i_A => NOTHALT, i_B =>  i_PCStall, o_F => HSxor);
+	HALTSTALLOR: org2 port map(i_A => NOTHALT, i_B => i_PCStall, o_F => HSor);
 
-	PCREG : PC port map(i_CLK => clock, i_RST => i_PCRST, i_WE => HSxor, i_D => PCnext, o_R => currentPC);
+	PCREG : PC port map(i_CLK => clock, i_RST => i_PCRST, i_WE => HSor, i_D => PCnext, o_R => currentPC);
 
 	o_PC <= currentPC;
 

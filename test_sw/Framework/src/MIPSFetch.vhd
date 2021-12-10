@@ -82,7 +82,7 @@ component invg is
 end component;
 
 signal instrData, immData, instrShift, immShift, jumpAddress, BranchAddress, BranchMux 	: std_logic_vector(31 downto 0);
-signal PCp4, four, PCnext, currentPC, sdata, PCin	: std_logic_vector(31 downto 0);
+signal PCp4, four, zero32, PCnext, currentPC, sdata, PCin	: std_logic_vector(31 downto 0);
 signal nextinstr	: std_logic_vector(9 downto 0);
 signal PCp4C, JAddressC, BranchC, BAnd, Bxor, clock, HALT, NOTHALT	: std_logic;
 signal zero	: std_logic;

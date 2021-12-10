@@ -12,17 +12,52 @@
 # //  is prohibited from disclosure under the Trade Secrets Act,
 # //  18 U.S.C. Section 1905.
 # //
+project open /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/HardwareTesting
 # Loading project HardwareTesting
-# Compile of MIPS_Processor.vhd failed with 3 errors.
-# Compile of MIPS_Processor.vhd failed with 3 errors.
-# Compile of MIPS_Processor.vhd failed with 3 errors.
-# Compile of MIPS_Processor.vhd failed with 1 errors.
-# Compile of MIPS_Processor.vhd failed with 8 errors.
-# Compile of MIPS_Processor.vhd failed with 6 errors.
-# Compile of MIPS_Processor.vhd failed with 5 errors.
-# Compile of MIPS_Processor.vhd failed with 3 errors.
-# Compile of MIPS_Processor.vhd failed with 2 errors.
-# Compile of MIPS_Processor.vhd failed with 2 errors.
-# Compile of MIPS_Processor.vhd failed with 1 errors.
-# Compile of MIPS_Processor.vhd failed with 2 errors.
 # Compile of MIPS_Processor.vhd was successful.
+# Compile of hazardDetection.vhd failed with 13 errors.
+# 2 compiles, 1 failed with 13 errors.
+# Compile of hazardDetection.vhd failed with 13 errors.
+# Compile of hazardDetection.vhd failed with 13 errors.
+# Compile of hazardDetection.vhd failed with 13 errors.
+# Compile of test.vhd failed with 5 errors.
+# Compile of test.vhd failed with 1 errors.
+# Compile of test.vhd failed with 1 errors.
+# Compile of test.vhd failed with 1 errors.
+# Compile of test.vhd failed with 2 errors.
+# Compile of test.vhd was successful.
+# Compile of test.vhd failed with 1 errors.
+# Compile of test.vhd failed with 2 errors.
+# Compile of hazardDetection.vhd failed with 11 errors.
+# Compile of hazardDetection.vhd failed with 6 errors.
+# Compile of hazardDetection.vhd failed with 5 errors.
+# Compile of hazardDetection.vhd was successful.
+# Compile of Forwarding_Unit.vhd was successful.
+vsim work.forwardingunit
+# vsim work.forwardingunit 
+# Start time: 21:47:15 on Dec 09,2021
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.forwardingunit(behavior)#1
+add wave -position insertpoint  \
+sim:/forwardingunit/i_IDEX_RS \
+sim:/forwardingunit/i_IDEX_RT \
+sim:/forwardingunit/i_EXMEM_RD \
+sim:/forwardingunit/i_EXMEM_RW \
+sim:/forwardingunit/i_MEMWB_RD \
+sim:/forwardingunit/i_MEMWB_RW \
+sim:/forwardingunit/o_ForwardA \
+sim:/forwardingunit/o_ForwardB
+force -freeze sim:/forwardingunit/i_IDEX_RS 5'h00 0
+force -freeze sim:/forwardingunit/i_IDEX_RT 5'h02 0
+force -freeze sim:/forwardingunit/i_IDEX_RS 5'h00 0
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h01 0
+force -freeze sim:/forwardingunit/i_EXMEM_RW 1 0
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h00 0
+force -freeze sim:/forwardingunit/i_MEMWB_RW 1 0
+run
+# Causality operation skipped due to absence of debug database file
+# End time: 21:55:53 on Dec 09,2021, Elapsed time: 0:08:38
+# Errors: 0, Warnings: 21

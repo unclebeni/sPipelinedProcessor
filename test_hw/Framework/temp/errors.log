@@ -110,3 +110,63 @@ Traceback (most recent call last):
   File "internal/testpy/test_framework.py", line 57, in main
     input("Press Enter To Exit...")
 EOFError: EOF when reading a line
+
+Exception caught at 2021-12-09 22:55:22.052550:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 57, in main
+    input("Press Enter To Exit...")
+EOFError: EOF when reading a line
+
+Exception caught at 2021-12-10 10:48:53.263052:
+Traceback (most recent call last):
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/modelsim.py", line 80, in sim
+    timeout=timeout # If the do file doesn't reach the 'quit' we need to manually kill the process
+  File "/usr/lib64/python3.6/subprocess.py", line 289, in call
+    return p.wait(timeout=timeout)
+  File "/usr/lib64/python3.6/subprocess.py", line 1469, in wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/usr/local/mentor/questasim/bin//vsim', '-c', '-voptargs=+acc', 'tb', '-do', '../testpy/modelsim_framework.do']' timed out after 30 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib64/python3.6/tkinter/__init__.py", line 1705, in __call__
+    return self.func(*args)
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/run_gui.py", line 197, in chooseSelectedFiles
+    test_framework.queueSimulation(asm_files_to_run, options)
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/test_framework.py", line 65, in queueSimulation
+    runSimulation(x,simOptions)
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/test_framework.py", line 87, in runSimulation
+    sim_success = modelsim.sim(timeout=options['sim-timeout'])
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/modelsim.py", line 100, in sim
+    print('Simulation timed out (if you think this was a mistake you can increase the time to more than 30 seconds explicitly via --sim-timeout)\n')
+OSError: [Errno 5] Input/output error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 55, in main
+    run_gui.guiMain()
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/run_gui.py", line 156, in guiMain
+    window.mainloop()
+  File "/usr/lib64/python3.6/tkinter/__init__.py", line 1283, in mainloop
+    self.tk.mainloop(n)
+  File "/usr/lib64/python3.6/tkinter/__init__.py", line 1709, in __call__
+    self.widget._report_exception()
+  File "/usr/lib64/python3.6/tkinter/__init__.py", line 1452, in _report_exception
+    root.report_callback_exception(exc, val, tb)
+  File "/usr/lib64/python3.6/tkinter/__init__.py", line 2094, in report_callback_exception
+    print("Exception in Tkinter callback", file=sys.stderr)
+OSError: [Errno 5] Input/output error
+
+Exception caught at 2021-12-10 10:50:20.622272:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 57, in main
+    input("Press Enter To Exit...")
+EOFError: EOF when reading a line

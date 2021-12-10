@@ -1,22 +1,22 @@
 Oh no...
 
-Cycle: 5
+Cycle: 39
 Incorrect Write to Register File
-MARS instruction number: 1	Instruction: addi $1,$0,1
-MARS: Register Write to Reg: 0x01 Val: 0x00000001
-Student: Register Write to Reg: 0x01 Val: 0x0000000X
+MARS instruction number: 33	Instruction: add $1,$0,$0
+MARS: Register Write to Reg: 0x01 Val: 0x00000000
+Student: Register Write to Reg: 0x04 Val: 0x00000000
 
-Cycle: 6
+Cycle: 40
 Incorrect Write to Register File
-MARS instruction number: 2	Instruction: addi $2,$0,2
-MARS: Register Write to Reg: 0x02 Val: 0x00000002
-Student: Register Write to Reg: 0x02 Val: 0x0000000X
+MARS instruction number: 34	Instruction: add $2,$0,$0
+MARS: Register Write to Reg: 0x02 Val: 0x00000000
+Student: Register Write to Reg: 0x05 Val: 0x00000000
 
-Cycle: 7
+Cycle: 41
 Incorrect Write to Register File
-MARS instruction number: 3	Instruction: addi $3,$0,3
-MARS: Register Write to Reg: 0x03 Val: 0x00000003
-Student: Register Write to Reg: 0x03 Val: 0x0000000X
+MARS instruction number: 35	Instruction: add $3,$0,$0
+MARS: Register Write to Reg: 0x03 Val: 0x00000000
+Student: Register Write to Reg: 0x06 Val: 0x00000000
 
 You have reached the maximum mismatches (3)
 

@@ -260,7 +260,7 @@ component MEMWB is
 		  o_LuiShift	: out std_logic_vector(31 downto 0));
 end component;
 
-component Forwarding_Unit is
+component ForwardingUnit is
     port(
     i_IDEX_RS   : in std_logic_vector(4 downto 0);
     i_IDEX_RT   : in std_logic_vector(4 downto 0);
@@ -292,8 +292,8 @@ component hazardDetection is
 	i_IF_ID_Op	: in std_logic_vector(6-1 downto 0);
 	i_IF_ID_Rs	: in std_logic_vector(5-1 downto 0);
 	i_IF_ID_Rt	: in std_logic_vector(5-1 downto 0);
-	i_EX_MEM_MemRead : in std_logic;
 	i_ID_EX_jump	: in std_logic;
+	i_EX_MEM_MemRead : in std_logic;
 	i_branchTaken	: in std_logic;
 	o_flush		: out std_logic;
 	o_stall	: out std_logic);
@@ -340,6 +340,25 @@ component controlMux is
 	      o_LuiOp	 : out std_logic);
 end component;
 
+component dffg is
+  port(i_CLK        : in std_logic;     -- Clock input
+       i_RST        : in std_logic;     -- Reset input
+       i_WE         : in std_logic;     -- Write enable input
+       i_D          : in std_logic;     -- Data value input
+       o_Q          : out std_logic);   -- Data value output
+end component;
+
+component invg is
+  port(i_A          : in std_logic;
+       o_F          : out std_logic);
+end component;
+
+component org2 is
+  port(i_A          : in std_logic;
+       i_B          : in std_logic;
+       o_F          : out std_logic);
+end component;
+
   signal s_032  : std_logic_vector(31 downto 0);
   signal s_31 : std_logic_vector(4 downto 0);
 
@@ -359,7 +378,7 @@ end component;
   --Module output
   signal s_RegFileRD1, s_RegFileRD2, s_ALUOut, s_ImmExtended, s_PCp4, s_PC, s_luiShifted : std_logic_vector(31 downto 0);
   signal s_ForwardOut1, s_ForwardOut2	: std_logic_vector(1 downto 0);
-  signal s_ALUSecondOut, s_overflow, s_carryout, s_stall, s_flush, s_branchTaken : std_logic;
+  signal s_ALUSecondOut, s_overflow, s_carryout, s_stall, s_nstall, s_flush, s_branchTaken : std_logic;
 
   --Instruction segments
   signal s_instr25t21, s_instr20t16, s_instr15t11, s_instr10t6  : std_logic_vector(4 downto 0);
@@ -371,7 +390,7 @@ end component;
   signal cs_branch, cs_jump, cs_ALUSrc, cs_RegDst, cs_MemToReg, cs_RegWrite, cs_MemWrite, cs_WriteRa, cs_LuiOp	: std_logic;
 
   --Misc
-  signal s_Reset, s_AreEqual	: std_logic;
+  signal s_Reset, s_AreEqual, s_stallDffOut, s_stallSlave, s_stallOr	: std_logic;
   signal s_NextInstAddrShift, s_DMemAddrShift	: std_logic_vector(9 downto 0);
   signal s_RegFileRD125t0 : std_logic_vector(25 downto 0);
   signal s_instr25t0shift : std_logic_vector(31 downto 0);
@@ -398,6 +417,15 @@ begin
   --Instruction memory
   IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_IMemAddr(11 downto 2), data => iInstExt, we => iInstLd, q => s_Inst);
     
+  --D Flip Flop for stall bit
+  --STALLDFF: dffg port map(i_CLK => iCLK, i_RST => '0', i_WE => '1', i_D => s_stall, o_Q => s_stallDffOut);
+
+  --STALL Slave Flip Flop
+  --STALLSLAVE: dffg port map(i_CLK => iCLK, i_RST => '0', i_WE => '1', i_D => s_stallDffOut, o_Q => s_stallSlave);
+
+  --Stall or
+  --STALLOR: org2 port map(i_A => s_stall, i_B => s_stallDffOut, o_F => s_stallOr);
+
   --IF/ID Register
   IFIDREG: IFID port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => s_stall, i_PCp4 => s_PCp4, i_Inst => s_Inst, o_PCp4 => ps_PCp4, o_Inst => ps_Inst);
 
@@ -428,7 +456,7 @@ begin
   WRITERAREGMUX: Mux2t1_N generic map(N => 5) port map(i_S => ps_WriteRa3, i_D0 => ps_RegDstMUX2, i_D1 => s_31, o_O => s_RegWrAddr);
 
   --Write Ra Data Mux
-  WRITERADATAMUX: Mux2t1_N generic map(N => 32) port map(i_S => ps_WriteRa3, i_D0 => s_luiMux, i_D1 => ps_PCp4, o_O => s_RegWrData);
+  WRITERADATAMUX: Mux2t1_N generic map(N => 32) port map(i_S => ps_WriteRa3, i_D0 => s_DMEMMUXOut, i_D1 => ps_PCp4, o_O => s_RegWrData);
 
   --Register File
   REGFILE: MIPSRegFile port map(i_WE => s_RegWr, i_CLK => iCLK, i_RST => s_Reset, i_WS => s_RegWrAddr, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => s_RegWrData, o_R1F => s_RegFileRD1, o_R2F => s_RegFileRD2);
@@ -444,28 +472,31 @@ begin
   JUMPADDRMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_jrOp, i_D0 => s_instr25t0shift, i_D1 => s_RegFileRD1, o_O => s_jumpAddrMux);
 
   --Fetch Logic module
-  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_PCRST => s_Reset, i_PCStall => s_stall, i_Instr => s_jumpAddrMux, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp4 => s_PCp4, o_BranchTaken => s_branchTaken, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_AreEqual);
+  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_PCRST => s_Reset, i_PCStall => s_nstall, i_Instr => s_jumpAddrMux, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp4 => s_PCp4, o_BranchTaken => s_branchTaken, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_AreEqual);
 
   --Hazard Detection Unit
   HZRDDETECT: hazardDetection port map(i_ID_EX_RegWrite => ps_RegWrite1, i_ID_EX_MemRead => ps_MemToReg1, i_ID_EX_Ra => s_RegDstMUX, i_ID_EX_branch => ps_Branch, i_IF_ID_Op => s_instr31t26, i_IF_ID_Rs => s_instr25t21, i_IF_ID_Rt => s_instr20t16, i_ID_EX_jump => ps_jump, i_EX_MEM_MemRead => ps_MemToReg2, i_branchTaken => s_branchTaken, o_flush => s_flush, o_stall => s_stall);
+
+  --NOTStall
+  NOTSTALL: invg port map(i_A => s_stall, o_F => s_nstall);
 
   --Immediate sign extension
   IMMEXTEND: Extend16t32 port map(i_D => s_instr15t0, i_SignZero => s_signZero, o_D => s_ImmExtended);
 
   --Control Multiplexer
-  CTRLMUX: controlMux port map(i_S => s_flush, i_dBranch => s_Branch, i_dJump => s_jump, i_dALUSrc => s_ALUSrc, i_dRegDst => s_RegDst, i_dMemToReg => s_MemToReg, i_dRegWrite => s_RegWrite, i_dMemWrite => s_MemWrite, i_dWriteRa => s_WriteRa, i_dLuiOp => s_luiOp, o_Branch => cs_branch, o_Jump => cs_jump, o_ALUSrc => cs_ALUSrc, o_RegDst => cs_RegDst, o_MemToReg => cs_MemToReg, o_RegWrite => cs_RegWrite, o_MemWrite => cs_MemWrite, o_WriteRa => cs_WriteRa, o_LuiOp => cs_LuiOp);
+  CTRLMUX: controlMux port map(i_S => s_stall, i_dBranch => s_Branch, i_dJump => s_jump, i_dALUSrc => s_ALUSrc, i_dRegDst => s_RegDst, i_dMemToReg => s_MemToReg, i_dRegWrite => s_RegWrite, i_dMemWrite => s_MemWrite, i_dWriteRa => s_WriteRa, i_dLuiOp => s_luiOp, o_Branch => cs_branch, o_Jump => cs_jump, o_ALUSrc => cs_ALUSrc, o_RegDst => cs_RegDst, o_MemToReg => cs_MemToReg, o_RegWrite => cs_RegWrite, o_MemWrite => cs_MemWrite, o_WriteRa => cs_WriteRa, o_LuiOp => cs_LuiOp);
 
   --ID/EX Register
-  IDEXREG: IDEX port map(i_CLK => iCLK, i_Rst => s_Reset, i_WE => '1', i_Halt => p1Halt, o_Halt => p2halt, i_Instr25t21 => s_instr25t21, o_Instr25t21 => ps_instr25t21, i_Instr15t0 => s_instr15t0, o_Instr15t0 => ps_LuiImm, i_Instr20t16 => s_instr20t16, o_Instr20t16 => ps_instr20t16, i_Rd => s_instr15t11, o_Rd => ps_Rd, i_Rt => s_instr20t16, o_Rt => ps_Rt, i_shamt => s_instr10t6, o_shamt => ps_shamt, i_RD1 => s_RegFileRD1, o_RD1 => ps_RD1, i_RD2 => s_RegFileRD2, o_RD2 => ps_RD2, i_Imm => s_ImmExtended, o_Imm => ps_Imm, i_Branch => cs_Branch, o_Branch => ps_Branch, i_Jump => cs_jump, o_Jump => ps_jump, i_ALUSrc => cs_ALUSrc, o_ALUSrc => ps_ALUSrc, i_RegDst => cs_RegDst, o_RegDst => ps_RegDst, i_MemToReg => cs_MemtoReg, o_MemToReg => ps_MemToReg1, i_RegWrite => cs_RegWrite, o_RegWrite => ps_RegWrite1, i_MemWrite => cs_MemWrite, o_MemWrite => ps_MemWrite1, i_WriteRa => cs_WriteRa, o_WriteRa => ps_WriteRa1, i_LuiOp => cs_luiOp, o_LuiOp => ps_luiOp1, i_ALUOp => s_ALUOp, o_ALUOp => ps_ALUOp);
+  IDEXREG: IDEX port map(i_CLK => iCLK, i_Rst => s_Reset, i_WE => '1', i_Halt => p1Halt, o_Halt => p2Halt, i_Instr25t21 => s_instr25t21, o_Instr25t21 => ps_instr25t21, i_Instr15t0 => s_instr15t0, o_Instr15t0 => ps_LuiImm, i_Instr20t16 => s_instr20t16, o_Instr20t16 => ps_instr20t16, i_Rd => s_instr15t11, o_Rd => ps_Rd, i_Rt => s_instr20t16, o_Rt => ps_Rt, i_shamt => s_instr10t6, o_shamt => ps_shamt, i_RD1 => s_RegFileRD1, o_RD1 => ps_RD1, i_RD2 => s_RegFileRD2, o_RD2 => ps_RD2, i_Imm => s_ImmExtended, o_Imm => ps_Imm, i_Branch => cs_Branch, o_Branch => ps_Branch, i_Jump => cs_jump, o_Jump => ps_jump, i_ALUSrc => cs_ALUSrc, o_ALUSrc => ps_ALUSrc, i_RegDst => cs_RegDst, o_RegDst => ps_RegDst, i_MemToReg => cs_MemtoReg, o_MemToReg => ps_MemToReg1, i_RegWrite => cs_RegWrite, o_RegWrite => ps_RegWrite1, i_MemWrite => cs_MemWrite, o_MemWrite => ps_MemWrite1, i_WriteRa => cs_WriteRa, o_WriteRa => ps_WriteRa1, i_LuiOp => cs_luiOp, o_LuiOp => ps_luiOp1, i_ALUOp => s_ALUOp, o_ALUOp => ps_ALUOp);
     
   --Forwarding Mux 1
-  ALURD1MUX: mux3t1_32 port map(i_S => s_ForwardOut1, i_D0 => ps_RD1, i_D1 => s_luiMux, i_D2 => ps_ALUOut1, o_O => s_ForwardMux1Out);
+  ALURD1MUX: mux3t1_32 port map(i_S => s_ForwardOut1, i_D0 => ps_RD1, i_D1 => s_luiMux, i_D2 => s_luiMux, o_O => s_ForwardMux1Out);
 
   --ALU Source Mux
   ALUSRCMUX: Mux2t1_N generic map(N => 32) port map(i_S => ps_ALUSrc, i_D0 => ps_RD2, i_D1 => ps_Imm, o_O => s_ALUSRCMux);
 
   --Forwarding Mux 2
-  ALURD2MUX: mux3t1_32 port map(i_S => s_ForwardOut2, i_D0 => s_ALUSRCMux, i_D1 => s_luiMux, i_D2 => ps_ALUOut1, o_O => s_ForwardMux2Out);
+  ALURD2MUX: mux3t1_32 port map(i_S => s_ForwardOut2, i_D0 => s_ALUSRCMux, i_D1 => s_luiMux, i_D2 => s_luiMux, o_O => s_ForwardMux2Out);
 
   --ALU Control
   MIPSALUCNTRL: ALUControl port map(i_ALUop => ps_ALUOp, o_ALUShiftDir => s_ALUShiftDir, o_ALUShiftArithmetic => s_ALUShiftArithmetic, o_ALUAddSub => s_ALUAddSub, o_ALUMuxCtrl => s_ALUMuxCtrl, o_signed => s_signed);
@@ -474,7 +505,7 @@ begin
   MIPSALU: ALU port map(i_Adata => s_forwardMux1Out, i_Bdata => s_ForwardMux2Out, i_ALUShiftDir => s_ALUShiftDir, i_ALUShiftArithmetic => s_ALUShiftArithmetic, i_ALUAddSub => s_ALUAddSub, i_ALUMuxCtrl => s_ALUMuxCtrl, i_shamt => ps_shamt, i_signed => s_signed, o_equal => s_ALUSecondOut, o_carryout => s_carryout, o_overflow => s_Ovfl, o_result => s_ALUOut);
 
   --Forwardging Unit
-  FRWDUNIT: Forwarding_Unit port map(i_IDEX_RS => ps_instr25t21, i_IDEX_RT => ps_instr20t16, i_EXMEM_RD => ps_RegDstMux1, i_EXMEM_RW => ps_RegWrite2, i_MEMWB_RD => ps_RegDstMux2, i_MEMWB_RW => s_RegWr, o_ForwardA => s_ForwardOut1, o_ForwardB => s_ForwardOut2);
+  FRWDUNIT: ForwardingUnit port map(i_IDEX_RS => ps_instr25t21, i_IDEX_RT => ps_instr20t16, i_EXMEM_RD => ps_RegDstMux1, i_EXMEM_RW => ps_RegWrite2, i_MEMWB_RD => ps_RegDstMux2, i_MEMWB_RW => s_RegWr, o_ForwardA => s_ForwardOut1, o_ForwardB => s_ForwardOut2);
 
   --Lui Shifter
   LUISHIFT: luiShifter port map(i_data => ps_LuiImm, o_out => s_luiShifted);
@@ -493,12 +524,12 @@ begin
   DMem: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_DMemAddr(11 downto 2), data => s_DMemData, we => s_DMemWr, q => s_DMemOut);
 
   --Mem/WB Register
-  MEMWBREG: MEMWB port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => '1', i_Halt => p3Halt, o_Halt => s_Halt, i_WriteRa => ps_WriteRa2, o_WriteRa => ps_WriteRa3, i_MemToReg => ps_MemToReg2, o_MemToReg => ps_MemToReg3, i_RegWrite => ps_RegWrite2, o_RegWrite => s_RegWr, i_LuiOp => ps_luiOp2, o_LuiOp => ps_luiOp3, i_RegDstMux => ps_RegDstMux1, o_RegDstMux => ps_RegDstMux2, i_DMemOut => s_DMemOut, o_DMemOut => ps_DMemOut, i_ALUOut => ps_ALUOut1, o_ALUOut => ps_ALUOut2, i_LuiShift => ps_LuiShift1, o_LuiShift => ps_LuiShift2);
+  MEMWBREG: MEMWB port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => '1', i_Halt => p3Halt, o_Halt => s_Halt, i_WriteRa => ps_WriteRa2, o_WriteRa => ps_WriteRa3, i_MemToReg => ps_MemToReg2, o_MemToReg => ps_MemToReg3, i_RegWrite => ps_RegWrite2, o_RegWrite => s_RegWr, i_LuiOp => ps_luiOp2, o_LuiOp => ps_luiOp3, i_RegDstMux => ps_RegDstMux1, o_RegDstMux => ps_RegDstMux2, i_DMemOut => s_DMemOut, o_DMemOut => ps_DMemOut, i_ALUOut => s_luiMux, o_ALUOut => ps_ALUOut2, i_LuiShift => ps_LuiShift1, o_LuiShift => ps_LuiShift2);
 
   --Mem to Reg Mux
   DMEMTREGMUX: Mux2t1_N generic map(N => 32) port map(i_S => ps_MemToReg3, i_D0 => ps_ALUOut2, i_D1 => ps_DMemOut, o_O => s_DMEMMUXOut);
 
   --Lui mux
-  LUIMUX: Mux2t1_N generic map(N => 32) port map(i_S => ps_luiOp3, i_D0 => s_DMEMMUXOut, i_D1 => ps_LuiShift2, o_O => s_luiMux);
+  LUIMUX: Mux2t1_N generic map(N => 32) port map(i_S => ps_luiOp2, i_D0 => ps_ALUOut1, i_D1 => ps_LuiShift1, o_O => s_luiMux);
 
   end structural;

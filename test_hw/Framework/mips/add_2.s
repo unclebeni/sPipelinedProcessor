@@ -15,6 +15,7 @@ addi  $8,  $0,  8		# Place 8 in $8
 addi  $9,  $0,  9		# Place 9 in $9
 addi  $10, $0,  10		# Place 10 in $10
 
+lui $11, 0x1001
 
 #do some adds
 add $1, $1, $2		#store 3 in 1
@@ -27,6 +28,8 @@ add $7, $7, $8		#store 15 in 7
 add $8, $8, $9		#store 17 in 8
 add $9, $9, $10		#store 19 in 9
 
+sw $10, 0($11)
+
 #do some adds on those adds
 add $1, $1, $2		#store 8 in 1
 add $2, $2, $3		#store 12 in 2
@@ -36,9 +39,12 @@ add $5, $5, $6		#store 24 in 5
 add $6, $6, $7		#store 28 in 6
 add $7, $7, $8		#store 32 in 7
 add $8, $8, $9		#store 36 in 8
-add $9, $9, $10		#store 39 in 9
+add $9, $9, $10		#store 29 in 9
 
-#lui $s0, 0x00FF
+lw $12, 0($11)
+beq $12, $10 exit
+addi $1, $1, 5
+exit:
 
 #set the register back to zero
 add $at, $zero, $zero

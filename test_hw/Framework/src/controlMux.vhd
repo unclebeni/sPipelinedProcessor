@@ -64,8 +64,8 @@ begin
 
   G_multiplexer : mux2t1_N port map(
 	i_S	=> i_S,
-	i_D0	=> input,
-	i_D1	=> zeros,
+	i_D0	=> zeros,
+	i_D1	=> input,
 	o_O	=> output);
 
   o_Branch <= output(0);

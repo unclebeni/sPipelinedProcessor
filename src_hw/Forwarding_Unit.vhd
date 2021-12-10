@@ -36,6 +36,8 @@ end ForwardingUnit;
 
 architecture behavior of ForwardingUnit is
 
+
+
     begin
 
         o_ForwardA <=

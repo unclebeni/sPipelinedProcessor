@@ -60,16 +60,22 @@ begin
   input(0) <= i_dBranch; input(1) <= i_dJump; input(2) <= i_dALUSrc; input(3) <= i_dRegDst; input(4) <= i_dMemToReg;
   input(5) <= i_dRegWrite; input(6) <= i_dMemWrite; input(7) <= i_dWriteRa; input(8) <= i_dLuiOp;
 
-  zeros <= ((9-1 downto 0) => '0'); 
+  zeros(9-1 downto 0) <= (9-1 downto 0 => '0');
 
-  G_multiplexer : mux2t1_N port(
-	i_S	<= i_S,
-	i_D0	<= input,
-	i_D1	<= zeros,
-	o_O	<= output);
+  G_multiplexer : mux2t1_N port map(
+	i_S	=> i_S,
+	i_D0	=> zeros,
+	i_D1	=> input,
+	o_O	=> output);
 
-  output(0) => o_Branch; output(1) => o_Jump; output(2) => o_ALUSrc; output(3) => o_RegDst; output(4) => o_MemToReg;
-  output(5) => o_RegWrite; output(6) => o_MemWrite; output(7) => o_WriteRa; input(8) => o_LuiOp;
-
+  o_Branch <= output(0);
+  o_Jump <= output(1);
+  o_ALUSrc <= output(2);
+  o_RegDst <= output(3);
+  o_MemToReg <= output(4);
+  o_RegWrite <= output(5);
+  o_MemWrite <= output(6);
+  o_WriteRa <= output(7);
+  o_LuiOp <= output(8);
 
 end structural;

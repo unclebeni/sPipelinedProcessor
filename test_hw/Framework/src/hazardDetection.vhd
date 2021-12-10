@@ -41,15 +41,15 @@ entity hazardDetection is
 	Rt_Equal <= '1' when i_ID_EX_Ra = i_IF_ID_Rt else '0';
 	branchEqual <= '1' when i_IF_ID_Op = "000100" else '0';
 	branchNotEqual <= '1' when i_IF_ID_Op = "000101" else '0';
-	
 
 
-	o_stall <= '1' when i_ID_EX_MemRead ='1' and i_ID_EX_RegWrite = '1' and Rs_Equal = '1' else --When a LW Precedes a comsuming op
-					'1' when (i_ID_EX_MemRead ='1' and i_ID_EX_RegWrite ='1') and (Rt_Equal ='1') else --When a LW Precedes a consuming op 
-					'1' when i_ID_EX_MemRead='1' and (branchEqual='1' or branchNotEqual='1') else --When a LW precedes a branch by one or two cycles
-					'1' when i_EX_MEM_MemRead='1' and (branchEqual='1' or branchNotEqual='1') else --When a LW precedes a branch by one or two cycles
-					'1' when i_ID_EX_RegWrite='1' and (branchEqual='1' or branchNotEqual='1') --When a Reg Write op precedes a branch one cycle
-			else '0';
+
+	o_stall <= '0' when i_ID_EX_MemRead ='1' and i_ID_EX_RegWrite = '1' and Rs_Equal = '1' else --When a LW Precedes a comsuming op
+					'0' when (i_ID_EX_MemRead ='1' and i_ID_EX_RegWrite ='1') and (Rt_Equal ='1') else --When a LW Precedes a consuming op 
+					'0' when i_ID_EX_MemRead='1' and (branchEqual='1' or branchNotEqual='1') else --When a LW precedes a branch by one or two cycles
+					'0' when i_EX_MEM_MemRead='1' and (branchEqual='1' or branchNotEqual='1') else --When a LW precedes a branch by one or two cycles
+					'0' when i_ID_EX_RegWrite='1' and (branchEqual='1' or branchNotEqual='1') --When a Reg Write op precedes a branch one cycle
+			else '1';
 
 	o_flush	<= '1' when (i_branchTaken='1' and i_ID_EX_branch='1') or --If the branch is in the ID/EX register and the branch is not taken, we will flush IF/ID
 			i_ID_EX_jump='1' else '0';

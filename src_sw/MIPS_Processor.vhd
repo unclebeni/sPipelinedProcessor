@@ -270,12 +270,12 @@ end component;
   signal s_ALUMuxCtrl : std_logic_vector(2 downto 0);
 
   --MUX output
-  signal s_WriteRaDataMUX, s_DMEMMUXOut, s_ALUSRCMux, s_luiMux : std_logic_vector(31 downto 0);
-  signal s_RegDstMUX, s_WriteRaRegMUX : std_logic_vector(4 downto 0);
+  signal s_DMEMMUXOut, s_ALUSRCMux, s_luiMux : std_logic_vector(31 downto 0);
+  signal s_RegDstMUX : std_logic_vector(4 downto 0);
   signal s_jumpAddrMux  : std_logic_vector(31 downto 0);
 
   --Module output
-  signal s_RegFileRD1, s_RegFileRD2, s_ALUOut, s_ImmExtended, s_PCp4, s_PC, s_luiShifted : std_logic_vector(31 downto 0);
+  signal s_RegFileRD1, s_RegFileRD2, s_ALUOut, s_ImmExtended, s_PCp4, s_luiShifted : std_logic_vector(31 downto 0);
   signal s_ALUSecondOut, s_overflow, s_carryout : std_logic;
 
   --Instruction segments
@@ -286,14 +286,12 @@ end component;
 
   --Misc
   signal s_Reset, s_AreEqual	: std_logic;
-  signal s_NextInstAddrShift, s_DMemAddrShift	: std_logic_vector(9 downto 0);
-  signal s_RegFileRD125t0 : std_logic_vector(25 downto 0);
   signal s_instr25t0shift : std_logic_vector(31 downto 0);
 
   --Pipeline register output
   signal ps_PCp4, ps_Inst : std_logic_vector(31 downto 0);
-  signal p1Halt, p2Halt, p3Halt, p4Halt : std_logic;
-  signal ps_RegDst, ps_WriteRa1, ps_RegWrite1, ps_RegWrite2, ps_RegDst2, ps_WriteRa2, ps_WriteRa3, ps_MemToReg1, ps_MemToReg2, ps_MemToReg3, ps_MemWrite1, ps_MemWrite2, ps_ALUSrc, ps_luiOp1, ps_luiOp2, ps_luiOp3, ps_jrOp, ps_Branch, ps_jump  : std_logic;
+  signal p1Halt, p2Halt, p3Halt : std_logic;
+  signal ps_RegDst, ps_WriteRa1, ps_RegWrite1, ps_RegWrite2, ps_WriteRa2, ps_WriteRa3, ps_MemToReg1, ps_MemToReg2, ps_MemToReg3, ps_MemWrite1, ps_ALUSrc, ps_luiOp1, ps_luiOp2, ps_luiOp3, ps_Branch, ps_jump  : std_logic;
   signal ps_instr25t21, ps_instr20t16, ps_shamt, ps_RegDstMux1, ps_RegDstMux2, ps_Rd, ps_Rt : std_logic_vector(4 downto 0);
   signal ps_RD1, ps_RD2, ps_Imm, ps_ALUOut1, ps_ALUOut2, ps_ALUSrcout, ps_LuiShift1, ps_LuiShift2, ps_DMemData, ps_DMemOut : std_logic_vector(31 downto 0);
   signal ps_ALUOp  : std_logic_vector(3 downto 0);

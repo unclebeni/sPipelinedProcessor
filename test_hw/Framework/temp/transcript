@@ -75,6 +75,7 @@ vsim:/tb/MyMips/s_ALUSecondOut \
 vsim:/tb/MyMips/s_overflow \
 vsim:/tb/MyMips/s_carryout \
 vsim:/tb/MyMips/s_stall \
+vsim:/tb/MyMips/s_nstall \
 vsim:/tb/MyMips/s_flush \
 vsim:/tb/MyMips/s_branchTaken \
 vsim:/tb/MyMips/s_instr25t21 \
@@ -144,10 +145,177 @@ vsim:/tb/MyMips/ps_DMemData \
 vsim:/tb/MyMips/ps_DMemOut \
 vsim:/tb/MyMips/ps_ALUOp \
 vsim:/tb/MyMips/ps_LuiImm
+add wave -position insertpoint  \
+vsim:/tb/MyMips/MIPSALU/i_Adata \
+vsim:/tb/MyMips/MIPSALU/i_Bdata \
+vsim:/tb/MyMips/MIPSALU/i_ALUShiftDir \
+vsim:/tb/MyMips/MIPSALU/i_ALUShiftArithmetic \
+vsim:/tb/MyMips/MIPSALU/i_ALUAddSub \
+vsim:/tb/MyMips/MIPSALU/i_ALUMuxCtrl \
+vsim:/tb/MyMips/MIPSALU/i_shamt \
+vsim:/tb/MyMips/MIPSALU/i_signed \
+vsim:/tb/MyMips/MIPSALU/o_equal \
+vsim:/tb/MyMips/MIPSALU/o_carryout \
+vsim:/tb/MyMips/MIPSALU/o_overflow \
+vsim:/tb/MyMips/MIPSALU/o_result \
+vsim:/tb/MyMips/MIPSALU/s_adderOUT \
+vsim:/tb/MyMips/MIPSALU/s_andOUT \
+vsim:/tb/MyMips/MIPSALU/s_orOUT \
+vsim:/tb/MyMips/MIPSALU/s_xorOUT \
+vsim:/tb/MyMips/MIPSALU/s_shifterOUT \
+vsim:/tb/MyMips/MIPSALU/s_lessThanBit \
+vsim:/tb/MyMips/MIPSALU/s_slt \
+vsim:/tb/MyMips/MIPSALU/s_invOR \
+vsim:/tb/MyMips/MIPSALU/s_rplQB \
+vsim:/tb/MyMips/MIPSALU/s_equal_one_bit \
+vsim:/tb/MyMips/MIPSALU/s_overflow
+dataset reload -f
+# vsim:/tb/MyMips/MIPSALU
+dataset reload -f
+# vsim:/tb/MyMips/LUISHIFT
+dataset reload -f
+# vsim:/tb/MyMips/LUISHIFT
+dataset reload -f
+# vsim:/tb/MyMips/LUISHIFT
+dataset reload -f
+# vsim:/tb/MyMips/LUISHIFT
+dataset reload -f
+# vsim:/tb/MyMips/LUISHIFT
+dataset reload -f
+# vsim:/tb/MyMips/LUISHIFT
+dataset reload -f
+# vsim:/tb/MyMips/EXMEMREG
+dataset reload -f
+# vsim:/tb/MyMips/EXMEMREG
+dataset reload -f
+# vsim:/tb/MyMips/EXMEMREG
+dataset reload -f
+# vsim:/tb/MyMips
+add wave -position insertpoint  \
+vsim:/tb/MyMips/STALLDFF/i_CLK \
+vsim:/tb/MyMips/STALLDFF/i_RST \
+vsim:/tb/MyMips/STALLDFF/i_WE \
+vsim:/tb/MyMips/STALLDFF/i_D \
+vsim:/tb/MyMips/STALLDFF/o_Q \
+vsim:/tb/MyMips/STALLDFF/s_D \
+vsim:/tb/MyMips/STALLDFF/s_Q
+add wave -position insertpoint  \
+vsim:/tb/MyMips/STALLRSTDFF/i_CLK \
+vsim:/tb/MyMips/STALLRSTDFF/i_RST \
+vsim:/tb/MyMips/STALLRSTDFF/i_WE \
+vsim:/tb/MyMips/STALLRSTDFF/i_D \
+vsim:/tb/MyMips/STALLRSTDFF/o_Q \
+vsim:/tb/MyMips/STALLRSTDFF/s_D \
+vsim:/tb/MyMips/STALLRSTDFF/s_Q
+dataset reload -f
+# vsim:/tb/MyMips/STALLRSTDFF
+dataset reload -f
+# vsim:/tb/MyMips/STALLRSTDFF
 dataset reload -f
 # vsim:/tb/MyMips
 dataset reload -f
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLRSTDFF/i_CLK'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLRSTDFF/i_RST'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLRSTDFF/i_WE'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLRSTDFF/i_D'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLRSTDFF/o_Q'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLRSTDFF/s_D'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLRSTDFF/s_Q'. 
 # vsim:/tb/MyMips
+dataset reload -f
+# vsim:/tb/MyMips/IMEM
+dataset reload -f
+# vsim:/tb/MyMips/IFIDREG
+dataset reload -f
+# vsim:/tb/MyMips/IFIDREG
+dataset reload -f
+# vsim:/tb/MyMips/IFIDREG
+add wave -position insertpoint  \
+vsim:/tb/MyMips/HZRDDETECT/i_ID_EX_RegWrite \
+vsim:/tb/MyMips/HZRDDETECT/i_ID_EX_MemRead \
+vsim:/tb/MyMips/HZRDDETECT/i_ID_EX_Ra \
+vsim:/tb/MyMips/HZRDDETECT/i_ID_EX_branch \
+vsim:/tb/MyMips/HZRDDETECT/i_IF_ID_Op \
+vsim:/tb/MyMips/HZRDDETECT/i_IF_ID_Rs \
+vsim:/tb/MyMips/HZRDDETECT/i_IF_ID_Rt \
+vsim:/tb/MyMips/HZRDDETECT/i_ID_EX_jump \
+vsim:/tb/MyMips/HZRDDETECT/i_EX_MEM_MemRead \
+vsim:/tb/MyMips/HZRDDETECT/i_stall2cycle \
+vsim:/tb/MyMips/HZRDDETECT/i_branchTaken \
+vsim:/tb/MyMips/HZRDDETECT/o_flush \
+vsim:/tb/MyMips/HZRDDETECT/o_stall \
+vsim:/tb/MyMips/HZRDDETECT/Rs_Equal \
+vsim:/tb/MyMips/HZRDDETECT/Rt_Equal \
+vsim:/tb/MyMips/HZRDDETECT/branchEqual \
+vsim:/tb/MyMips/HZRDDETECT/branchNotEqual \
+vsim:/tb/MyMips/HZRDDETECT/luiOp
+dataset reload -f
+# vsim:/tb/MyMips/HZRDDETECT
+dataset reload -f
+# vsim:/tb/MyMips/HZRDDETECT
+dataset reload -f
+# vsim:/tb/MyMips/HZRDDETECT
+add wave -position insertpoint  \
+vsim:/tb/MyMips/CTRLMUX/i_S \
+vsim:/tb/MyMips/CTRLMUX/i_dBranch \
+vsim:/tb/MyMips/CTRLMUX/i_dJump \
+vsim:/tb/MyMips/CTRLMUX/i_dALUSrc \
+vsim:/tb/MyMips/CTRLMUX/i_dRegDst \
+vsim:/tb/MyMips/CTRLMUX/i_dMemToReg \
+vsim:/tb/MyMips/CTRLMUX/i_dRegWrite \
+vsim:/tb/MyMips/CTRLMUX/i_dMemWrite \
+vsim:/tb/MyMips/CTRLMUX/i_dWriteRa \
+vsim:/tb/MyMips/CTRLMUX/i_dLuiOp \
+vsim:/tb/MyMips/CTRLMUX/o_Branch \
+vsim:/tb/MyMips/CTRLMUX/o_Jump \
+vsim:/tb/MyMips/CTRLMUX/o_ALUSrc \
+vsim:/tb/MyMips/CTRLMUX/o_RegDst \
+vsim:/tb/MyMips/CTRLMUX/o_MemToReg \
+vsim:/tb/MyMips/CTRLMUX/o_RegWrite \
+vsim:/tb/MyMips/CTRLMUX/o_MemWrite \
+vsim:/tb/MyMips/CTRLMUX/o_WriteRa \
+vsim:/tb/MyMips/CTRLMUX/o_LuiOp \
+vsim:/tb/MyMips/CTRLMUX/zeros \
+vsim:/tb/MyMips/CTRLMUX/input \
+vsim:/tb/MyMips/CTRLMUX/output
+dataset reload -f
+# vsim:/tb/MyMips/CTRLMUX
+add wave -position insertpoint  \
+vsim:/tb/MyMips/STALLSLAVE/i_CLK \
+vsim:/tb/MyMips/STALLSLAVE/i_RST \
+vsim:/tb/MyMips/STALLSLAVE/i_WE \
+vsim:/tb/MyMips/STALLSLAVE/i_D \
+vsim:/tb/MyMips/STALLSLAVE/o_Q \
+vsim:/tb/MyMips/STALLSLAVE/s_D \
+vsim:/tb/MyMips/STALLSLAVE/s_Q
+dataset reload -f
+# vsim:/tb/MyMips/STALLSLAVE
+add wave -position insertpoint  \
+vsim:/tb/MyMips/STALLOR/i_A \
+vsim:/tb/MyMips/STALLOR/i_B \
+vsim:/tb/MyMips/STALLOR/o_F
+dataset reload -f
+# vsim:/tb/MyMips/STALLOR
+dataset reload -f
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLDFF/i_CLK'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLDFF/i_RST'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLDFF/i_WE'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLDFF/i_D'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLDFF/o_Q'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLDFF/s_D'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLDFF/s_Q'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/HZRDDETECT/i_stall2cycle'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/HZRDDETECT/luiOp'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLSLAVE/i_CLK'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLSLAVE/i_RST'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLSLAVE/i_WE'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLSLAVE/i_D'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLSLAVE/o_Q'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLSLAVE/s_D'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLSLAVE/s_Q'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLOR/i_A'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLOR/i_B'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/STALLOR/o_F'. 
 add wave -position insertpoint  \
 vsim:/tb/MyMips/REGFILE/i_WE \
 vsim:/tb/MyMips/REGFILE/i_CLK \
@@ -265,3 +433,5 @@ vsim:/tb/MyMips/REGFILE/s_r2M28 \
 vsim:/tb/MyMips/REGFILE/s_r2M29 \
 vsim:/tb/MyMips/REGFILE/s_r2M30 \
 vsim:/tb/MyMips/REGFILE/s_r2M31
+dataset reload -f
+# vsim:/tb/MyMips/REGFILE
