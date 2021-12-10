@@ -1,0 +1,52 @@
+m255
+K4
+z2
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw
+Emips_processor
+Z1 w1639102715
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 12
+R0
+Z4 8/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd
+Z5 F/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd
+l0
+L10 1
+VM[UaC4T;7=ONMFKilNlE_1
+!s100 S3nahV4aK@hTio]OMVSg40
+Z6 OL;C;2021.2;73
+33
+Z7 !s110 1639102724
+!i10b 1
+Z8 !s108 1639102724.000000
+Z9 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd|
+!s107 /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd|
+!i113 0
+Z10 o-work work -2008 -explicit
+Z11 tExplicit 1 CvgOpt 0
+Astructural
+R2
+R3
+DEx4 work 14 mips_processor 0 22 M[UaC4T;7=ONMFKilNlE_1
+!i122 12
+l387
+L20 484
+VjE?SE:Wa@VM0zS9D2nSa62
+!s100 MRm<^JJkEMN`l6YWezzM60
+R6
+33
+R7
+!i10b 1
+R8
+R9
+Z12 !s107 /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd|
+!i113 0
+R10
+R11

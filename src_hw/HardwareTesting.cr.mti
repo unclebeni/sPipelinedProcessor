@@ -1,0 +1,31 @@
+/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd {1 {vcom -work work -2008 -explicit -vopt -stats=none /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd
+QuestaSim-64 vcom 2021.2 Compiler 2021.04 Apr 14 2021
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity MIPS_processor
+-- Compiling architecture structural of MIPS_processor
+
+} {} {}} /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd {0 {vcom -work work -2002 -explicit -vopt -stats=none /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd
+QuestaSim-64 vcom 2021.2 Compiler 2021.04 Apr 14 2021
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity hazardDetection
+-- Compiling architecture mixed of hazardDetection
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(39): (vcom-1581) No feasible entries for infix operator 'and'.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(39): Type error resolving infix expression "and" as type std.STANDARD.BOOLEAN.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(40): (vcom-1581) No feasible entries for infix operator 'and'.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(40): Type error resolving infix expression "and" as type std.STANDARD.BOOLEAN.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(41): (vcom-1581) No feasible entries for infix operator 'and'.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(41): Type error resolving infix expression "and" as type std.STANDARD.BOOLEAN.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(42): (vcom-1581) No feasible entries for infix operator 'and'.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(42): Type error resolving infix expression "and" as type std.STANDARD.BOOLEAN.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(43): (vcom-1581) No feasible entries for infix operator 'and'.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(43): Type error resolving infix expression "and" as type std.STANDARD.BOOLEAN.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(46): Type error resolving infix expression "and" as type std.STANDARD.BOOLEAN.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(47): Signal [mode IN port] "i_ID_EX_jump" is type ieee.std_logic_1164.STD_LOGIC; expecting type std.STANDARD.BOOLEAN.
+** Error: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(48): near "else": syntax error
+** Note: /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd(51): VHDL Compiler exiting
+
+} {8.0 21.0} {}}
