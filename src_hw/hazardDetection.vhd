@@ -17,12 +17,11 @@ entity hazardDetection is
     port(
 	i_ID_EX.RegWrite	: in std_logic;
 	i_ID_EX.MemRead		: in std_logic;
-	i_ID_EX.Ra		: in std_logic(5-1 downto 0);
+	i_ID_EX.Rd		: in std_logic(5-1 downto 0);
 	i_ID_EX.branch  : in std_logic;			--Whether or not there is a branch operation in the ID/EX register
 	i_IF_ID.Op	: in std_logic_vector(6-1 downto 0);
 	i_IF_ID.Rs	: in std_logic_vector(5-1 downto 0);
-	i_IF_ID.Rt	: in std_logic_vector(5-1 downto 0);
-	i_EX_MEM.MemWrite : in std_logic;
+	i_IF_ID.Rt	: in std_logic_vector(5-1 downto 0);  
 	i_ID_EX.jump	: in std_logic;
 	i_branchTaken	: in std_logic;
 	o_flush		: out std_logic;
@@ -36,8 +35,8 @@ entity hazardDetection is
     begin
 
 
-	o_stall <= '1' when i_ID_EX.MemRead and i_ID_EX.RegWrite and i_ID_EX.Ra = i_IF_ID.Rs else --When a LW Precedes a comsuming op
-					'1' when i_ID_EX.MemRead and i_ID_EX.RegWrite and i_ID_EX.Ra = i_IF_ID.Rt else --When a LW Precedes a consuming op 
+	o_stall <= '1' when i_ID_EX.MemRead and i_ID_EX.RegWrite and i_ID_EX.Rd = i_IF_ID.Rs else --When a LW Precedes a comsuming op
+					'1' when i_ID_EX.MemRead and i_ID_EX.RegWrite and i_ID_EX.Rd = i_IF_ID.Rt else --When a LW Precedes a consuming op 
 					'1' when i_ID_EX.MemRead and (i_IF_ID.Op = "000100" or i_IF_ID.Op = "00101") else --When a LW precedes a branch by one or two cycles
 					'1' when i_EX_MEM.MemRead and (i_IF_ID.OP = "00100" or i_IF_ID.Op = "00101") else --When a LW precedes a branch by one or two cycles
 					'1' when i_ID_EX.RegWrite and (i_IF_ID.Op = "00100" or i_IF_ID.Op = "00101") --When a Reg Write op precedes a branch one cycle
