@@ -284,16 +284,17 @@ end component;
 
 component hazardDetection is
     port(
-	i_ID_EX.RegWrite	: std_logic;
-	i_ID_EX.MemRead		: std_logic;
-	i_ID_EX.Ra		: std_logic(5-1 downto 0);
-	i_IF_ID.Op	: std_logic_vector(6-1 downto 0);
-	i_IF_ID.Rs	: std_logic_vector(5-1 downto 0);
-	i_IF_ID.Rt	: std_logic_vector(5-1 downto 0);
-	i_branchTaken	: std_logic;
-	o_flush		: std_logic;
-	o_stall_PC	: std_logic;
-	o_stall_id	: std_logic);
+	i_ID_EX.RegWrite	: in std_logic;
+	i_ID_EX.MemRead		: in std_logic;
+	i_ID_EX.Ra		: in std_logic(5-1 downto 0);
+	i_ID_EX.branch  : in std_logic;			--Whether or not there is a branch operation in the ID/EX register
+	i_IF_ID.Op	: in std_logic_vector(6-1 downto 0);
+	i_IF_ID.Rs	: in std_logic_vector(5-1 downto 0);
+	i_IF_ID.Rt	: in std_logic_vector(5-1 downto 0);
+	i_ID_EX.jump	: in std_logic;
+	i_branchTaken	: in std_logic;
+	o_flush		: out std_logic;
+	o_stall	: out std_logic);
 end component;
 
 component mux3t1_32 is
@@ -324,7 +325,7 @@ end component;
   --Module output
   signal s_RegFileRD1, s_RegFileRD2, s_ALUOut, s_ImmExtended, s_PCp4, s_PC, s_luiShifted : std_logic_vector(31 downto 0);
   signal s_ForwardOut1, s_ForwardOut2	: std_logic_vector(1 downto 0);
-  signal s_ALUSecondOut, s_overflow, s_carryout, s_stallPC, s_stallID : std_logic;
+  signal s_ALUSecondOut, s_overflow, s_carryout, s_stall, s_branchTaken : std_logic;
 
   --Instruction segments
   signal s_instr25t21, s_instr20t16, s_instr15t11, s_instr10t6  : std_logic_vector(4 downto 0);
@@ -361,7 +362,7 @@ begin
   IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_IMemAddr(11 downto 2), data => iInstExt, we => iInstLd, q => s_Inst);
     
   --IF/ID Register
-  IFIDREG: IFID port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => s_stallID, i_PCp4 => s_PCp4, i_Inst => s_Inst, o_PCp4 => ps_PCp4, o_Inst => ps_Inst);
+  IFIDREG: IFID port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => s_stall, i_PCp4 => s_PCp4, i_Inst => s_Inst, o_PCp4 => ps_PCp4, o_Inst => ps_Inst);
 
   --Defining instruction segments
   s_instr31t26(5 downto 0) <= ps_Inst(31 downto 26);
@@ -406,10 +407,10 @@ begin
   JUMPADDRMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_jrOp, i_D0 => s_instr25t0shift, i_D1 => s_RegFileRD1, o_O => s_jumpAddrMux);
 
   --Fetch Logic module
-  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_PCRST => s_Reset, i_PCStall => s_stallPC, i_Instr => s_jumpAddrMux, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp4 => s_PCp4, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_AreEqual);
+  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_PCRST => s_Reset, i_PCStall => s_stall, i_Instr => s_jumpAddrMux, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp4 => s_PCp4, o_BranchTaken => s_branchTaken, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_AreEqual);
 
   --Hazard Detection Unit
-  HZRDDETECT: hazardDetection port map(i_ID_EX.RegWrite => ps_RegWrite1, i_ID_EX.MemRead => ps_MemToReg, i_ID_EX.Ra => ps_WriteRa1, i_IF_ID.OP => s_instr31t26, i_IF_ID.Rs => s_instr25t21, i_IF_ID.Rt => s_instr20t16, i_branchTaken => ?????, o_stall_PC => s_stallPC, o_stall_id => s_stallID);
+  HZRDDETECT: hazardDetection port map(i_ID_EX.RegWrite => ps_RegWrite1, i_ID_EX.MemRead => ps_MemToReg, i_ID_EX.Ra => s_RegDstMUX, i_ID_EX.branch => ps_Branch, i_IF_ID.Op => s_instr31t26, i_IF_ID.Rs => s_instr25t21, i_IF_ID.Rt => s_instr20t16, i_ID_EX.jump => ps_jump, i_branchTaken => s_branchTaken, o_flush => s_flush, o_stall => s_stall);
 
   --Immediate sign extension
   IMMEXTEND: Extend16t32 port map(i_D => s_instr15t0, i_SignZero => s_signZero, o_D => s_ImmExtended);
@@ -433,7 +434,7 @@ begin
   MIPSALU: ALU port map(i_Adata => s_forwardMux1Out, i_Bdata => s_ForwardMux2Out, i_ALUShiftDir => s_ALUShiftDir, i_ALUShiftArithmetic => s_ALUShiftArithmetic, i_ALUAddSub => s_ALUAddSub, i_ALUMuxCtrl => s_ALUMuxCtrl, i_shamt => ps_shamt, i_signed => s_signed, o_equal => s_ALUSecondOut, o_carryout => s_carryout, o_overflow => s_Ovfl, o_result => s_ALUOut);
 
   --Forwardging Unit
-  FRWDUNIT: Forwarding_Unit port map(i_IDEX_RS = > ps_instr25t21, i_IDEX_RT => ps_instr20t16,);
+  FRWDUNIT: Forwarding_Unit port map(i_IDEX_RS = > ps_instr25t21, i_IDEX_RT => ps_instr20t16, i_EXMEM_RD => ps_RegDstMux1, i_EXMEM_RW => ps_RegWrite2, i_MEMWB_RD => ps_RegDstMux2, i_MEMWB_RW => s_RegWr o_ForwardA => s_ForwardOut1, o_ForwardOutB => s_ForwardOut2);
 
   --Lui Shifter
   LUISHIFT: luiShifter port map(i_data => ps_LuiImm, o_out => s_luiShifted);
