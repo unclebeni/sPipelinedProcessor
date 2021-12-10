@@ -12,6 +12,9 @@ use IEEE.std_logic_1164.all;
 entity ForwardingUnit is
 
     port(
+    i_IFID_RS   : in std_logic_vector(4 downto 0);
+    i_IFID_RT   : in std_logic_vector(4 downto 0);
+
     i_IDEX_RS   : in std_logic_vector(4 downto 0);
     i_IDEX_RT   : in std_logic_vector(4 downto 0);
 
@@ -20,6 +23,8 @@ entity ForwardingUnit is
 
     i_MEMWB_RD  : in std_logic_vector(4 downto 0);
     i_MEMWB_RW  : in std_logic;
+
+
 
     o_ForwardA  : out std_logic_vector(1 downto 0); -- Output to Signal 3 to 1 MUX  (ID/EX - luiMUX Output - EX/MEM -> ALU A)
                                                     -- 00 - ID/EX - Comes from RegFile
@@ -31,9 +36,9 @@ entity ForwardingUnit is
                                                     -- 10 - EX/MEM - Forwarded from prior ALU result
                                                     -- 01 - MEM/WB - Forwarded from memory or earlier ALU result
 
-    o_BranchForwardA : std_logic_vector(1 downto 0);
+    o_BranchForwardA : out std_logic_vector(1 downto 0);
 
-    o_BranchForwardB : std_logic_vector(1 downto 0)
+    o_BranchForwardB : out std_logic_vector(1 downto 0)
 
     );
 
@@ -76,11 +81,34 @@ architecture behavior of ForwardingUnit is
                         "00";
 
         o_BranchForwardA <=
+                        -- EX Hazard
+                        "10" when (i_EXMEM_RW = '1'
+                        and (i_EXMEM_RD /= "00000")
+                        and (i_EXMEM_RD = i_IFID_RS)) else
 
+                        --MEM Hazard
+                        "01" when (i_MEMWB_RW = '1'
+                        and (i_MEMWB_RD /= "00000")
+                        and not(i_EXMEM_RW = '1' and (i_EXMEM_RD /= "00000")
+                            and (i_EXMEM_RD /= i_IFID_RS))
+                        and (i_MEMWB_RD = i_IFID_RS)) else
+
+                        -- No Hazard
                         "00";
 
         o_BranchForwardB <=
+                        -- EX Hazard
+                        "10" when (i_EXMEM_RW = '1'
+                        and (i_EXMEM_RD /= "00000")
+                        and (i_EXMEM_RD = i_IFID_RT)) else
 
+                        --MEM Hazard
+                        "01" when (i_MEMWB_RW = '1'
+                        and (i_MEMWB_RD /= "00000")
+                        and not(i_EXMEM_RW = '1' and (i_EXMEM_RD /= "00000")
+                            and (i_EXMEM_RD /= i_IFID_RT))
+                        and (i_MEMWB_RD = i_IFID_RT)) else
 
+                        -- No Hazard
                         "00";
 end behavior;
