@@ -125,17 +125,20 @@ port(
 
   component MIPSFetch is
     port(i_PC	: in std_logic_vector(31 downto 0);
-	 i_PCRST	: std_logic;
-         i_Instr	: in std_logic_vector(31 downto 0);
-         i_ExtendedImm	: in std_logic_vector(31 downto 0);
-         o_PC		: out std_logic_vector(31 downto 0);
-         o_PCp4		: out std_logic_vector(31 downto 0);
-	 i_HALT	: in std_logic;
-         i_CLK	: in std_logic;
-         i_Jump	: in std_logic;
-         i_Branch	: in std_logic;
-	 i_BranchNotEqual	: in std_logic;
-         i_ALUResult	: in std_logic);
+    i_BranchPC : in std_logic_vector(31 downto 0);
+    i_PCStall	: std_logic;
+      i_PCRST	: in std_logic;
+      i_Instr	: in std_logic_vector(31 downto 0);
+      i_ExtendedImm	: in std_logic_vector(31 downto 0);
+      o_PC		: out std_logic_vector(31 downto 0);
+      o_PCp4		: out std_logic_vector(31 downto 0);
+    o_BranchTaken	: out std_logic;
+      i_HALT	: in std_logic;
+      i_CLK	: in std_logic;
+      i_Jump	: in std_logic;
+      i_Branch	: in std_logic;
+      i_BranchNotEqual	: in std_logic;
+      i_ALUResult	: in std_logic);
   end component;
 
   component luiShifter is
@@ -168,6 +171,8 @@ component IDEX is
 i_WE	: in std_logic;
 i_Halt    : in std_logic;
 o_Halt    : out std_logic;
+i_PCp4	: in std_logic_vector(31 downto 0);
+o_PCp4	: out std_logic_vector(31 downto 0);
 i_Instr25t21	: in std_logic_vector(4 downto 0);
 o_Instr25t21	: out std_logic_vector(4 downto 0);
 i_Instr15t0	: in std_logic_vector(15 downto 0);
@@ -209,53 +214,57 @@ o_ALUOp	: out std_logic_vector(3 downto 0));
 end component;
 
 component EXMEM is
-    port (i_Clk     : in std_logic;
-		  i_Rst     : in std_logic;
-		  i_WE	: in std_logic;
-		  i_Halt    : in std_logic;
-         	  o_Halt    : out std_logic;
-		  i_MemWrite    : in std_logic;
-         	  o_MemWrite    : out std_logic;
-		  i_WriteRa    : in std_logic;
-         	  o_WriteRa    : out std_logic;
-		  i_MemToReg    : in std_logic;
-         	  o_MemToReg    : out std_logic;
-		  i_RegWrite    : in std_logic;
-         	  o_RegWrite    : out std_logic;
-		  i_ALUOut	: in std_logic_vector(31 downto 0);
-		  o_ALUOut	: out std_logic_vector(31 downto 0);
-		  i_RD2	: in std_logic_vector(31 downto 0);
-		  o_RD2	: out std_logic_vector(31 downto 0);
-		  i_RegDstMux	: in std_logic_vector(4 downto 0);
-		  o_RegDstMux	: out std_logic_vector(4 downto 0);
-		  i_LuiOp	: in std_logic;
-		  o_LuiOp	: out std_logic;
-		  i_LuiShift	: in std_logic_vector(31 downto 0);
-		  o_LuiShift	: out std_logic_vector(31 downto 0));
+  port (i_Clk     : in std_logic;
+  i_Rst     : in std_logic;
+  i_WE	: in std_logic;
+  i_PCp4	: in std_logic_vector(31 downto 0);
+  o_PCp4	: out std_logic_vector(31 downto 0);
+  i_Halt    : in std_logic;
+         o_Halt    : out std_logic;
+  i_MemWrite    : in std_logic;
+         o_MemWrite    : out std_logic;
+  i_WriteRa    : in std_logic;
+         o_WriteRa    : out std_logic;
+  i_MemToReg    : in std_logic;
+         o_MemToReg    : out std_logic;
+  i_RegWrite    : in std_logic;
+         o_RegWrite    : out std_logic;
+  i_ALUOut	: in std_logic_vector(31 downto 0);
+  o_ALUOut	: out std_logic_vector(31 downto 0);
+  i_RD2	: in std_logic_vector(31 downto 0);
+  o_RD2	: out std_logic_vector(31 downto 0);
+  i_RegDstMux	: in std_logic_vector(4 downto 0);
+  o_RegDstMux	: out std_logic_vector(4 downto 0);
+  i_LuiOp	: in std_logic;
+  o_LuiOp	: out std_logic;
+  i_LuiShift	: in std_logic_vector(31 downto 0);
+  o_LuiShift	: out std_logic_vector(31 downto 0));
 end component;
 
 component MEMWB is
-    port (i_Clk     : in std_logic;
-		  i_Rst     : in std_logic;
-		  i_WE	: in std_logic;
-		  i_Halt    : in std_logic;
-          	  o_Halt    : out std_logic;
-		  i_WriteRa    : in std_logic;
-          	  o_WriteRa    : out std_logic;
-		  i_MemToReg    : in std_logic;
-          	  o_MemToReg    : out std_logic;
-		  i_RegWrite    : in std_logic;
-          	  o_RegWrite    : out std_logic;
-		  i_LuiOp    : in std_logic;
-          	  o_LuiOp    : out std_logic;
-		  i_RegDstMux	: in std_logic_vector(4 downto 0);
-		  o_RegDstMux	: out std_logic_vector(4 downto 0);
-		  i_DMemOut	: in std_logic_vector(31 downto 0);
-		  o_DMemOut	: out std_logic_vector(31 downto 0);
-		  i_ALUOut	: in std_logic_vector(31 downto 0);
-		  o_ALUOut	: out std_logic_vector(31 downto 0);
-		  i_LuiShift	: in std_logic_vector(31 downto 0);
-		  o_LuiShift	: out std_logic_vector(31 downto 0));
+  port (i_Clk     : in std_logic;
+  i_Rst     : in std_logic;
+  i_WE	: in std_logic;
+  i_Halt    : in std_logic;
+          o_Halt    : out std_logic;
+  i_PCp4	: in std_logic_vector(31 downto 0);
+  o_PCp4	: out std_logic_vector(31 downto 0);
+  i_WriteRa    : in std_logic;
+          o_WriteRa    : out std_logic;
+  i_MemToReg    : in std_logic;
+          o_MemToReg    : out std_logic;
+  i_RegWrite    : in std_logic;
+          o_RegWrite    : out std_logic;
+  i_LuiOp    : in std_logic;
+          o_LuiOp    : out std_logic;
+  i_RegDstMux	: in std_logic_vector(4 downto 0);
+  o_RegDstMux	: out std_logic_vector(4 downto 0);
+  i_DMemOut	: in std_logic_vector(31 downto 0);
+  o_DMemOut	: out std_logic_vector(31 downto 0);
+  i_ALUOut	: in std_logic_vector(31 downto 0);
+  o_ALUOut	: out std_logic_vector(31 downto 0);
+  i_LuiShift	: in std_logic_vector(31 downto 0);
+  o_LuiShift	: out std_logic_vector(31 downto 0));
 end component;
 
   signal s_032  : std_logic_vector(31 downto 0);
@@ -289,8 +298,8 @@ end component;
   signal s_instr25t0shift : std_logic_vector(31 downto 0);
 
   --Pipeline register output
-  signal ps_PCp4, ps_Inst : std_logic_vector(31 downto 0);
-  signal p1Halt, p2Halt, p3Halt : std_logic;
+  signal ps_PCp41, ps_PCp42, ps_PCp43, ps_PCp44, ps_Inst : std_logic_vector(31 downto 0);
+  signal p1Halt, p2Halt, p3Halt, s_BT : std_logic;
   signal ps_RegDst, ps_WriteRa1, ps_RegWrite1, ps_RegWrite2, ps_WriteRa2, ps_WriteRa3, ps_MemToReg1, ps_MemToReg2, ps_MemToReg3, ps_MemWrite1, ps_ALUSrc, ps_luiOp1, ps_luiOp2, ps_luiOp3, ps_Branch, ps_jump  : std_logic;
   signal ps_instr25t21, ps_instr20t16, ps_shamt, ps_RegDstMux1, ps_RegDstMux2, ps_Rd, ps_Rt : std_logic_vector(4 downto 0);
   signal ps_RD1, ps_RD2, ps_Imm, ps_ALUOut1, ps_ALUOut2, ps_ALUSrcout, ps_LuiShift1, ps_LuiShift2, ps_DMemData, ps_DMemOut : std_logic_vector(31 downto 0);
@@ -311,7 +320,7 @@ begin
   IMEM: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_IMemAddr(11 downto 2), data => iInstExt, we => iInstLd, q => s_Inst);
     
   --IF/ID Register
-  IFIDREG: IFID port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => '1', i_PCp4 => s_PCp4, i_Inst => s_Inst, o_PCp4 => ps_PCp4, o_Inst => ps_Inst);
+  IFIDREG: IFID port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => '1', i_PCp4 => s_PCp4, i_Inst => s_Inst, o_PCp4 => ps_PCp41, o_Inst => ps_Inst);
 
   --Defining instruction segments
   s_instr31t26(5 downto 0) <= ps_Inst(31 downto 26);
@@ -340,7 +349,7 @@ begin
   WRITERAREGMUX: Mux2t1_N generic map(N => 5) port map(i_S => ps_WriteRa3, i_D0 => ps_RegDstMUX2, i_D1 => s_31, o_O => s_RegWrAddr);
 
   --Write Ra Data Mux
-  WRITERADATAMUX: Mux2t1_N generic map(N => 32) port map(i_S => ps_WriteRa3, i_D0 => s_luiMux, i_D1 => ps_PCp4, o_O => s_RegWrData);
+  WRITERADATAMUX: Mux2t1_N generic map(N => 32) port map(i_S => ps_WriteRa3, i_D0 => s_luiMux, i_D1 => ps_PCp44, o_O => s_RegWrData);
 
   --Register File
   REGFILE: MIPSRegFile port map(i_WE => s_RegWr, i_CLK => iCLK, i_RST => s_Reset, i_WS => s_RegWrAddr, i_RS => s_instr25t21, i_R2S => s_instr20t16, i_wD => s_RegWrData, o_R1F => s_RegFileRD1, o_R2F => s_RegFileRD2);
@@ -356,13 +365,13 @@ begin
   JUMPADDRMUX: Mux2t1_N generic map(N => 32) port map(i_S => s_jrOp, i_D0 => s_instr25t0shift, i_D1 => s_RegFileRD1, o_O => s_jumpAddrMux);
 
   --Fetch Logic module
-  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_PCRST => s_Reset, i_Instr => s_jumpAddrMux, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp4 => s_PCp4, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_AreEqual);
+  FETCHLOGIC: MipsFetch port map(i_PC => s_IMemAddr, i_BranchPC => ps_PCp41, i_PCRST => s_Reset, i_PCStall => '0', o_BranchTaken => s_BT, i_Instr => s_jumpAddrMux, i_ExtendedImm => s_ImmExtended, o_PC => s_NextInstAddr, o_PCp4 => s_PCp4, i_HALT => s_Halt, i_CLK => iCLK, i_Jump => s_Jump, i_Branch => s_Branch, i_BranchNotEqual => s_bneOp, i_ALUResult => s_AreEqual);
 
   --Immediate sign extension
   IMMEXTEND: Extend16t32 port map(i_D => s_instr15t0, i_SignZero => s_signZero, o_D => s_ImmExtended);
 
   --ID/EX Register
-  IDEXREG: IDEX port map(i_CLK => iCLK, i_Rst => s_Reset, i_WE => '1', i_Halt => p1Halt, o_Halt => p2halt, i_Instr25t21 => s_instr25t21, o_Instr25t21 => ps_instr25t21, i_Instr15t0 => s_instr15t0, o_Instr15t0 => ps_LuiImm, i_Instr20t16 => s_instr20t16, o_Instr20t16 => ps_instr20t16, i_Rd => s_instr15t11, o_Rd => ps_Rd, i_Rt => s_instr20t16, o_Rt => ps_Rt, i_shamt => s_instr10t6, o_shamt => ps_shamt, i_RD1 => s_RegFileRD1, o_RD1 => ps_RD1, i_RD2 => s_RegFileRD2, o_RD2 => ps_RD2, i_Imm => s_ImmExtended, o_Imm => ps_Imm, i_Branch => s_Branch, o_Branch => ps_Branch, i_Jump => s_jump, o_Jump => ps_jump, i_ALUSrc => s_ALUSrc, o_ALUSrc => ps_ALUSrc, i_RegDst => s_RegDst, o_RegDst => ps_RegDst, i_MemToReg => s_MemtoReg, o_MemToReg => ps_MemToReg1, i_RegWrite => s_RegWrite, o_RegWrite => ps_RegWrite1, i_MemWrite => s_MemWrite, o_MemWrite => ps_MemWrite1, i_WriteRa => s_WriteRa, o_WriteRa => ps_WriteRa1, i_LuiOp => s_luiOp, o_LuiOp => ps_luiOp1, i_ALUOp => s_ALUOp, o_ALUOp => ps_ALUOp);
+  IDEXREG: IDEX port map(i_CLK => iCLK, i_Rst => s_Reset, i_WE => '1', i_Halt => p1Halt, o_Halt => p2halt, i_PCp4 => ps_PCp41, o_PCp4 => ps_PCp42, i_Instr25t21 => s_instr25t21, o_Instr25t21 => ps_instr25t21, i_Instr15t0 => s_instr15t0, o_Instr15t0 => ps_LuiImm, i_Instr20t16 => s_instr20t16, o_Instr20t16 => ps_instr20t16, i_Rd => s_instr15t11, o_Rd => ps_Rd, i_Rt => s_instr20t16, o_Rt => ps_Rt, i_shamt => s_instr10t6, o_shamt => ps_shamt, i_RD1 => s_RegFileRD1, o_RD1 => ps_RD1, i_RD2 => s_RegFileRD2, o_RD2 => ps_RD2, i_Imm => s_ImmExtended, o_Imm => ps_Imm, i_Branch => s_Branch, o_Branch => ps_Branch, i_Jump => s_jump, o_Jump => ps_jump, i_ALUSrc => s_ALUSrc, o_ALUSrc => ps_ALUSrc, i_RegDst => s_RegDst, o_RegDst => ps_RegDst, i_MemToReg => s_MemtoReg, o_MemToReg => ps_MemToReg1, i_RegWrite => s_RegWrite, o_RegWrite => ps_RegWrite1, i_MemWrite => s_MemWrite, o_MemWrite => ps_MemWrite1, i_WriteRa => s_WriteRa, o_WriteRa => ps_WriteRa1, i_LuiOp => s_luiOp, o_LuiOp => ps_luiOp1, i_ALUOp => s_ALUOp, o_ALUOp => ps_ALUOp);
     
   --ALU Source Mux
   ALUSRCMUX: Mux2t1_N generic map(N => 32) port map(i_S => ps_ALUSrc, i_D0 => ps_RD2, i_D1 => ps_Imm, o_O => s_ALUSRCMux);
@@ -380,7 +389,7 @@ begin
   oALUOut <= s_ALUOut;
   
   --EX/Mem Register
-  EXMEMREG: EXMEM port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => '1', i_Halt => p2Halt, o_Halt => p3Halt, i_MemWrite => ps_MemWrite1, o_MemWrite => s_DMemWr, i_WriteRa => ps_WriteRa1, o_WriteRa => ps_WriteRa2, i_MemToReg => ps_MemToReg1, o_MemToReg => ps_MemToReg2, i_RegWrite => ps_RegWrite1, o_RegWrite => ps_RegWrite2, i_ALUOut => s_ALUOut, o_ALUOut => ps_ALUOut1, i_RD2 => ps_RD2, o_RD2 => ps_DMemData, i_RegDstMux => s_RegDstMUX, o_RegDstMux => ps_RegDstMux1, i_LuiOP => ps_luiOp1, o_LuiOp => ps_luiOp2, i_LuiShift => s_luiShifted, o_LuiShift => ps_LuiShift1);
+  EXMEMREG: EXMEM port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => '1', i_Halt => p2Halt, o_Halt => p3Halt, i_PCp4 => ps_PCp42, o_PCp4 => ps_PCp43, i_MemWrite => ps_MemWrite1, o_MemWrite => s_DMemWr, i_WriteRa => ps_WriteRa1, o_WriteRa => ps_WriteRa2, i_MemToReg => ps_MemToReg1, o_MemToReg => ps_MemToReg2, i_RegWrite => ps_RegWrite1, o_RegWrite => ps_RegWrite2, i_ALUOut => s_ALUOut, o_ALUOut => ps_ALUOut1, i_RD2 => ps_RD2, o_RD2 => ps_DMemData, i_RegDstMux => s_RegDstMUX, o_RegDstMux => ps_RegDstMux1, i_LuiOP => ps_luiOp1, o_LuiOp => ps_luiOp2, i_LuiShift => s_luiShifted, o_LuiShift => ps_LuiShift1);
 
   s_DMemAddr <= ps_ALUOut1;
 
@@ -390,7 +399,7 @@ begin
   DMem: mem generic map(ADDR_WIDTH => 10, DATA_WIDTH => 32) port map(clk => iCLK, addr => s_DMemAddr(11 downto 2), data => s_DMemData, we => s_DMemWr, q => s_DMemOut);
 
   --Mem/WB Register
-  MEMWBREG: MEMWB port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => '1', i_Halt => p3Halt, o_Halt => s_Halt, i_WriteRa => ps_WriteRa2, o_WriteRa => ps_WriteRa3, i_MemToReg => ps_MemToReg2, o_MemToReg => ps_MemToReg3, i_RegWrite => ps_RegWrite2, o_RegWrite => s_RegWr, i_LuiOp => ps_luiOp2, o_LuiOp => ps_luiOp3, i_RegDstMux => ps_RegDstMux1, o_RegDstMux => ps_RegDstMux2, i_DMemOut => s_DMemOut, o_DMemOut => ps_DMemOut, i_ALUOut => ps_ALUOut1, o_ALUOut => ps_ALUOut2, i_LuiShift => ps_LuiShift1, o_LuiShift => ps_LuiShift2);
+  MEMWBREG: MEMWB port map(i_Clk => iCLK, i_Rst => s_Reset, i_WE => '1', i_Halt => p3Halt, o_Halt => s_Halt, i_PCp4 => ps_PCp43, o_PCp4 => ps_PCp44, i_WriteRa => ps_WriteRa2, o_WriteRa => ps_WriteRa3, i_MemToReg => ps_MemToReg2, o_MemToReg => ps_MemToReg3, i_RegWrite => ps_RegWrite2, o_RegWrite => s_RegWr, i_LuiOp => ps_luiOp2, o_LuiOp => ps_luiOp3, i_RegDstMux => ps_RegDstMux1, o_RegDstMux => ps_RegDstMux2, i_DMemOut => s_DMemOut, o_DMemOut => ps_DMemOut, i_ALUOut => ps_ALUOut1, o_ALUOut => ps_ALUOut2, i_LuiShift => ps_LuiShift1, o_LuiShift => ps_LuiShift2);
 
   --Mem to Reg Mux
   DMEMTREGMUX: Mux2t1_N generic map(N => 32) port map(i_S => ps_MemToReg3, i_D0 => ps_ALUOut2, i_D1 => ps_DMemOut, o_O => s_DMEMMUXOut);

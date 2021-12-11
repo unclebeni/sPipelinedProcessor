@@ -47,6 +47,6 @@ EQUATOR: norg32t1 port map(i_data => s_AddOut, o_result => s_Eq);
 
 INVERT: invg port map(i_A => s_Eq, o_F => s_nEq);
 
-o_Eq <= s_nEq;
+o_Eq <= s_Eq;
 
 end structural;

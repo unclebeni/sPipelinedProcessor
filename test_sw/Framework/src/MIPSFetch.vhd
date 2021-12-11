@@ -18,11 +18,14 @@ use IEEE.std_logic_1164.all;
 
 entity MIPSFetch is
 	port(i_PC	: in std_logic_vector(31 downto 0);
+		 i_BranchPC : in std_logic_vector(31 downto 0);
+		 i_PCStall	: std_logic;
 	     i_PCRST	: in std_logic;
 	     i_Instr	: in std_logic_vector(31 downto 0);
 	     i_ExtendedImm	: in std_logic_vector(31 downto 0);
 	     o_PC		: out std_logic_vector(31 downto 0);
 	     o_PCp4		: out std_logic_vector(31 downto 0);
+		 o_BranchTaken	: out std_logic;
 	     i_HALT	: in std_logic;
 	     i_CLK	: in std_logic;
 	     i_Jump	: in std_logic;
@@ -61,6 +64,12 @@ component andg2 is
              o_F          : out std_logic);
 end component;
 
+component org2 is
+	port(i_A          : in std_logic;
+             i_B          : in std_logic;
+             o_F          : out std_logic);
+end component;
+
 component xorg2 is
   port(i_A          : in std_logic;
        i_B          : in std_logic;
@@ -82,9 +91,9 @@ component invg is
 end component;
 
 signal instrData, immData, instrShift, immShift, jumpAddress, BranchAddress, BranchMux 	: std_logic_vector(31 downto 0);
-signal PCp4, four, zero32, PCnext, currentPC, sdata, PCin	: std_logic_vector(31 downto 0);
+signal PCp4, four, PCnext, currentPC, sdata, PCin	: std_logic_vector(31 downto 0);
 signal nextinstr	: std_logic_vector(9 downto 0);
-signal PCp4C, JAddressC, BranchC, BAnd, Bxor, clock, HALT, NOTHALT	: std_logic;
+signal PCp4C, JAddressC, BranchC, BAnd, Bxor, clock, HALT, NOTHALT, HSor, nHSor	: std_logic;
 signal zero	: std_logic;
 
 begin
@@ -107,16 +116,24 @@ begin
 
 	o_PCp4 <= PCp4;
 
-	BRANCHADDER : RippleCarryAdder port map(i_A => PCp4, i_B => immShift, i_C => zero, o_S => BranchAddress, o_C => BranchC);
+	BRANCHADDER : RippleCarryAdder port map(i_A => i_BranchPC, i_B => immShift, i_C => zero, o_S => BranchAddress, o_C => BranchC);
 	
 	BRANCHXOR : xorg2 port map(i_A => i_ALUResult, i_B => i_BranchNotEqual, o_F => Bxor);
+
 	BRANCHAND : andg2 port map(i_A => i_Branch, i_B => Bxor, o_F => BAnd);
+
+	o_BranchTaken <= BAnd;
 
 	BRANCHMULTI : mux2t1_N port map(i_S => BAnd, i_D0 => PCp4, i_D1 => BranchAddress, o_O => BranchMux);
 
 	JUMPMULTI : mux2t1_N port map(i_S => i_Jump, i_D0 => BranchMux, i_D1 => instrData, o_O => PCnext);
 
-	PCREG : PC port map(i_CLK => clock, i_RST => i_PCRST, i_WE => NOTHALT, i_D => PCnext, o_R => currentPC);
+	--HALTSTALLXOR : xorg2 port map(i_A => NOTHALT, i_B =>  i_PCStall, o_F => HSxor);
+	HALTSTALLOR: org2 port map(i_A => HALT, i_B => i_PCStall, o_F => HSor);
+
+	NOTHALTSTALL: invg port map(i_A => HSor, o_F => nHSor);
+
+	PCREG : PC port map(i_CLK => clock, i_RST => i_PCRST, i_WE => nHSor, i_D => PCnext, o_R => currentPC);
 
 	o_PC <= currentPC;
 

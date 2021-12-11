@@ -12,7 +12,7 @@
 # //  is prohibited from disclosure under the Trade Secrets Act,
 # //  18 U.S.C. Section 1905.
 # //
-# Loading project Lab2
+# Loading project HardwareTesting
 add wave -position insertpoint  \
 vsim:/tb/MyMips/iCLK \
 vsim:/tb/MyMips/iRST \
@@ -46,24 +46,23 @@ vsim:/tb/MyMips/s_SignZero \
 vsim:/tb/MyMips/s_bneOp \
 vsim:/tb/MyMips/s_MemRead \
 vsim:/tb/MyMips/s_luiOp \
+vsim:/tb/MyMips/s_jrOp \
 vsim:/tb/MyMips/s_ALUOp \
 vsim:/tb/MyMips/s_ALUShiftDir \
 vsim:/tb/MyMips/s_ALUShiftArithmetic \
 vsim:/tb/MyMips/s_ALUAddSub \
 vsim:/tb/MyMips/s_signed \
 vsim:/tb/MyMips/s_ALUMuxCtrl \
-vsim:/tb/MyMips/s_WriteRaDataMUX \
 vsim:/tb/MyMips/s_DMEMMUXOut \
 vsim:/tb/MyMips/s_ALUSRCMux \
 vsim:/tb/MyMips/s_luiMux \
 vsim:/tb/MyMips/s_RegDstMUX \
-vsim:/tb/MyMips/s_WriteRaRegMUX \
+vsim:/tb/MyMips/s_jumpAddrMux \
 vsim:/tb/MyMips/s_RegFileRD1 \
 vsim:/tb/MyMips/s_RegFileRD2 \
 vsim:/tb/MyMips/s_ALUOut \
 vsim:/tb/MyMips/s_ImmExtended \
-vsim:/tb/MyMips/s_PCp8 \
-vsim:/tb/MyMips/s_PC \
+vsim:/tb/MyMips/s_PCp4 \
 vsim:/tb/MyMips/s_luiShifted \
 vsim:/tb/MyMips/s_ALUSecondOut \
 vsim:/tb/MyMips/s_overflow \
@@ -77,273 +76,60 @@ vsim:/tb/MyMips/s_instr5t0 \
 vsim:/tb/MyMips/s_instr15t0 \
 vsim:/tb/MyMips/s_instr25t0 \
 vsim:/tb/MyMips/s_Reset \
-vsim:/tb/MyMips/s_NextInstAddrShift \
-vsim:/tb/MyMips/s_DMemAddrShift
-add wave -position insertpoint  \
-vsim:/tb/MyMips/REGFILE/i_WE \
-vsim:/tb/MyMips/REGFILE/i_CLK \
-vsim:/tb/MyMips/REGFILE/i_RST \
-vsim:/tb/MyMips/REGFILE/i_WS \
-vsim:/tb/MyMips/REGFILE/i_RS \
-vsim:/tb/MyMips/REGFILE/i_R2S \
-vsim:/tb/MyMips/REGFILE/i_wD \
-vsim:/tb/MyMips/REGFILE/o_R1F \
-vsim:/tb/MyMips/REGFILE/o_R2F \
-vsim:/tb/MyMips/REGFILE/s_CLK \
-vsim:/tb/MyMips/REGFILE/s_WE \
-vsim:/tb/MyMips/REGFILE/s_RST \
-vsim:/tb/MyMips/REGFILE/s_iD \
-vsim:/tb/MyMips/REGFILE/s_sR \
-vsim:/tb/MyMips/REGFILE/s_rD \
-vsim:/tb/MyMips/REGFILE/s_r2D \
-vsim:/tb/MyMips/REGFILE/s_rS \
-vsim:/tb/MyMips/REGFILE/s_wS \
-vsim:/tb/MyMips/REGFILE/s_zeroRST \
-vsim:/tb/MyMips/REGFILE/s_wR0 \
-vsim:/tb/MyMips/REGFILE/s_wR1 \
-vsim:/tb/MyMips/REGFILE/s_wR2 \
-vsim:/tb/MyMips/REGFILE/s_wR3 \
-vsim:/tb/MyMips/REGFILE/s_wR4 \
-vsim:/tb/MyMips/REGFILE/s_wR5 \
-vsim:/tb/MyMips/REGFILE/s_wR6 \
-vsim:/tb/MyMips/REGFILE/s_wR7 \
-vsim:/tb/MyMips/REGFILE/s_wR8 \
-vsim:/tb/MyMips/REGFILE/s_wR9 \
-vsim:/tb/MyMips/REGFILE/s_wR10 \
-vsim:/tb/MyMips/REGFILE/s_wR11 \
-vsim:/tb/MyMips/REGFILE/s_wR12 \
-vsim:/tb/MyMips/REGFILE/s_wR13 \
-vsim:/tb/MyMips/REGFILE/s_wR14 \
-vsim:/tb/MyMips/REGFILE/s_wR15 \
-vsim:/tb/MyMips/REGFILE/s_wR16 \
-vsim:/tb/MyMips/REGFILE/s_wR17 \
-vsim:/tb/MyMips/REGFILE/s_wR18 \
-vsim:/tb/MyMips/REGFILE/s_wR19 \
-vsim:/tb/MyMips/REGFILE/s_wR20 \
-vsim:/tb/MyMips/REGFILE/s_wR21 \
-vsim:/tb/MyMips/REGFILE/s_wR22 \
-vsim:/tb/MyMips/REGFILE/s_wR23 \
-vsim:/tb/MyMips/REGFILE/s_wR24 \
-vsim:/tb/MyMips/REGFILE/s_wR25 \
-vsim:/tb/MyMips/REGFILE/s_wR26 \
-vsim:/tb/MyMips/REGFILE/s_wR27 \
-vsim:/tb/MyMips/REGFILE/s_wR28 \
-vsim:/tb/MyMips/REGFILE/s_wR29 \
-vsim:/tb/MyMips/REGFILE/s_wR30 \
-vsim:/tb/MyMips/REGFILE/s_wR31 \
-vsim:/tb/MyMips/REGFILE/s_rR0 \
-vsim:/tb/MyMips/REGFILE/s_rR1 \
-vsim:/tb/MyMips/REGFILE/s_rR2 \
-vsim:/tb/MyMips/REGFILE/s_rR3 \
-vsim:/tb/MyMips/REGFILE/s_rR4 \
-vsim:/tb/MyMips/REGFILE/s_rR5 \
-vsim:/tb/MyMips/REGFILE/s_rR6 \
-vsim:/tb/MyMips/REGFILE/s_rR7 \
-vsim:/tb/MyMips/REGFILE/s_rR8 \
-vsim:/tb/MyMips/REGFILE/s_rR9 \
-vsim:/tb/MyMips/REGFILE/s_rR10 \
-vsim:/tb/MyMips/REGFILE/s_rR11 \
-vsim:/tb/MyMips/REGFILE/s_rR12 \
-vsim:/tb/MyMips/REGFILE/s_rR13 \
-vsim:/tb/MyMips/REGFILE/s_rR14 \
-vsim:/tb/MyMips/REGFILE/s_rR15 \
-vsim:/tb/MyMips/REGFILE/s_rR16 \
-vsim:/tb/MyMips/REGFILE/s_rR17 \
-vsim:/tb/MyMips/REGFILE/s_rR18 \
-vsim:/tb/MyMips/REGFILE/s_rR19 \
-vsim:/tb/MyMips/REGFILE/s_rR20 \
-vsim:/tb/MyMips/REGFILE/s_rR21 \
-vsim:/tb/MyMips/REGFILE/s_rR22 \
-vsim:/tb/MyMips/REGFILE/s_rR23 \
-vsim:/tb/MyMips/REGFILE/s_rR24 \
-vsim:/tb/MyMips/REGFILE/s_rR25 \
-vsim:/tb/MyMips/REGFILE/s_rR26 \
-vsim:/tb/MyMips/REGFILE/s_rR27 \
-vsim:/tb/MyMips/REGFILE/s_rR28 \
-vsim:/tb/MyMips/REGFILE/s_rR29 \
-vsim:/tb/MyMips/REGFILE/s_rR30 \
-vsim:/tb/MyMips/REGFILE/s_rR31 \
-vsim:/tb/MyMips/REGFILE/s_rM0 \
-vsim:/tb/MyMips/REGFILE/s_rM1 \
-vsim:/tb/MyMips/REGFILE/s_rM2 \
-vsim:/tb/MyMips/REGFILE/s_rM3 \
-vsim:/tb/MyMips/REGFILE/s_rM4 \
-vsim:/tb/MyMips/REGFILE/s_rM5 \
-vsim:/tb/MyMips/REGFILE/s_rM6 \
-vsim:/tb/MyMips/REGFILE/s_rM7 \
-vsim:/tb/MyMips/REGFILE/s_rM8 \
-vsim:/tb/MyMips/REGFILE/s_rM9 \
-vsim:/tb/MyMips/REGFILE/s_rM10 \
-vsim:/tb/MyMips/REGFILE/s_rM11 \
-vsim:/tb/MyMips/REGFILE/s_rM12 \
-vsim:/tb/MyMips/REGFILE/s_rM13 \
-vsim:/tb/MyMips/REGFILE/s_rM14 \
-vsim:/tb/MyMips/REGFILE/s_rM15 \
-vsim:/tb/MyMips/REGFILE/s_rM16 \
-vsim:/tb/MyMips/REGFILE/s_rM17 \
-vsim:/tb/MyMips/REGFILE/s_rM18 \
-vsim:/tb/MyMips/REGFILE/s_rM19 \
-vsim:/tb/MyMips/REGFILE/s_rM20 \
-vsim:/tb/MyMips/REGFILE/s_rM21 \
-vsim:/tb/MyMips/REGFILE/s_rM22 \
-vsim:/tb/MyMips/REGFILE/s_rM23 \
-vsim:/tb/MyMips/REGFILE/s_rM24 \
-vsim:/tb/MyMips/REGFILE/s_rM25 \
-vsim:/tb/MyMips/REGFILE/s_rM26 \
-vsim:/tb/MyMips/REGFILE/s_rM27 \
-vsim:/tb/MyMips/REGFILE/s_rM28 \
-vsim:/tb/MyMips/REGFILE/s_rM29 \
-vsim:/tb/MyMips/REGFILE/s_rM30 \
-vsim:/tb/MyMips/REGFILE/s_rM31 \
-vsim:/tb/MyMips/REGFILE/s_r2M0 \
-vsim:/tb/MyMips/REGFILE/s_r2M1 \
-vsim:/tb/MyMips/REGFILE/s_r2M2 \
-vsim:/tb/MyMips/REGFILE/s_r2M3 \
-vsim:/tb/MyMips/REGFILE/s_r2M4 \
-vsim:/tb/MyMips/REGFILE/s_r2M5 \
-vsim:/tb/MyMips/REGFILE/s_r2M6 \
-vsim:/tb/MyMips/REGFILE/s_r2M7 \
-vsim:/tb/MyMips/REGFILE/s_r2M8 \
-vsim:/tb/MyMips/REGFILE/s_r2M9 \
-vsim:/tb/MyMips/REGFILE/s_r2M10 \
-vsim:/tb/MyMips/REGFILE/s_r2M11 \
-vsim:/tb/MyMips/REGFILE/s_r2M12 \
-vsim:/tb/MyMips/REGFILE/s_r2M13 \
-vsim:/tb/MyMips/REGFILE/s_r2M14 \
-vsim:/tb/MyMips/REGFILE/s_r2M15 \
-vsim:/tb/MyMips/REGFILE/s_r2M16 \
-vsim:/tb/MyMips/REGFILE/s_r2M17 \
-vsim:/tb/MyMips/REGFILE/s_r2M18 \
-vsim:/tb/MyMips/REGFILE/s_r2M19 \
-vsim:/tb/MyMips/REGFILE/s_r2M20 \
-vsim:/tb/MyMips/REGFILE/s_r2M21 \
-vsim:/tb/MyMips/REGFILE/s_r2M22 \
-vsim:/tb/MyMips/REGFILE/s_r2M23 \
-vsim:/tb/MyMips/REGFILE/s_r2M24 \
-vsim:/tb/MyMips/REGFILE/s_r2M25 \
-vsim:/tb/MyMips/REGFILE/s_r2M26 \
-vsim:/tb/MyMips/REGFILE/s_r2M27 \
-vsim:/tb/MyMips/REGFILE/s_r2M28 \
-vsim:/tb/MyMips/REGFILE/s_r2M29 \
-vsim:/tb/MyMips/REGFILE/s_r2M30 \
-vsim:/tb/MyMips/REGFILE/s_r2M31
-add wave -position insertpoint vsim:/tb/MyMips/MIPSALU/*
-dataset reload -f
-# vsim:/tb/MyMips/MIPSALU
-add wave -position insertpoint  \
-vsim:/tb/MyMips/DMem/clk \
-vsim:/tb/MyMips/DMem/addr \
-vsim:/tb/MyMips/DMem/data \
-vsim:/tb/MyMips/DMem/we \
-vsim:/tb/MyMips/DMem/q
-dataset reload -f
-# vsim:/tb/MyMips/DMem
-dataset reload -f
-# vsim:/tb/MyMips/DMem
-dataset reload -f
-# vsim:/tb/MyMips/DMem
-dataset reload -f
-# vsim:/tb/MyMips/DMem
-dataset reload -f
-# vsim:/tb/MyMips/DMem
-dataset reload -f
-# vsim:/tb/MyMips/DMem
-dataset reload -f
-# vsim:/tb/MyMips/DMem
-dataset reload -f
-# vsim:/tb/MyMips/DMem
-dataset reload -f
-# vsim:/tb/MyMips/DMem
-dataset reload -f
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR0'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR1'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR2'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR3'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR4'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR5'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR6'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR7'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR8'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR9'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR10'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR11'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR12'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR13'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR14'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR15'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR16'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR17'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR18'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR19'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR20'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR21'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR22'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR23'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR24'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR25'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR26'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR27'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR28'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR29'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR30'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/REGFILE/s_wR31'. 
-# vsim:/tb/MyMips/DMem
-dataset reload -f
-# vsim:/tb/MyMips/DMEMTREGMUX/G_NBit_MUX(0)/MUXI
-dataset reload -f
-# vsim:/tb/MyMips/DMEMTREGMUX/G_NBit_MUX(0)/MUXI
-dataset reload -f
-# vsim:/tb/MyMips/DMEMTREGMUX/G_NBit_MUX(0)/MUXI
-dataset reload -f
-# vsim:/tb/MyMips/DMEMTREGMUX/G_NBit_MUX(0)/MUXI
-add wave -position insertpoint  \
-vsim:/tb/MyMips/FETCHLOGIC/i_PC \
-vsim:/tb/MyMips/FETCHLOGIC/o_PC \
-vsim:/tb/MyMips/FETCHLOGIC/o_PCp8
-dataset reload -f
-# vsim:/tb/MyMips/FETCHLOGIC
-add wave -position insertpoint  \
-vsim:/tb/MyMips/WRITERADATAMUX/i_S \
-vsim:/tb/MyMips/WRITERADATAMUX/i_D0 \
-vsim:/tb/MyMips/WRITERADATAMUX/i_D1 \
-vsim:/tb/MyMips/WRITERADATAMUX/o_O
-add wave -position insertpoint  \
-vsim:/tb/MyMips/WRITERAREGMUX/i_S \
-vsim:/tb/MyMips/WRITERAREGMUX/i_D0 \
-vsim:/tb/MyMips/WRITERAREGMUX/i_D1 \
-vsim:/tb/MyMips/WRITERAREGMUX/o_O
-dataset reload -f
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/WRITERAREGMUX/i_S'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/WRITERAREGMUX/i_D0'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/WRITERAREGMUX/i_D1'. 
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/WRITERAREGMUX/o_O'. 
-dataset reload -f
-# vsim:/tb
-dataset reload -f
-# vsim:/tb
-dataset reload -f
-# vsim:/tb
-dataset reload -f
-# vsim:/tb/MyMips/CONTROLUNIT
-dataset reload -f
-# vsim:/tb/MyMips/CONTROLUNIT
-dataset reload -f
-# vsim:/tb/MyMips/CONTROLUNIT
-dataset reload -f
-# vsim:/tb/MyMips/CONTROLUNIT
-dataset reload -f
-# vsim:/tb/MyMips/CONTROLUNIT
-add wave -position insertpoint  \
-vsim:/tb/MyMips/s_jumpAddrMux
-add wave -position insertpoint  \
-vsim:/tb/MyMips/JUMPADDRMUX/i_S \
-vsim:/tb/MyMips/JUMPADDRMUX/i_D0 \
-vsim:/tb/MyMips/JUMPADDRMUX/i_D1 \
-vsim:/tb/MyMips/JUMPADDRMUX/o_O
-add wave -position insertpoint  \
-vsim:/tb/MyMips/s_RegFileRD225t0
-dataset reload -f
-# Warning in wave window restart: (vish-4014) No objects found matching '/tb/MyMips/s_RegFileRD225t0'. 
-# vsim:/tb/MyMips
+vsim:/tb/MyMips/s_AreEqual \
+vsim:/tb/MyMips/s_instr25t0shift \
+vsim:/tb/MyMips/ps_PCp41 \
+vsim:/tb/MyMips/ps_PCp42 \
+vsim:/tb/MyMips/ps_PCp43 \
+vsim:/tb/MyMips/ps_PCp44 \
+vsim:/tb/MyMips/ps_Inst \
+vsim:/tb/MyMips/p1Halt \
+vsim:/tb/MyMips/p2Halt \
+vsim:/tb/MyMips/p3Halt \
+vsim:/tb/MyMips/s_BT \
+vsim:/tb/MyMips/ps_RegDst \
+vsim:/tb/MyMips/ps_WriteRa1 \
+vsim:/tb/MyMips/ps_RegWrite1 \
+vsim:/tb/MyMips/ps_RegWrite2 \
+vsim:/tb/MyMips/ps_WriteRa2 \
+vsim:/tb/MyMips/ps_WriteRa3 \
+vsim:/tb/MyMips/ps_MemToReg1 \
+vsim:/tb/MyMips/ps_MemToReg2 \
+vsim:/tb/MyMips/ps_MemToReg3 \
+vsim:/tb/MyMips/ps_MemWrite1 \
+vsim:/tb/MyMips/ps_ALUSrc \
+vsim:/tb/MyMips/ps_luiOp1 \
+vsim:/tb/MyMips/ps_luiOp2 \
+vsim:/tb/MyMips/ps_luiOp3 \
+vsim:/tb/MyMips/ps_Branch \
+vsim:/tb/MyMips/ps_jump \
+vsim:/tb/MyMips/ps_instr25t21 \
+vsim:/tb/MyMips/ps_instr20t16 \
+vsim:/tb/MyMips/ps_shamt \
+vsim:/tb/MyMips/ps_RegDstMux1 \
+vsim:/tb/MyMips/ps_RegDstMux2 \
+vsim:/tb/MyMips/ps_Rd \
+vsim:/tb/MyMips/ps_Rt \
+vsim:/tb/MyMips/ps_RD1 \
+vsim:/tb/MyMips/ps_RD2 \
+vsim:/tb/MyMips/ps_Imm \
+vsim:/tb/MyMips/ps_ALUOut1 \
+vsim:/tb/MyMips/ps_ALUOut2 \
+vsim:/tb/MyMips/ps_ALUSrcout \
+vsim:/tb/MyMips/ps_LuiShift1 \
+vsim:/tb/MyMips/ps_LuiShift2 \
+vsim:/tb/MyMips/ps_DMemData \
+vsim:/tb/MyMips/ps_DMemOut \
+vsim:/tb/MyMips/ps_ALUOp \
+vsim:/tb/MyMips/ps_LuiImm
 dataset reload -f
 # vsim:/tb/MyMips
+add wave -position insertpoint  \
+vsim:/tb/MyMips/EQUALS/i_A \
+vsim:/tb/MyMips/EQUALS/i_B \
+vsim:/tb/MyMips/EQUALS/o_Eq \
+vsim:/tb/MyMips/EQUALS/s_overflow \
+vsim:/tb/MyMips/EQUALS/s_carryout \
+vsim:/tb/MyMips/EQUALS/s_Eq \
+vsim:/tb/MyMips/EQUALS/s_nEq \
+vsim:/tb/MyMips/EQUALS/s_AddOut

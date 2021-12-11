@@ -141,7 +141,7 @@ o_WriteRa<=
 
 
 o_signed<=
-		'0' when	(i_opCode = "001001") else -- addiuvsim:/tb/MyMips/s_Inst
+		'1' when	(i_opCode = "001001") else -- addiuvsim:/tb/MyMips/s_Inst
 
 		'0' when	(i_opCode = "000000" AND i_functCode = "100001") else -- addu
 		'1' when	(i_opCode = "100011") else --lw

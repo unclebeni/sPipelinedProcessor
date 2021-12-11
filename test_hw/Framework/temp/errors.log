@@ -178,3 +178,62 @@ Traceback (most recent call last):
   File "internal/testpy/test_framework.py", line 57, in main
     input("Press Enter To Exit...")
 EOFError: EOF when reading a line
+
+Exception caught at 2021-12-10 22:35:58.832224:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 57, in main
+    input("Press Enter To Exit...")
+EOFError
+
+Exception caught at 2021-12-10 22:35:58.853621:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 57, in main
+    input("Press Enter To Exit...")
+EOFError
+
+Exception caught at 2021-12-10 22:35:58.853612:
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 57, in main
+    input("Press Enter To Exit...")
+EOFError
+
+Exception caught at 2021-12-10 22:35:58.853687:
+Traceback (most recent call last):
+  File "/usr/lib64/python3.6/tkinter/__init__.py", line 1705, in __call__
+    return self.func(*args)
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/run_gui.py", line 197, in chooseSelectedFiles
+    test_framework.queueSimulation(asm_files_to_run, options)
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/test_framework.py", line 65, in queueSimulation
+    runSimulation(x,simOptions)
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/test_framework.py", line 72, in runSimulation
+    options['asm-path'] = mars.run_sim(asm_file=asm_Path)
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/mars.py", line 72, in run_sim
+    return run_sim()
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/mars.py", line 45, in run_sim
+    path = input('>').strip()
+EOFError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "internal/testpy/test_framework.py", line 238, in <module>
+    main()
+  File "internal/testpy/test_framework.py", line 55, in main
+    run_gui.guiMain()
+  File "/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/internal/testpy/run_gui.py", line 156, in guiMain
+    window.mainloop()
+  File "/usr/lib64/python3.6/tkinter/__init__.py", line 1283, in mainloop
+    self.tk.mainloop(n)
+  File "/usr/lib64/python3.6/tkinter/__init__.py", line 1709, in __call__
+    self.widget._report_exception()
+  File "/usr/lib64/python3.6/tkinter/__init__.py", line 1452, in _report_exception
+    root.report_callback_exception(exc, val, tb)
+  File "/usr/lib64/python3.6/tkinter/__init__.py", line 2094, in report_callback_exception
+    print("Exception in Tkinter callback", file=sys.stderr)
+OSError: [Errno 5] Input/output error

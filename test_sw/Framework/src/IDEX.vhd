@@ -13,6 +13,8 @@ entity IDEX is
 	  i_WE	: in std_logic;
 	  i_Halt    : in std_logic;
 	  o_Halt    : out std_logic;
+	  i_PCp4	: in std_logic_vector(31 downto 0);
+	  o_PCp4	: out std_logic_vector(31 downto 0);
 	  i_Instr25t21	: in std_logic_vector(4 downto 0);
 	  o_Instr25t21	: out std_logic_vector(4 downto 0);
 	  i_Instr15t0	: in std_logic_vector(15 downto 0);
@@ -56,7 +58,7 @@ end IDEX;
 architecture structural of IDEX is
 
 component Reg is
-    generic(N : integer := 151);
+    generic(N : integer := 183);
 	port(i_CLK	: in std_logic;
 	     i_RST	: in std_logic;
 	     i_WE	: in std_logic;
@@ -64,10 +66,11 @@ component Reg is
 	     o_R	: out std_logic_vector(N-1 downto 0));
 end component;
 
-signal RegInput, RegOutput     : std_logic_vector(150 downto 0);
+signal RegInput, RegOutput     : std_logic_vector(182 downto 0);
 
 begin
 
+RegInput(182 downto 151) <= i_PCp4;
 RegInput(150) <= i_Branch;
 RegInput(149) <= i_Jump;
 RegInput(148 downto 133) <= i_Instr15t0;
@@ -91,6 +94,7 @@ RegInput(4 downto 0) <= i_shamt;
 
 IFIDREG: Reg port map(i_CLK => i_Clk, i_RST => i_Rst, i_WE => i_WE, i_D => RegInput, o_R => RegOutput);
 
+o_PCp4 <= RegOutput(182 downto 151);
 o_Branch <= RegOutput(150);
 o_Jump <= RegOutput(149);
 o_Instr15t0 <= RegOutput(148 downto 133);

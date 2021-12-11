@@ -46,8 +46,8 @@ entity hazardDetection is
 
 	o_stall <= '0' when i_ID_EX_MemRead ='1' and i_ID_EX_RegWrite = '1' and Rs_Equal = '1' else --When a LW Precedes a comsuming op
 					'0' when (i_ID_EX_MemRead ='1' and i_ID_EX_RegWrite ='1') and (Rt_Equal ='1') else --When a LW Precedes a consuming op 
-					'0' when i_ID_EX_MemRead='1' and (branchEqual='1' or branchNotEqual='1') else --When a LW precedes a branch by one or two cycles
-					'0' when i_EX_MEM_MemRead='1' and (branchEqual='1' or branchNotEqual='1') else --When a LW precedes a branch by one or two cycles
+					--'0' when i_ID_EX_MemRead='1' and (branchEqual='1' or branchNotEqual='1') else --When a LW precedes a branch by one or two cycles
+					--'0' when i_EX_MEM_MemRead='1' and (branchEqual='1' or branchNotEqual='1') else --When a LW precedes a branch by one or two cycles
 					'0' when i_ID_EX_RegWrite='1' and (branchEqual='1' or branchNotEqual='1') --When a Reg Write op precedes a branch one cycle
 			else '1';
 

@@ -13,6 +13,8 @@ entity MEMWB is
 		  i_WE	: in std_logic;
 		  i_Halt    : in std_logic;
           	  o_Halt    : out std_logic;
+			i_PCp4	: in std_logic_vector(31 downto 0);
+			o_PCp4	: out std_logic_vector(31 downto 0);
 		  i_WriteRa    : in std_logic;
           	  o_WriteRa    : out std_logic;
 		  i_MemToReg    : in std_logic;
@@ -34,7 +36,7 @@ end MEMWB;
 architecture structural of MEMWB is
 
 component Reg is
-    generic(N : integer := 106);
+    generic(N : integer := 138);
 	port(i_CLK	: in std_logic;
 	     i_RST	: in std_logic;
 	     i_WE	: in std_logic;
@@ -42,10 +44,11 @@ component Reg is
 	     o_R	: out std_logic_vector(N-1 downto 0));
 end component;
 
-signal RegInput, RegOutput     : std_logic_vector(105 downto 0);
+signal RegInput, RegOutput     : std_logic_vector(137 downto 0);
 
 begin	
 
+RegInput(137 downto 106) <= i_PCp4;
 RegInput(105) <= i_LuiOp;
 RegInput(104) <= i_RegWrite;
 RegInput(103) <= i_MemToReg;
@@ -58,6 +61,7 @@ Reginput(4 downto 0) <= i_RegDstMux;
 
 IFIDREG: Reg port map(i_CLK => i_Clk, i_RST => i_Rst, i_WE => i_WE, i_D => RegInput, o_R => RegOutput);
 
+o_PCp4 <= RegOutput(137 downto 106);
 o_LuiOp <= Regoutput(105);
 o_RegWrite <= Regoutput(104);
 o_MemToReg <= Regoutput(103);

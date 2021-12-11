@@ -11,6 +11,8 @@ entity EXMEM is
     port (i_Clk     : in std_logic;
 		  i_Rst     : in std_logic;
 		  i_WE	: in std_logic;
+		  i_PCp4	: in std_logic_vector(31 downto 0);
+		  o_PCp4	: out std_logic_vector(31 downto 0);
 		  i_Halt    : in std_logic;
          	  o_Halt    : out std_logic;
 		  i_MemWrite    : in std_logic;
@@ -36,7 +38,7 @@ end EXMEM;
 architecture structural of EXMEM is
 
 component Reg is
-    generic(N : integer := 107);
+    generic(N : integer := 139);
 	port(i_CLK	: in std_logic;
 	     i_RST	: in std_logic;
 	     i_WE	: in std_logic;
@@ -44,10 +46,11 @@ component Reg is
 	     o_R	: out std_logic_vector(N-1 downto 0));
 end component;
 
-signal RegInput, RegOutput     : std_logic_vector(106 downto 0);
+signal RegInput, RegOutput     : std_logic_vector(138 downto 0);
 
 begin
 
+	Reginput(138 downto 107) <= i_Pcp4;
 	RegInput(106) <= i_RegWrite;
 	RegInput(105) <= i_MemToReg;
 	RegInput(104) <= i_WriteRa;
@@ -61,6 +64,7 @@ begin
 
 	IFIDREG: Reg port map(i_CLK => i_Clk, i_RST => i_Rst, i_WE => i_WE, i_D => RegInput, o_R => RegOutput);
 
+	o_PCp4 <= RegOutput(138 downto 107);
 	o_RegWrite <= RegOutput(106);
 	o_MemToReg <= RegOutput(105);
 	o_WriteRa <= RegOutput(104);
