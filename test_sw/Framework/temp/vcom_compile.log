@@ -1,102 +1,102 @@
 QuestaSim-64 vcom 2021.2 Compiler 2021.04 Apr 14 2021
-Start time: 22:56:49 on Dec 10,2021
+Start time: 23:38:35 on Dec 10,2021
 vcom -2008 -work internal/ModelSimContainer/work src/*.vhd 
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
--- Compiling entity norg32t1
--- Compiling architecture data of norg32t1
--- Compiling entity fullAdderN
--- Compiling architecture struct of fullAdderN
--- Compiling entity FullAdderSid
--- Compiling architecture structural of FullAdderSid
--- Compiling entity mux2t1
--- Compiling architecture struct of mux2t1
--- Compiling entity PCffz
--- Compiling architecture mixed of PCffz
 -- Compiling entity Multi32t1
 -- Compiling architecture dataflow of Multi32t1
--- Compiling entity Reg
--- Compiling architecture structural of Reg
--- Compiling entity Decoder
--- Compiling architecture dataflow of Decoder
+-- Compiling entity MIPS_processor
+-- Compiling architecture structural of MIPS_processor
+-- Compiling entity overflowDetection
+-- Compiling architecture behavior of overflowDetection
 -- Compiling entity xorg2
 -- Compiling architecture dataflow of xorg2
 -- Compiling entity Extend16t32
 -- Compiling architecture behavioral of Extend16t32
--- Compiling entity fullAdder
--- Compiling architecture behavior of fullAdder
--- Compiling entity invg
--- Compiling architecture dataflow of invg
 -- Compiling entity andg32
 -- Compiling architecture struct of andg32
--- Compiling entity PC
--- Compiling architecture structural of PC
--- Compiling entity RippleCarryAdder
--- Compiling architecture structural of RippleCarryAdder
 -- Compiling entity luiShifter
 -- Compiling architecture struct of luiShifter
+-- Compiling entity PCffz
+-- Compiling architecture mixed of PCffz
 -- Compiling entity MIPSRegFile
 -- Compiling architecture structural of MIPSRegFile
+-- Compiling entity Add_Sub
+-- Compiling architecture struct of Add_Sub
+-- Compiling entity RippleCarryAdder
+-- Compiling architecture structural of RippleCarryAdder
+-- Compiling entity mux2t1_5
+-- Compiling architecture structural of mux2t1_5
+-- Compiling entity fullAdder
+-- Compiling architecture behavior of fullAdder
+-- Compiling entity mux2t1
+-- Compiling architecture struct of mux2t1
+-- Compiling entity MIPSFetch
+-- Compiling architecture structural of MIPSFetch
+-- Compiling entity CompareEqual
+-- Compiling architecture Structural of CompareEqual
+-- Compiling entity Reg
+-- Compiling architecture structural of Reg
+-- Compiling entity invg
+-- Compiling architecture dataflow of invg
+-- Compiling entity fullAdderN
+-- Compiling architecture struct of fullAdderN
+-- Compiling entity Shifter2
+-- Compiling architecture dataflow of Shifter2
+-- Compiling entity control
+-- Compiling architecture data of control
+-- Compiling entity mux2t1_N
+-- Compiling architecture structural of mux2t1_N
+-- Compiling entity MuxForALU
+-- Compiling architecture multiplex of MuxForALU
+-- Compiling entity Adder
+-- Compiling architecture behavior of Adder
+-- Compiling entity xorg32
+-- Compiling architecture struct of xorg32
+-- Compiling entity PC
+-- Compiling architecture structural of PC
+-- Compiling entity org32
+-- Compiling architecture struct of org32
+-- Compiling entity ALU
+-- Compiling architecture struct of ALU
+-- Compiling entity org2
+-- Compiling architecture dataflow of org2
+-- Compiling entity barrelshifter
+-- Compiling architecture structure of barrelshifter
+-- Compiling entity dffg
+-- Compiling architecture mixed of dffg
+-- Compiling entity EXMEM
+-- Compiling architecture structural of EXMEM
 -- Loading package std_logic_textio
 -- Loading package ENV
 -- Compiling entity tb
 -- Compiling architecture mixed of tb
--- Compiling entity mux2t1_N
--- Compiling architecture structural of mux2t1_N
--- Compiling entity MIPSFetch
--- Compiling architecture structural of MIPSFetch
--- Compiling entity ALUControl
--- Compiling architecture data of ALUcontrol
--- Compiling entity control
--- Compiling architecture data of control
--- Compiling entity org2
--- Compiling architecture dataflow of org2
--- Compiling entity Shifter2
--- Compiling architecture dataflow of Shifter2
--- Compiling entity overflowDetection
--- Compiling architecture behavior of overflowDetection
--- Compiling entity dffg
--- Compiling architecture mixed of dffg
--- Compiling entity barrelshifter
--- Compiling architecture structure of barrelshifter
--- Compiling entity EXMEM
--- Compiling architecture structural of EXMEM
--- Compiling entity MIPS_processor
--- Compiling architecture structural of MIPS_processor
--- Compiling entity MuxForALU
--- Compiling architecture multiplex of MuxForALU
--- Compiling entity org32
--- Compiling architecture struct of org32
 -- Compiling entity IDEX
 -- Compiling architecture structural of IDEX
+-- Compiling entity FullAdderSid
+-- Compiling architecture structural of FullAdderSid
+-- Compiling entity MEMWB
+-- Compiling architecture structural of MEMWB
 -- Loading package NUMERIC_STD
 -- Compiling entity mem
 -- Compiling architecture rtl of mem
--- Compiling entity mux2t1_5
--- Compiling architecture structural of mux2t1_5
--- Compiling entity CompareEqual
--- Compiling architecture Structural of CompareEqual
--- Compiling entity Adder
--- Compiling architecture behavior of Adder
-** Warning: src/Mux2t1.vhd(15): (vcom-1615) Existing entity 'Mux2t1' at src/mux2t1.vhd(21) will be overwritten.
--- Compiling entity Mux2t1
--- Compiling architecture structure of Mux2t1
--- Compiling entity Add_Sub
--- Compiling architecture struct of Add_Sub
--- Compiling entity andg2
--- Compiling architecture dataflow of andg2
--- Compiling entity ALU
--- Compiling architecture struct of ALU
--- Compiling entity xorg32
--- Compiling architecture struct of xorg32
--- Compiling entity onescompliment_N
--- Compiling architecture struct of onescompliment_N
--- Compiling entity MEMWB
--- Compiling architecture structural of MEMWB
 -- Compiling entity PCff
 -- Compiling architecture mixed of PCff
 -- Compiling entity IFID
 -- Compiling architecture structural of IFID
-End time: 22:56:49 on Dec 10,2021, Elapsed time: 0:00:00
+-- Compiling entity Decoder
+-- Compiling architecture dataflow of Decoder
+-- Compiling entity onescompliment_N
+-- Compiling architecture struct of onescompliment_N
+-- Compiling entity andg2
+-- Compiling architecture dataflow of andg2
+-- Compiling entity norg32t1
+-- Compiling architecture data of norg32t1
+-- Compiling entity ALUControl
+-- Compiling architecture data of ALUcontrol
+** Warning: src/Mux2t1.vhd(15): (vcom-1615) Existing entity 'Mux2t1' at src/mux2t1.vhd(21) will be overwritten.
+-- Compiling entity Mux2t1
+-- Compiling architecture structure of Mux2t1
+End time: 23:38:35 on Dec 10,2021, Elapsed time: 0:00:00
 Errors: 0, Warnings: 1
