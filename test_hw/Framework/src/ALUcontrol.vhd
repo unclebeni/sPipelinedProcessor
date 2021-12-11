@@ -32,6 +32,7 @@ with i_ALUop select
 		'0' when "1011", -- Add U
 		'1' when "0001", -- Sub
 		'1' when "1100", -- Sub U
+		'1' when "0110", -- Sub on SLT
 		'0' when others;
 
 with i_ALUop select

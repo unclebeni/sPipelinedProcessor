@@ -24,6 +24,8 @@ entity hazardDetection is
 	i_IF_ID_Rt	: in std_logic_vector(5-1 downto 0);
 	i_ID_EX_jump	: in std_logic;
 	i_EX_MEM_MemRead : in std_logic;
+	i_EX_MEM_Ra		: in std_logic_vector(5-1 downto 0);
+	i_EX_MEM_RegWrite : in std_logic;
 	i_branchTaken	: in std_logic;
 	o_flush		: out std_logic;
 	o_stall	: out std_logic);
@@ -32,7 +34,7 @@ entity hazardDetection is
 
     architecture mixed of hazardDetection is 
 
-	signal Rs_Equal, Rt_Equal, branchEqual, branchNotEqual : std_logic;
+	signal Rs_Equal, Rt_Equal, branchEqual, branchNotEqual, EX_MEM_Rs_Equal, EX_MEM_Rt_Equal : std_logic;
 
     begin
 
@@ -41,18 +43,22 @@ entity hazardDetection is
 	Rt_Equal <= '1' when i_ID_EX_Ra = i_IF_ID_Rt else '0';
 	branchEqual <= '1' when i_IF_ID_Op = "000100" else '0';
 	branchNotEqual <= '1' when i_IF_ID_Op = "000101" else '0';
+	EX_MEM_Rs_Equal <= '1' when i_EX_MEM_Ra = i_IF_ID_Rs else '0';
+	EX_MEM_Rt_Equal <= '1' when i_EX_MEM_Ra = i_IF_ID_Rt else '0';
 
 
 
 	o_stall <= '0' when i_ID_EX_MemRead ='1' and i_ID_EX_RegWrite = '1' and Rs_Equal = '1' else --When a LW Precedes a comsuming op
 					'0' when (i_ID_EX_MemRead ='1' and i_ID_EX_RegWrite ='1') and (Rt_Equal ='1') else --When a LW Precedes a consuming op 
+					--'0' when (i_EX_MEM_MemRead = '1') and (i_EX_MEM_RegWrite ='1') and (EX_MEM_Rs_Equal = '1' or EX_MEM_Rt_Equal = '1') else 
 					'0' when i_ID_EX_MemRead='1' and (branchEqual='1' or branchNotEqual='1') else --When a LW precedes a branch by one or two cycles
-					'0' when i_EX_MEM_MemRead='1' and (branchEqual='1' or branchNotEqual='1') else --When a LW precedes a branch by one or two cycles
-					'0' when i_ID_EX_RegWrite='1' and (branchEqual='1' or branchNotEqual='1') --When a Reg Write op precedes a branch one cycle
+					'0' when i_EX_MEM_MemRead='1' and (branchEqual='1' or branchNotEqual='1') --else --When a LW precedes a branch by one or two cycles
+					--'0' when i_ID_EX_RegWrite='1' and (branchEqual='1' or branchNotEqual='1') --When a Reg Write op precedes a branch one cycle
 			else '1';
 
-	o_flush	<= '1' when (i_branchTaken='1' and i_ID_EX_branch='1') or --If the branch is in the ID/EX register and the branch is not taken, we will flush IF/ID
+	o_flush	<= '1' when (i_branchTaken='1') or --If the branch is in the ID/EX register and the branch is not taken, we will flush IF/ID
 			i_ID_EX_jump='1' else '0';
+
 	
 	
     end mixed;

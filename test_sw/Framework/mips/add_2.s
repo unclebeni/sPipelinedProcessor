@@ -38,13 +38,14 @@ add $7, $7, $8		#store 32 in 7
 add $8, $8, $9		#store 36 in 8
 add $9, $9, $10		#store 39 in 9
 
-addi $1, $1, 2
-beq $1, $2, exit
+addi $1, $1, 4
 nop
+nop
+beq $1, $2, exit
 nop
 addi $10, $10, 24
 exit:
-
+nop
 #set the register back to zero
 add $at, $zero, $zero
 add $v0, $zero, $zero

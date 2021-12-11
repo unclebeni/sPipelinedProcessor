@@ -1,7 +1,13 @@
 m255
 K4
 z2
-!s99 nomlopt
+Z0 !s99 nomlopt
+R0
+R0
+R0
+R0
+R0
+R0
 !s11e MIXED_VERSIONS
 13
 !s112 1.1
@@ -9,178 +15,178 @@ z2
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 d/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw
+Z1 d/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw
 T_opt
-!s110 1639108035
-V6z[C?JB=ag@D6@j26KN>W1
+!s110 1639171593
+VlcfAdAZ9C3mAMZPE>om^n1
 04 14 8 work forwardingunit behavior 1
-=1-1866da19cb75-61b2cdc3-91149-6a4a
+=1-00133b5b2bc5-61b3c609-8acc6-160e
 !s124 OEM100
 o-quiet -auto_acc_if_foreign -work work
 tCvgOpt 0
 n@_opt
 OL;O;2021.2;73
 Eforwardingunit
-Z1 w1639096923
-Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
-Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
-!i122 27
-R0
-Z4 8/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/src/Forwarding_Unit.vhd
-Z5 F/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/src/Forwarding_Unit.vhd
+Z2 w1639171574
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 36
+R1
+Z5 8/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/src/Forwarding_Unit.vhd
+Z6 F/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/src/Forwarding_Unit.vhd
 l0
 L12 1
-V5NJl9<nzZ_9M`=G^Nh8532
-!s100 dUPkcEi7<F]UEzESV8F;V1
-Z6 OL;C;2021.2;73
+VaX6^;=]^?WYf_<oR7ZCH[0
+!s100 TOF?LOLf0KjKMP@L;Jcf62
+Z7 OL;C;2021.2;73
 32
-Z7 !s110 1639108024
+Z8 !s110 1639171586
 !i10b 1
-Z8 !s108 1639108024.000000
-Z9 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/src/Forwarding_Unit.vhd|
-Z10 !s107 /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/src/Forwarding_Unit.vhd|
+Z9 !s108 1639171586.000000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/src/Forwarding_Unit.vhd|
+Z11 !s107 /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/test_hw/Framework/src/Forwarding_Unit.vhd|
 !i113 0
-Z11 o-work work -2002 -explicit
-Z12 tExplicit 1 CvgOpt 0
+Z12 o-work work -2002 -explicit
+Z13 tExplicit 1 CvgOpt 0
 Abehavior
-R2
 R3
-DEx4 work 14 forwardingunit 0 22 5NJl9<nzZ_9M`=G^Nh8532
-!i122 27
-l39
-L37 37
-VWE5[K[=jh3WdQXmlIWbe00
-!s100 in9QMS^bPR331D3:6Oigi3
-R6
-32
+R4
+DEx4 work 14 forwardingunit 0 22 aX6^;=]^?WYf_<oR7ZCH[0
+!i122 36
+l49
+L47 68
+VWnLUMCD6[22KWcm=Om6le2
+!s100 o8iGKlOIB^g2VRLKjOCZc3
 R7
-!i10b 1
+32
 R8
+!i10b 1
 R9
 R10
-!i113 0
 R11
+!i113 0
 R12
+R13
 Ehazarddetection
-Z13 w1639105551
-R2
+Z14 w1639161682
 R3
-!i122 26
-R0
-Z14 8/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd
-Z15 F/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd
+R4
+!i122 29
+R1
+Z15 8/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd
+Z16 F/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd
 l0
 L16 1
 V2JWz5`o4[7NLi=?VclB4H3
 !s100 C>;Ng65e^lLemZHl2OI_B3
-R6
+R7
 32
-Z16 !s110 1639105559
+Z17 !s110 1639170226
 !i10b 1
-Z17 !s108 1639105559.000000
-Z18 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd|
-Z19 !s107 /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd|
+Z18 !s108 1639170226.000000
+Z19 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd|
+Z20 !s107 /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/hazardDetection.vhd|
 !i113 0
-R11
 R12
+R13
 Amixed
-R2
 R3
+R4
 DEx4 work 15 hazarddetection 0 22 2JWz5`o4[7NLi=?VclB4H3
-!i122 26
+!i122 29
 l37
 L33 26
-V`[>`9Lg_LQLOb87J4hZGl2
-!s100 KMRgC9Yn[3zOZ9SM:dS=g1
-R6
+VXK_NBhh5k59PYHR3VE?a41
+!s100 2D=o^95QFB=hgeYP5eNEk3
+R7
 32
-R16
-!i10b 1
 R17
+!i10b 1
 R18
 R19
+R20
 !i113 0
-R11
 R12
+R13
 Emips_processor
-Z20 w1639103526
-R2
+Z21 w1639164487
 R3
-!i122 13
-R0
-Z21 8/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd
-Z22 F/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd
+R4
+!i122 28
+R1
+Z22 8/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd
+Z23 F/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd
 l0
 L10 1
 VM[UaC4T;7=ONMFKilNlE_1
 !s100 S3nahV4aK@hTio]OMVSg40
-R6
+R7
 33
-Z23 !s110 1639103796
+R17
 !i10b 1
-Z24 !s108 1639103796.000000
-Z25 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd|
-Z26 !s107 /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd|
+R18
+Z24 !s90 -reportprogress|300|-work|work|-2008|-explicit|-vopt|-stats=none|/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd|
+Z25 !s107 /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/MIPS_Processor.vhd|
 !i113 0
-Z27 o-work work -2008 -explicit
-R12
+Z26 o-work work -2008 -explicit
+R13
 Astructural
-R2
 R3
+R4
 DEx4 work 14 mips_processor 0 22 M[UaC4T;7=ONMFKilNlE_1
-!i122 13
-l388
-L20 485
-VCOUX1;T5llB@NHS8oeSk<0
-!s100 Y:jg24_NRbg0=CfCQ>J;92
-R6
+!i122 28
+l407
+L20 516
+VkE:zCDH6XO;29QQN@XVOR2
+!s100 mE]Do49a7>WfJW90YW4E51
+R7
 33
-R23
+R17
 !i10b 1
+R18
 R24
 R25
-R26
 !i113 0
-R27
-R12
+R26
+R13
 Etest
-Z28 w1639104610
-R2
+Z27 w1639104642
 R3
-!i122 22
-R0
-Z29 8/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/test.vhd
-Z30 F/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/test.vhd
+R4
+!i122 30
+R1
+Z28 8/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/test.vhd
+Z29 F/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/test.vhd
 l0
 L4 1
 VOZN@Vz]`V;aAJI1`iRLJ`1
 !s100 I=4IH1=[20FPFQY^mORA01
-R6
+R7
 32
-!s110 1639104617
+!s110 1639170227
 !i10b 1
-!s108 1639104617.000000
-Z31 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/test.vhd|
-Z32 !s107 /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/test.vhd|
+R18
+Z30 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|/home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/test.vhd|
+Z31 !s107 /home/sfstowe/sfstowe/cpre381/ProjPart2/sPipelinedProcessor/src_hw/test.vhd|
 !i113 0
-R11
 R12
+R13
 Amixed
-R2
 R3
+R4
 DEx4 work 4 test 0 22 OZN@Vz]`V;aAJI1`iRLJ`1
 !i122 20
 l13
 L11 7
 VQWoO_o:bzlPi?=[nn=5`X0
 !s100 7HNUn@X^IDjdZZg>59RdI0
-R6
+R7
 32
 !s110 1639104406
 !i10b 1
 !s108 1639104406.000000
+R30
 R31
-R32
 !i113 0
-R11
 R12
+R13

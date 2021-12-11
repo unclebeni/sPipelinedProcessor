@@ -435,3 +435,759 @@ vsim:/tb/MyMips/REGFILE/s_r2M30 \
 vsim:/tb/MyMips/REGFILE/s_r2M31
 dataset reload -f
 # vsim:/tb/MyMips/REGFILE
+dataset reload -f
+# vsim:/tb/MyMips/REGFILE
+dataset reload -f
+# vsim:/tb/MyMips/REGFILE
+add wave -position insertpoint  \
+vsim:/tb/MyMips/FRWDUNIT/i_IFID_RS \
+vsim:/tb/MyMips/FRWDUNIT/i_IFID_RT \
+vsim:/tb/MyMips/FRWDUNIT/i_IDEX_RS \
+vsim:/tb/MyMips/FRWDUNIT/i_IDEX_RT \
+vsim:/tb/MyMips/FRWDUNIT/i_EXMEM_RD \
+vsim:/tb/MyMips/FRWDUNIT/i_EXMEM_RW \
+vsim:/tb/MyMips/FRWDUNIT/i_MEMWB_RD \
+vsim:/tb/MyMips/FRWDUNIT/i_MEMWB_RW \
+vsim:/tb/MyMips/FRWDUNIT/o_ForwardA \
+vsim:/tb/MyMips/FRWDUNIT/o_ForwardB \
+vsim:/tb/MyMips/FRWDUNIT/o_BranchForwardA \
+vsim:/tb/MyMips/FRWDUNIT/o_BranchForwardB
+dataset reload -f
+# vsim:/tb/MyMips/FRWDUNIT
+quit -sim
+# Compile of MIPS_Processor.vhd was successful.
+# Compile of hazardDetection.vhd was successful.
+# Compile of test.vhd failed with 1 errors.
+# Compile of Forwarding_Unit.vhd was successful.
+# 4 compiles, 1 failed with 1 error.
+vsim work.forwardingunit
+# vsim work.forwardingunit 
+# Start time: 15:03:56 on Dec 10,2021
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.forwardingunit(behavior)#1
+add wave -position insertpoint  \
+sim:/forwardingunit/i_IFID_RS \
+sim:/forwardingunit/i_IFID_RT \
+sim:/forwardingunit/i_IDEX_RS \
+sim:/forwardingunit/i_IDEX_RT \
+sim:/forwardingunit/i_EXMEM_RD \
+sim:/forwardingunit/i_EXMEM_RW \
+sim:/forwardingunit/i_MEMWB_RD \
+sim:/forwardingunit/i_MEMWB_RW \
+sim:/forwardingunit/o_ForwardA \
+sim:/forwardingunit/o_ForwardB \
+sim:/forwardingunit/o_BranchForwardA \
+sim:/forwardingunit/o_BranchForwardB
+add wave -position insertpoint  \
+sim:/forwardingunit/i_IFID_RS \
+sim:/forwardingunit/i_IFID_RT \
+sim:/forwardingunit/i_IDEX_RS \
+sim:/forwardingunit/i_IDEX_RT \
+sim:/forwardingunit/i_EXMEM_RD \
+sim:/forwardingunit/i_EXMEM_RW \
+sim:/forwardingunit/i_MEMWB_RD \
+sim:/forwardingunit/i_MEMWB_RW \
+sim:/forwardingunit/o_ForwardA \
+sim:/forwardingunit/o_ForwardB \
+sim:/forwardingunit/o_BranchForwardA \
+sim:/forwardingunit/o_BranchForwardB
+force -freeze sim:/forwardingunit/i_IFID_RS 5'h0C 0
+force -freeze sim:/forwardingunit/i_IFID_RT 5'h0A 0
+force -freeze sim:/forwardingunit/i_IDEX_RS 5'h04 0
+force -freeze sim:/forwardingunit/i_IDEX_RT 5'h01 0
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h0C 0
+force -freeze sim:/forwardingunit/i_EXMEM_RW 1 0
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h0D 0
+noforce sim:/forwardingunit/i_MEMWB_RW
+force -freeze sim:/forwardingunit/i_MEMWB_RW 1 0
+run
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h0C 0
+run
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h0D 0
+run
+run
+force -freeze sim:/forwardingunit/i_IFID_RT 5'h0C 0
+run
+quit -sim
+# End time: 15:09:54 on Dec 10,2021, Elapsed time: 0:05:58
+# Errors: 0, Warnings: 3
+# Compile of Forwarding_Unit.vhd was successful.
+vsim work.forwardingunit
+# vsim work.forwardingunit 
+# Start time: 15:10:10 on Dec 10,2021
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.forwardingunit(behavior)#1
+add wave -position insertpoint  \
+sim:/forwardingunit/i_IFID_RS \
+sim:/forwardingunit/i_IFID_RT \
+sim:/forwardingunit/i_IDEX_RS \
+sim:/forwardingunit/i_IDEX_RT \
+sim:/forwardingunit/i_EXMEM_RD \
+sim:/forwardingunit/i_EXMEM_RW \
+sim:/forwardingunit/i_MEMWB_RD \
+sim:/forwardingunit/i_MEMWB_RW \
+sim:/forwardingunit/o_ForwardA \
+sim:/forwardingunit/o_ForwardB \
+sim:/forwardingunit/o_BranchForwardA \
+sim:/forwardingunit/o_BranchForwardB
+force -freeze sim:/forwardingunit/i_IFID_RS 5'h0C 0
+force -freeze sim:/forwardingunit/i_IFID_RT 5'h0A 0
+force -freeze sim:/forwardingunit/i_IDEX_RS 5'h03 0
+force -freeze sim:/forwardingunit/i_IDEX_RT 5'h01 0
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h0D 0
+force -freeze sim:/forwardingunit/i_EXMEM_RW 1 0
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h)C 0
+# ** UI-Msg: (vsim-4012) Expected ',' separator between value/time pairs.
+# Usage: force [-deposit | -drive | -freeze] [-cancel <period>] [-repeat <period>] <item_name> <value> [<time>] [, <value> <time> ...]
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h0D 0
+force -freeze sim:/forwardingunit/i_MEMWB_RW 1 0
+run
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h0C 0
+run
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h0D 0
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h0C 0
+run
+quit -sim
+# End time: 15:11:58 on Dec 10,2021, Elapsed time: 0:01:48
+# Errors: 0, Warnings: 2
+# Compile of Forwarding_Unit.vhd was successful.
+vsim work.forwardingunit
+# vsim work.forwardingunit 
+# Start time: 15:12:56 on Dec 10,2021
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.forwardingunit(behavior)#1
+add wave -position insertpoint  \
+sim:/forwardingunit/i_IFID_RS \
+sim:/forwardingunit/i_IFID_RT \
+sim:/forwardingunit/i_IDEX_RS \
+sim:/forwardingunit/i_IDEX_RT \
+sim:/forwardingunit/i_EXMEM_RD \
+sim:/forwardingunit/i_EXMEM_RW \
+sim:/forwardingunit/i_MEMWB_RD \
+sim:/forwardingunit/i_MEMWB_RW \
+sim:/forwardingunit/o_ForwardA \
+sim:/forwardingunit/o_ForwardB \
+sim:/forwardingunit/o_BranchForwardA \
+sim:/forwardingunit/o_BranchForwardB
+force -freeze sim:/forwardingunit/i_IFID_RS 5'h0C 0
+force -freeze sim:/forwardingunit/i_IFID_RT 5'h0D 0
+force -freeze sim:/forwardingunit/i_IDEX_RS 5'h02 0
+force -freeze sim:/forwardingunit/i_IDEX_RT 5'h01 0
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h0C 0
+force -freeze sim:/forwardingunit/i_EXMEM_RW 1 0
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h02 0
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h0E 0
+force -freeze sim:/forwardingunit/i_MEMWB_RW 1 0
+run
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h02 0
+run
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h01 0
+run
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h03 0
+run
+force -freeze sim:/forwardingunit/i_EXMEM_RW 0 0
+run
+quit -sim
+# End time: 15:20:42 on Dec 10,2021, Elapsed time: 0:07:46
+# Errors: 0, Warnings: 2
+# Compile of Forwarding_Unit.vhd was successful.
+vsim work.forwardingunit
+# vsim work.forwardingunit 
+# Start time: 15:20:51 on Dec 10,2021
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.forwardingunit(behavior)#1
+add wave -position insertpoint  \
+sim:/forwardingunit/i_IFID_RS \
+sim:/forwardingunit/i_IFID_RT \
+sim:/forwardingunit/i_IDEX_RS \
+sim:/forwardingunit/i_IDEX_RT \
+sim:/forwardingunit/i_EXMEM_RD \
+sim:/forwardingunit/i_EXMEM_RW \
+sim:/forwardingunit/i_MEMWB_RD \
+sim:/forwardingunit/i_MEMWB_RW \
+sim:/forwardingunit/o_ForwardA \
+sim:/forwardingunit/o_ForwardB \
+sim:/forwardingunit/o_BranchForwardA \
+sim:/forwardingunit/o_BranchForwardB
+force -freeze sim:/forwardingunit/i_IDEX_RS 5'h01 0
+force -freeze sim:/forwardingunit/i_IDEX_RT 5'h02 0
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h01 0
+force -freeze sim:/forwardingunit/i_EXMEM_RW 1 0
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h04 0
+force -freeze sim:/forwardingunit/i_MEMWB_RW 1 0
+run
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h01 0
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h04 0
+run
+quit -sim
+# End time: 15:22:47 on Dec 10,2021, Elapsed time: 0:01:56
+# Errors: 0, Warnings: 2
+# Compile of Forwarding_Unit.vhd was successful.
+vsim work.forwardingunit
+# vsim work.forwardingunit 
+# Start time: 15:23:09 on Dec 10,2021
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.forwardingunit(behavior)#1
+add wave -position insertpoint  \
+sim:/forwardingunit/i_IFID_RS \
+sim:/forwardingunit/i_IFID_RT \
+sim:/forwardingunit/i_IDEX_RS \
+sim:/forwardingunit/i_IDEX_RT \
+sim:/forwardingunit/i_EXMEM_RD \
+sim:/forwardingunit/i_EXMEM_RW \
+sim:/forwardingunit/i_MEMWB_RD \
+sim:/forwardingunit/i_MEMWB_RW \
+sim:/forwardingunit/o_ForwardA \
+sim:/forwardingunit/o_ForwardB \
+sim:/forwardingunit/o_BranchForwardA \
+sim:/forwardingunit/o_BranchForwardB
+add wave -position insertpoint  \
+sim:/forwardingunit/i_IFID_RS \
+sim:/forwardingunit/i_IFID_RT \
+sim:/forwardingunit/i_IDEX_RS \
+sim:/forwardingunit/i_IDEX_RT \
+sim:/forwardingunit/i_EXMEM_RD \
+sim:/forwardingunit/i_EXMEM_RW \
+sim:/forwardingunit/i_MEMWB_RD \
+sim:/forwardingunit/i_MEMWB_RW \
+sim:/forwardingunit/o_ForwardA \
+sim:/forwardingunit/o_ForwardB \
+sim:/forwardingunit/o_BranchForwardA \
+sim:/forwardingunit/o_BranchForwardB
+add wave -position 4 -format Default -height 17 -label i_IFID_RT -max 0 -min 0 -format Default -height 17 -label i_IFID_RS -max 0 -min 0
+# Missing signal name or pattern.
+add wave -position 4 -format Default -height 17 -label i_IDEX_RT -max 0 -min 0 -format Default -height 17 -label i_IDEX_RS -max 0 -min 0
+# Missing signal name or pattern.
+add wave -position 4 -format Default -height 17 -label i_EXMEM_RW -max 0 -min 0 -format Default -height 17 -label i_EXMEM_RD -max 0 -min 0
+# Missing signal name or pattern.
+add wave -position 4 -format Default -height 17 -label i_MEMWB_RW -max 0 -min 0 -format Default -height 17 -label i_MEMWB_RD -max 0 -min 0
+# Missing signal name or pattern.
+add wave -position 4 -format Default -height 17 -label o_ForwardB -max 0 -min 0 -format Default -height 17 -label o_ForwardA -max 0 -min 0
+# Missing signal name or pattern.
+add wave -position 4 -format Default -height 17 -label o_BranchForwardB -max 0 -min 0 -format Default -height 17 -label o_BranchForwardA -max 0 -min 0
+# Missing signal name or pattern.
+force -freeze sim:/forwardingunit/i_IDEX_RS 5'h01 0
+force -freeze sim:/forwardingunit/i_IDEX_RT 5'h02 0
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h01 0
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h04 0
+run
+force -freeze sim:/forwardingunit/i_EXMEM_RW 1 0
+force -freeze sim:/forwardingunit/i_MEMWB_RW 1 0
+run
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h04 0
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h01 0
+run
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h03 0
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h03 0
+run
+quit -sim
+# End time: 15:26:19 on Dec 10,2021, Elapsed time: 0:03:10
+# Errors: 0, Warnings: 2
+# Compile of Forwarding_Unit.vhd was successful.
+vsim work.forwardingunit
+# vsim work.forwardingunit 
+# Start time: 15:26:33 on Dec 10,2021
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.forwardingunit(behavior)#1
+add wave -position insertpoint  \
+sim:/forwardingunit/i_IFID_RS \
+sim:/forwardingunit/i_IFID_RT \
+sim:/forwardingunit/i_IDEX_RS \
+sim:/forwardingunit/i_IDEX_RT \
+sim:/forwardingunit/i_EXMEM_RD \
+sim:/forwardingunit/i_EXMEM_RW \
+sim:/forwardingunit/i_MEMWB_RD \
+sim:/forwardingunit/i_MEMWB_RW \
+sim:/forwardingunit/o_ForwardA \
+sim:/forwardingunit/o_ForwardB \
+sim:/forwardingunit/o_BranchForwardA \
+sim:/forwardingunit/o_BranchForwardB
+force -freeze sim:/forwardingunit/i_IDEX_RS 5'h01 0
+force -freeze sim:/forwardingunit/i_IDEX_RT 5'h02 0
+force -freeze sim:/forwardingunit/i_EXMEM_RD 5'h03 0
+force -freeze sim:/forwardingunit/i_EXMEM_RW 1 0
+force -freeze sim:/forwardingunit/i_MEMWB_RD 5'h01 0
+force -freeze sim:/forwardingunit/i_MEMWB_RW 1 0
+run
+quit -sim
+# End time: 15:28:13 on Dec 10,2021, Elapsed time: 0:01:40
+# Errors: 0, Warnings: 2
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/iCLK \
+vsim1:/tb/MyMips/iRST \
+vsim1:/tb/MyMips/iInstLd \
+vsim1:/tb/MyMips/iInstAddr \
+vsim1:/tb/MyMips/iInstExt \
+vsim1:/tb/MyMips/oALUOut \
+vsim1:/tb/MyMips/s_DMemWr \
+vsim1:/tb/MyMips/s_DMemAddr \
+vsim1:/tb/MyMips/s_DMemData \
+vsim1:/tb/MyMips/s_DMemOut \
+vsim1:/tb/MyMips/s_RegWr \
+vsim1:/tb/MyMips/s_RegWrAddr \
+vsim1:/tb/MyMips/s_RegWrData \
+vsim1:/tb/MyMips/s_IMemAddr \
+vsim1:/tb/MyMips/s_NextInstAddr \
+vsim1:/tb/MyMips/s_Inst \
+vsim1:/tb/MyMips/s_Halt \
+vsim1:/tb/MyMips/s_Ovfl \
+vsim1:/tb/MyMips/s_032 \
+vsim1:/tb/MyMips/s_31 \
+vsim1:/tb/MyMips/s_RegDst \
+vsim1:/tb/MyMips/s_WriteRa \
+vsim1:/tb/MyMips/s_RegWrite \
+vsim1:/tb/MyMips/s_Jump \
+vsim1:/tb/MyMips/s_Branch \
+vsim1:/tb/MyMips/s_MemToReg \
+vsim1:/tb/MyMips/s_MemWrite \
+vsim1:/tb/MyMips/s_ALUSrc \
+vsim1:/tb/MyMips/s_SignZero \
+vsim1:/tb/MyMips/s_bneOp \
+vsim1:/tb/MyMips/s_MemRead \
+vsim1:/tb/MyMips/s_luiOp \
+vsim1:/tb/MyMips/s_jrOp \
+vsim1:/tb/MyMips/s_ALUOp \
+vsim1:/tb/MyMips/s_ALUShiftDir \
+vsim1:/tb/MyMips/s_ALUShiftArithmetic \
+vsim1:/tb/MyMips/s_ALUAddSub \
+vsim1:/tb/MyMips/s_signed \
+vsim1:/tb/MyMips/s_ALUMuxCtrl \
+vsim1:/tb/MyMips/s_WriteRaDataMUX \
+vsim1:/tb/MyMips/s_DMEMMUXOut \
+vsim1:/tb/MyMips/s_ALUSRCMux \
+vsim1:/tb/MyMips/s_luiMux \
+vsim1:/tb/MyMips/s_RegDstMUX \
+vsim1:/tb/MyMips/s_WriteRaRegMUX \
+vsim1:/tb/MyMips/s_jumpAddrMux \
+vsim1:/tb/MyMips/s_ForwardMux1Out \
+vsim1:/tb/MyMips/s_ForwardMux2Out \
+vsim1:/tb/MyMips/s_BranchForwardMux1 \
+vsim1:/tb/MyMips/s_BranchForwardMux2 \
+vsim1:/tb/MyMips/s_RegFileRD1 \
+vsim1:/tb/MyMips/s_RegFileRD2 \
+vsim1:/tb/MyMips/s_ALUOut \
+vsim1:/tb/MyMips/s_ImmExtended \
+vsim1:/tb/MyMips/s_PCp4 \
+vsim1:/tb/MyMips/s_PC \
+vsim1:/tb/MyMips/s_luiShifted \
+vsim1:/tb/MyMips/s_ForwardOut1 \
+vsim1:/tb/MyMips/s_ForwardOut2 \
+vsim1:/tb/MyMips/s_BranchForwardOut1 \
+vsim1:/tb/MyMips/s_BranchForwardOut2 \
+vsim1:/tb/MyMips/s_ALUSecondOut \
+vsim1:/tb/MyMips/s_overflow \
+vsim1:/tb/MyMips/s_carryout \
+vsim1:/tb/MyMips/s_stall \
+vsim1:/tb/MyMips/s_nstall \
+vsim1:/tb/MyMips/s_flush \
+vsim1:/tb/MyMips/s_branchTaken \
+vsim1:/tb/MyMips/s_instr25t21 \
+vsim1:/tb/MyMips/s_instr20t16 \
+vsim1:/tb/MyMips/s_instr15t11 \
+vsim1:/tb/MyMips/s_instr10t6 \
+vsim1:/tb/MyMips/s_instr31t26 \
+vsim1:/tb/MyMips/s_instr5t0 \
+vsim1:/tb/MyMips/s_instr15t0 \
+vsim1:/tb/MyMips/s_instr25t0 \
+vsim1:/tb/MyMips/cs_branch \
+vsim1:/tb/MyMips/cs_jump \
+vsim1:/tb/MyMips/cs_ALUSrc \
+vsim1:/tb/MyMips/cs_RegDst \
+vsim1:/tb/MyMips/cs_MemToReg \
+vsim1:/tb/MyMips/cs_RegWrite \
+vsim1:/tb/MyMips/cs_MemWrite \
+vsim1:/tb/MyMips/cs_WriteRa \
+vsim1:/tb/MyMips/cs_LuiOp \
+vsim1:/tb/MyMips/s_Reset \
+vsim1:/tb/MyMips/s_AreEqual \
+vsim1:/tb/MyMips/s_stallDffOut \
+vsim1:/tb/MyMips/s_stallSlave \
+vsim1:/tb/MyMips/s_stallOr \
+vsim1:/tb/MyMips/s_NextInstAddrShift \
+vsim1:/tb/MyMips/s_DMemAddrShift \
+vsim1:/tb/MyMips/s_RegFileRD125t0 \
+vsim1:/tb/MyMips/s_instr25t0shift \
+vsim1:/tb/MyMips/ps_PCp4 \
+vsim1:/tb/MyMips/ps_Inst \
+vsim1:/tb/MyMips/p1Halt \
+vsim1:/tb/MyMips/p2Halt \
+vsim1:/tb/MyMips/p3Halt \
+vsim1:/tb/MyMips/p4Halt \
+vsim1:/tb/MyMips/ps_RegDst \
+vsim1:/tb/MyMips/ps_WriteRa1 \
+vsim1:/tb/MyMips/ps_RegWrite1 \
+vsim1:/tb/MyMips/ps_RegWrite2 \
+vsim1:/tb/MyMips/ps_RegDst2 \
+vsim1:/tb/MyMips/ps_WriteRa2 \
+vsim1:/tb/MyMips/ps_WriteRa3 \
+vsim1:/tb/MyMips/ps_MemToReg1 \
+vsim1:/tb/MyMips/ps_MemToReg2 \
+vsim1:/tb/MyMips/ps_MemToReg3 \
+vsim1:/tb/MyMips/ps_MemWrite1 \
+vsim1:/tb/MyMips/ps_MemWrite2 \
+vsim1:/tb/MyMips/ps_ALUSrc \
+vsim1:/tb/MyMips/ps_luiOp1 \
+vsim1:/tb/MyMips/ps_luiOp2 \
+vsim1:/tb/MyMips/ps_luiOp3 \
+vsim1:/tb/MyMips/ps_jrOp \
+vsim1:/tb/MyMips/ps_Branch \
+vsim1:/tb/MyMips/ps_jump \
+vsim1:/tb/MyMips/ps_instr25t21 \
+vsim1:/tb/MyMips/ps_instr20t16 \
+vsim1:/tb/MyMips/ps_shamt \
+vsim1:/tb/MyMips/ps_RegDstMux1 \
+vsim1:/tb/MyMips/ps_RegDstMux2 \
+vsim1:/tb/MyMips/ps_Rd \
+vsim1:/tb/MyMips/ps_Rt \
+vsim1:/tb/MyMips/ps_RD1 \
+vsim1:/tb/MyMips/ps_RD2 \
+vsim1:/tb/MyMips/ps_Imm \
+vsim1:/tb/MyMips/ps_ALUOut1 \
+vsim1:/tb/MyMips/ps_ALUOut2 \
+vsim1:/tb/MyMips/ps_ALUSrcout \
+vsim1:/tb/MyMips/ps_LuiShift1 \
+vsim1:/tb/MyMips/ps_LuiShift2 \
+vsim1:/tb/MyMips/ps_DMemData \
+vsim1:/tb/MyMips/ps_DMemOut \
+vsim1:/tb/MyMips/ps_ALUOp \
+vsim1:/tb/MyMips/ps_LuiImm
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/FRWDUNIT/i_IFID_RS \
+vsim1:/tb/MyMips/FRWDUNIT/i_IFID_RT \
+vsim1:/tb/MyMips/FRWDUNIT/i_IDEX_RS \
+vsim1:/tb/MyMips/FRWDUNIT/i_IDEX_RT \
+vsim1:/tb/MyMips/FRWDUNIT/i_EXMEM_RD \
+vsim1:/tb/MyMips/FRWDUNIT/i_EXMEM_RW \
+vsim1:/tb/MyMips/FRWDUNIT/i_MEMWB_RD \
+vsim1:/tb/MyMips/FRWDUNIT/i_MEMWB_RW \
+vsim1:/tb/MyMips/FRWDUNIT/o_ForwardA \
+vsim1:/tb/MyMips/FRWDUNIT/o_ForwardB \
+vsim1:/tb/MyMips/FRWDUNIT/o_BranchForwardA \
+vsim1:/tb/MyMips/FRWDUNIT/o_BranchForwardB
+dataset reload -f
+# vsim1:/tb/MyMips/FRWDUNIT
+dataset reload -f
+# vsim1:/tb/MyMips/FRWDUNIT
+add wave -position insertpoint vsim1:/tb/MyMips/*
+dataset reload -f
+# vsim1:/tb/MyMips
+add wave -position insertpoint vsim1:/tb/MyMips/FRWDUNIT/*
+add wave -position insertpoint vsim1:/tb/MyMips/HZRDDETECT/*
+dataset reload -f
+# vsim1:/tb/MyMips/HZRDDETECT
+add wave -position insertpoint vsim1:/tb/MyMips/FETCHLOGIC/*
+dataset reload -f
+# vsim1:/tb/MyMips/FETCHLOGIC
+dataset reload -f
+# vsim1:/tb/MyMips/FETCHLOGIC
+dataset reload -f
+# vsim1:/tb/MyMips/FETCHLOGIC
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/EQUALS/i_A \
+vsim1:/tb/MyMips/EQUALS/i_B \
+vsim1:/tb/MyMips/EQUALS/o_Eq \
+vsim1:/tb/MyMips/EQUALS/s_overflow \
+vsim1:/tb/MyMips/EQUALS/s_carryout \
+vsim1:/tb/MyMips/EQUALS/s_Eq \
+vsim1:/tb/MyMips/EQUALS/s_nEq \
+vsim1:/tb/MyMips/EQUALS/s_AddOut
+dataset reload -f
+# vsim1:/tb/MyMips/EQUALS
+dataset reload -f
+# vsim1:/tb/MyMips/EQUALS
+dataset reload -f
+# vsim1:/tb/MyMips/EQUALS
+dataset reload -f
+# vsim1:/tb/MyMips/EQUALS
+dataset reload -f
+# vsim1:/tb/MyMips/EQUALS
+dataset reload -f
+# vsim1:/tb/MyMips/EQUALS
+dataset reload -f
+# vsim1:/tb/MyMips/EQUALS
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/FETCHLOGIC/i_PC \
+vsim1:/tb/MyMips/FETCHLOGIC/i_PCRST \
+vsim1:/tb/MyMips/FETCHLOGIC/i_PCStall \
+vsim1:/tb/MyMips/FETCHLOGIC/i_Instr \
+vsim1:/tb/MyMips/FETCHLOGIC/i_ExtendedImm \
+vsim1:/tb/MyMips/FETCHLOGIC/o_PC \
+vsim1:/tb/MyMips/FETCHLOGIC/o_PCp4 \
+vsim1:/tb/MyMips/FETCHLOGIC/o_BranchTaken \
+vsim1:/tb/MyMips/FETCHLOGIC/i_HALT \
+vsim1:/tb/MyMips/FETCHLOGIC/i_CLK \
+vsim1:/tb/MyMips/FETCHLOGIC/i_Jump \
+vsim1:/tb/MyMips/FETCHLOGIC/i_Branch \
+vsim1:/tb/MyMips/FETCHLOGIC/i_BranchNotEqual \
+vsim1:/tb/MyMips/FETCHLOGIC/i_ALUResult \
+vsim1:/tb/MyMips/FETCHLOGIC/instrData \
+vsim1:/tb/MyMips/FETCHLOGIC/immData \
+vsim1:/tb/MyMips/FETCHLOGIC/instrShift \
+vsim1:/tb/MyMips/FETCHLOGIC/immShift \
+vsim1:/tb/MyMips/FETCHLOGIC/jumpAddress \
+vsim1:/tb/MyMips/FETCHLOGIC/BranchAddress \
+vsim1:/tb/MyMips/FETCHLOGIC/BranchMux \
+vsim1:/tb/MyMips/FETCHLOGIC/PCp4 \
+vsim1:/tb/MyMips/FETCHLOGIC/four \
+vsim1:/tb/MyMips/FETCHLOGIC/PCnext \
+vsim1:/tb/MyMips/FETCHLOGIC/currentPC \
+vsim1:/tb/MyMips/FETCHLOGIC/sdata \
+vsim1:/tb/MyMips/FETCHLOGIC/PCin \
+vsim1:/tb/MyMips/FETCHLOGIC/nextinstr \
+vsim1:/tb/MyMips/FETCHLOGIC/PCp4C \
+vsim1:/tb/MyMips/FETCHLOGIC/JAddressC \
+vsim1:/tb/MyMips/FETCHLOGIC/BranchC \
+vsim1:/tb/MyMips/FETCHLOGIC/BAnd \
+vsim1:/tb/MyMips/FETCHLOGIC/Bxor \
+vsim1:/tb/MyMips/FETCHLOGIC/clock \
+vsim1:/tb/MyMips/FETCHLOGIC/HALT \
+vsim1:/tb/MyMips/FETCHLOGIC/NOTHALT \
+vsim1:/tb/MyMips/FETCHLOGIC/HSor \
+vsim1:/tb/MyMips/FETCHLOGIC/zero
+dataset reload -f
+# vsim1:/tb/MyMips/FETCHLOGIC
+dataset reload -f
+# vsim1:/tb/MyMips/FETCHLOGIC
+dataset reload -f
+# vsim1:/tb/MyMips/FETCHLOGIC
+dataset reload -f
+# vsim1:/tb
+dataset reload -f
+# vsim1:/tb
+dataset reload -f
+# vsim1:/tb
+dataset reload -f
+# vsim1:/tb
+dataset reload -f
+# vsim1:/tb
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/REGFILE/i_WE \
+vsim1:/tb/MyMips/REGFILE/i_CLK \
+vsim1:/tb/MyMips/REGFILE/i_RST \
+vsim1:/tb/MyMips/REGFILE/i_WS \
+vsim1:/tb/MyMips/REGFILE/i_RS \
+vsim1:/tb/MyMips/REGFILE/i_R2S \
+vsim1:/tb/MyMips/REGFILE/i_wD \
+vsim1:/tb/MyMips/REGFILE/o_R1F \
+vsim1:/tb/MyMips/REGFILE/o_R2F \
+vsim1:/tb/MyMips/REGFILE/s_CLK \
+vsim1:/tb/MyMips/REGFILE/s_WE \
+vsim1:/tb/MyMips/REGFILE/s_RST \
+vsim1:/tb/MyMips/REGFILE/s_iD \
+vsim1:/tb/MyMips/REGFILE/s_sR \
+vsim1:/tb/MyMips/REGFILE/s_rD \
+vsim1:/tb/MyMips/REGFILE/s_r2D \
+vsim1:/tb/MyMips/REGFILE/s_rS \
+vsim1:/tb/MyMips/REGFILE/s_wS \
+vsim1:/tb/MyMips/REGFILE/s_zeroRST \
+vsim1:/tb/MyMips/REGFILE/s_wR \
+vsim1:/tb/MyMips/REGFILE/s_rR0 \
+vsim1:/tb/MyMips/REGFILE/s_rR1 \
+vsim1:/tb/MyMips/REGFILE/s_rR2 \
+vsim1:/tb/MyMips/REGFILE/s_rR3 \
+vsim1:/tb/MyMips/REGFILE/s_rR4 \
+vsim1:/tb/MyMips/REGFILE/s_rR5 \
+vsim1:/tb/MyMips/REGFILE/s_rR6 \
+vsim1:/tb/MyMips/REGFILE/s_rR7 \
+vsim1:/tb/MyMips/REGFILE/s_rR8 \
+vsim1:/tb/MyMips/REGFILE/s_rR9 \
+vsim1:/tb/MyMips/REGFILE/s_rR10 \
+vsim1:/tb/MyMips/REGFILE/s_rR11 \
+vsim1:/tb/MyMips/REGFILE/s_rR12 \
+vsim1:/tb/MyMips/REGFILE/s_rR13 \
+vsim1:/tb/MyMips/REGFILE/s_rR14 \
+vsim1:/tb/MyMips/REGFILE/s_rR15 \
+vsim1:/tb/MyMips/REGFILE/s_rR16 \
+vsim1:/tb/MyMips/REGFILE/s_rR17 \
+vsim1:/tb/MyMips/REGFILE/s_rR18 \
+vsim1:/tb/MyMips/REGFILE/s_rR19 \
+vsim1:/tb/MyMips/REGFILE/s_rR20 \
+vsim1:/tb/MyMips/REGFILE/s_rR21 \
+vsim1:/tb/MyMips/REGFILE/s_rR22 \
+vsim1:/tb/MyMips/REGFILE/s_rR23 \
+vsim1:/tb/MyMips/REGFILE/s_rR24 \
+vsim1:/tb/MyMips/REGFILE/s_rR25 \
+vsim1:/tb/MyMips/REGFILE/s_rR26 \
+vsim1:/tb/MyMips/REGFILE/s_rR27 \
+vsim1:/tb/MyMips/REGFILE/s_rR28 \
+vsim1:/tb/MyMips/REGFILE/s_rR29 \
+vsim1:/tb/MyMips/REGFILE/s_rR30 \
+vsim1:/tb/MyMips/REGFILE/s_rR31 \
+vsim1:/tb/MyMips/REGFILE/s_rM0 \
+vsim1:/tb/MyMips/REGFILE/s_rM1 \
+vsim1:/tb/MyMips/REGFILE/s_rM2 \
+vsim1:/tb/MyMips/REGFILE/s_rM3 \
+vsim1:/tb/MyMips/REGFILE/s_rM4 \
+vsim1:/tb/MyMips/REGFILE/s_rM5 \
+vsim1:/tb/MyMips/REGFILE/s_rM6 \
+vsim1:/tb/MyMips/REGFILE/s_rM7 \
+vsim1:/tb/MyMips/REGFILE/s_rM8 \
+vsim1:/tb/MyMips/REGFILE/s_rM9 \
+vsim1:/tb/MyMips/REGFILE/s_rM10 \
+vsim1:/tb/MyMips/REGFILE/s_rM11 \
+vsim1:/tb/MyMips/REGFILE/s_rM12 \
+vsim1:/tb/MyMips/REGFILE/s_rM13 \
+vsim1:/tb/MyMips/REGFILE/s_rM14 \
+vsim1:/tb/MyMips/REGFILE/s_rM15 \
+vsim1:/tb/MyMips/REGFILE/s_rM16 \
+vsim1:/tb/MyMips/REGFILE/s_rM17 \
+vsim1:/tb/MyMips/REGFILE/s_rM18 \
+vsim1:/tb/MyMips/REGFILE/s_rM19 \
+vsim1:/tb/MyMips/REGFILE/s_rM20 \
+vsim1:/tb/MyMips/REGFILE/s_rM21 \
+vsim1:/tb/MyMips/REGFILE/s_rM22 \
+vsim1:/tb/MyMips/REGFILE/s_rM23 \
+vsim1:/tb/MyMips/REGFILE/s_rM24 \
+vsim1:/tb/MyMips/REGFILE/s_rM25 \
+vsim1:/tb/MyMips/REGFILE/s_rM26 \
+vsim1:/tb/MyMips/REGFILE/s_rM27 \
+vsim1:/tb/MyMips/REGFILE/s_rM28 \
+vsim1:/tb/MyMips/REGFILE/s_rM29 \
+vsim1:/tb/MyMips/REGFILE/s_rM30 \
+vsim1:/tb/MyMips/REGFILE/s_rM31 \
+vsim1:/tb/MyMips/REGFILE/s_r2M0 \
+vsim1:/tb/MyMips/REGFILE/s_r2M1 \
+vsim1:/tb/MyMips/REGFILE/s_r2M2 \
+vsim1:/tb/MyMips/REGFILE/s_r2M3 \
+vsim1:/tb/MyMips/REGFILE/s_r2M4 \
+vsim1:/tb/MyMips/REGFILE/s_r2M5 \
+vsim1:/tb/MyMips/REGFILE/s_r2M6 \
+vsim1:/tb/MyMips/REGFILE/s_r2M7 \
+vsim1:/tb/MyMips/REGFILE/s_r2M8 \
+vsim1:/tb/MyMips/REGFILE/s_r2M9 \
+vsim1:/tb/MyMips/REGFILE/s_r2M10 \
+vsim1:/tb/MyMips/REGFILE/s_r2M11 \
+vsim1:/tb/MyMips/REGFILE/s_r2M12 \
+vsim1:/tb/MyMips/REGFILE/s_r2M13 \
+vsim1:/tb/MyMips/REGFILE/s_r2M14 \
+vsim1:/tb/MyMips/REGFILE/s_r2M15 \
+vsim1:/tb/MyMips/REGFILE/s_r2M16 \
+vsim1:/tb/MyMips/REGFILE/s_r2M17 \
+vsim1:/tb/MyMips/REGFILE/s_r2M18 \
+vsim1:/tb/MyMips/REGFILE/s_r2M19 \
+vsim1:/tb/MyMips/REGFILE/s_r2M20 \
+vsim1:/tb/MyMips/REGFILE/s_r2M21 \
+vsim1:/tb/MyMips/REGFILE/s_r2M22 \
+vsim1:/tb/MyMips/REGFILE/s_r2M23 \
+vsim1:/tb/MyMips/REGFILE/s_r2M24 \
+vsim1:/tb/MyMips/REGFILE/s_r2M25 \
+vsim1:/tb/MyMips/REGFILE/s_r2M26 \
+vsim1:/tb/MyMips/REGFILE/s_r2M27 \
+vsim1:/tb/MyMips/REGFILE/s_r2M28 \
+vsim1:/tb/MyMips/REGFILE/s_r2M29 \
+vsim1:/tb/MyMips/REGFILE/s_r2M30 \
+vsim1:/tb/MyMips/REGFILE/s_r2M31
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/CONTROLUNIT/i_opCode \
+vsim1:/tb/MyMips/CONTROLUNIT/i_functCode \
+vsim1:/tb/MyMips/CONTROLUNIT/o_RegDest \
+vsim1:/tb/MyMips/CONTROLUNIT/o_ALUSrc \
+vsim1:/tb/MyMips/CONTROLUNIT/o_MemtoReg \
+vsim1:/tb/MyMips/CONTROLUNIT/o_RegWrite \
+vsim1:/tb/MyMips/CONTROLUNIT/o_MemRead \
+vsim1:/tb/MyMips/CONTROLUNIT/o_MemWrite \
+vsim1:/tb/MyMips/CONTROLUNIT/o_branch \
+vsim1:/tb/MyMips/CONTROLUNIT/o_jump \
+vsim1:/tb/MyMips/CONTROLUNIT/o_WriteRa \
+vsim1:/tb/MyMips/CONTROLUNIT/o_signed \
+vsim1:/tb/MyMips/CONTROLUNIT/o_bneOp \
+vsim1:/tb/MyMips/CONTROLUNIT/o_halt \
+vsim1:/tb/MyMips/CONTROLUNIT/o_luiOp \
+vsim1:/tb/MyMips/CONTROLUNIT/o_jrOp \
+vsim1:/tb/MyMips/CONTROLUNIT/o_ALUop
+dataset reload -f
+# vsim1:/tb/MyMips/CONTROLUNIT
+dataset reload -f
+# Warning in wave window restart: (vish-4014) No objects found matching 'vsim1:/tb/MyMips/ps_PCp4'. 
+# Warning in wave window restart: (vish-4014) No objects found matching 'vsim1:/tb/MyMips/ps_PCp4'. 
+# vsim1:/tb/MyMips/CONTROLUNIT
+dataset reload -f
+# vsim1:/tb/MyMips
+dataset reload -f
+# vsim1:/tb/MyMips
+dataset reload -f
+# vsim1:/tb/MyMips
+dataset reload -f
+# vsim1:/tb/MyMips
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/MIPSALU/i_Adata \
+vsim1:/tb/MyMips/MIPSALU/i_Bdata \
+vsim1:/tb/MyMips/MIPSALU/i_ALUShiftDir \
+vsim1:/tb/MyMips/MIPSALU/i_ALUShiftArithmetic \
+vsim1:/tb/MyMips/MIPSALU/i_ALUAddSub \
+vsim1:/tb/MyMips/MIPSALU/i_ALUMuxCtrl \
+vsim1:/tb/MyMips/MIPSALU/i_shamt \
+vsim1:/tb/MyMips/MIPSALU/i_signed \
+vsim1:/tb/MyMips/MIPSALU/o_equal \
+vsim1:/tb/MyMips/MIPSALU/o_carryout \
+vsim1:/tb/MyMips/MIPSALU/o_overflow \
+vsim1:/tb/MyMips/MIPSALU/o_result \
+vsim1:/tb/MyMips/MIPSALU/s_adderOUT \
+vsim1:/tb/MyMips/MIPSALU/s_andOUT \
+vsim1:/tb/MyMips/MIPSALU/s_orOUT \
+vsim1:/tb/MyMips/MIPSALU/s_xorOUT \
+vsim1:/tb/MyMips/MIPSALU/s_shifterOUT \
+vsim1:/tb/MyMips/MIPSALU/s_lessThanBit \
+vsim1:/tb/MyMips/MIPSALU/s_slt \
+vsim1:/tb/MyMips/MIPSALU/s_invOR \
+vsim1:/tb/MyMips/MIPSALU/s_rplQB \
+vsim1:/tb/MyMips/MIPSALU/s_equal_one_bit \
+vsim1:/tb/MyMips/MIPSALU/s_overflow
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/IMMEXTEND/i_D \
+vsim1:/tb/MyMips/IMMEXTEND/i_SignZero \
+vsim1:/tb/MyMips/IMMEXTEND/o_D \
+vsim1:/tb/MyMips/IMMEXTEND/s_extended \
+vsim1:/tb/MyMips/IMMEXTEND/s_Sign \
+vsim1:/tb/MyMips/IMMEXTEND/s_extend
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/MIPSALUCNTRL/i_ALUop \
+vsim1:/tb/MyMips/MIPSALUCNTRL/o_ALUShiftDir \
+vsim1:/tb/MyMips/MIPSALUCNTRL/o_ALUShiftArithmetic \
+vsim1:/tb/MyMips/MIPSALUCNTRL/o_ALUAddSub \
+vsim1:/tb/MyMips/MIPSALUCNTRL/o_ALUMuxCtrl \
+vsim1:/tb/MyMips/MIPSALUCNTRL/o_signed
+dataset reload -f
+# vsim1:/tb/MyMips/MIPSALUCNTRL
+dataset reload -f
+# vsim1:/tb/MyMips
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/ALURD2MUX/i_S \
+vsim1:/tb/MyMips/ALURD2MUX/i_D0 \
+vsim1:/tb/MyMips/ALURD2MUX/i_D1 \
+vsim1:/tb/MyMips/ALURD2MUX/i_D2 \
+vsim1:/tb/MyMips/ALURD2MUX/o_O \
+vsim1:/tb/MyMips/ALURD2MUX/s_Mux1Out
+add wave -position insertpoint  \
+vsim1:/tb/MyMips/ALUSRCMUX/i_S \
+vsim1:/tb/MyMips/ALUSRCMUX/i_D0 \
+vsim1:/tb/MyMips/ALUSRCMUX/i_D1 \
+vsim1:/tb/MyMips/ALUSRCMUX/o_O
+dataset reload -f
+# vsim1:/tb/MyMips/ALUSRCMUX
+dataset reload -f
+# vsim1:/tb/MyMips/ALUSRCMUX
+dataset reload -f
+# vsim1:/tb/MyMips/ALUSRCMUX
+dataset reload -f
+# vsim1:/tb/MyMips/ALUSRCMUX
+dataset reload -f
+# vsim1:/tb/MyMips/ALUSRCMUX/G_NBit_MUX(0)
